@@ -1,0 +1,63 @@
+@api = http://localhost:3001/api/users
+
+### POST CONFIRM PASSWORD
+
+POST {{api}}/signup/eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjVmYTFjYWQ3ZjczMWVhYWQ3NDBlMjBlZSIsImVtYWlsIjoicmF1bHphcnphLmRldkBnbWFpbC5jb20iLCJyb2wiOiJ1c2VyIiwiaWF0IjoxNjA0NDM4NzQzLCJleHAiOjE2MDQ1MjUxNDN9.7QPSzjlsGM33RPkiTmxND_EYjwX7JJJnrcK-SH9O1Mo
+
+### POST SIGN UP 
+
+POST {{api}}/signup
+Content-Type: application/json
+
+{
+    "email": "raulzarza.dev@gmail.com",
+    "password":"123456"
+}
+
+### SIGN UP NEW
+POST {{api}}/signup
+Content-Type: application/json
+
+{
+    "email":"raulzarza.dev@gmail.com",
+    "password":"1234567"
+}
+
+### SIGN IN FIELD
+
+POST {{api}}/signin
+Content-Type: application/json
+
+{
+    "email":"raulzarza.dev@gmail.com",
+    "password":"1234567"
+}
+
+### SIGN IN NORMAL
+POST {{api}}/signin
+Content-Type: application/json
+
+{
+    "email":"raulzarza.dev@gmail.com",
+    "password":"0123456789"
+}
+
+### FORGOR PASSWOD
+
+POST {{api}}/forgot-password
+Content-Type: application/json
+
+{
+    "email": "raulzarza.dev@gmail.com"
+}
+
+### RECOVER PASSWORD
+
+POST {{api}}/recover-password/eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJyZWNvdmVyIjp0cnVlLCJpZCI6IjVmYTQ1M2VkYzQ2YzJlMWY4NjIzZjMwMCIsImlhdCI6MTYwNTE1MDIzMiwiZXhwIjoxNjA1MTUxMTMyfQ.CVatkPrEoA3nvIyh8HFYgiIQ76rXigNj9VyEwEwC5cY
+Content-Type:  application/json
+
+{
+    "email":"raulzarza.dev@gmail.com",
+    "password":"0123456789"
+}
+
