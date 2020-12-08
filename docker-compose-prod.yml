@@ -18,15 +18,15 @@ services:
     networks:
       - my-net
     environment:
-      PORT
-      MONGO_NDB
-      JWT_SECRET_TEXT
-      EMAIL_PASSWORD
-      NDB_EMAIL
-      ENVIROMENT
-      CLOUDINARY_CLOUD_NAME
-      CLOUDINARY_API_KEY
-      CLOUDINARY_API_SECRET
+      - PORT
+      - MONGO_NDB
+      - JWT_SECRET_TEXT
+      - EMAIL_PASSWORD
+      - NDB_EMAIL
+      - ENVIROMENT
+      - CLOUDINARY_CLOUD_NAME
+      - CLOUDINARY_API_KEY
+      - CLOUDINARY_API_SECRET
 networks:
   my-net:
     driver: bridge
