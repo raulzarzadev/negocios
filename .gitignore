@@ -1,0 +1,33 @@
+.env
+./front-negocios/node_modules/
+./front-negocios/.env
+
+./back-negocios/node_modules/
+./back-negocios/.env
+# See https://help.github.com/articles/ignoring-files/ for more about ignoring files.
+
+# dependencies
+/node_modules
+./back-negocios/.pnp
+.pnp.js
+
+# testing
+./back-negocios/coverage
+
+# production
+./back-negocios/build
+
+# misc
+.DS_Store
+.env
+.env.local
+./back-negocios/.env.development.local
+./back-negocios/.env.test.local
+./back-negocios/.env.production.local
+./back-negocios/npm-debug.log*
+./back-negocios/yarn-debug.log*
+./back-negocios/yarn-error.log*
+./back-negocios/ecosystem.pm2.json
+./back-negocios/ignorar
+./back-negocios/ApiOrigin.js
+

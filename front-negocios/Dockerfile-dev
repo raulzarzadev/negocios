@@ -1,0 +1,16 @@
+FROM node:15.3.0-alpine3.10 as build-deps
+
+RUN mkdir -p /usr/src/app
+
+WORKDIR /usr/src/app
+
+COPY package*.json .
+COPY yarn.lock .
+COPY . .
+
+RUN yarn 
+RUN yarn run build
+
+EXPOSE 3000
+
+CMD [ "yarn", "start" ]

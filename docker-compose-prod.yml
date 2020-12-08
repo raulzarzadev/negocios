@@ -1,35 +1,32 @@
 version: "3.8"
 
 services:
-    client:
-      build:
-        context: ./front-negocios
-        dockerfile: Dockerfile-prod
-      ports:
-        - "4000:80"
-      networks: 
-        - my-net
-    api:
-      build:
-        context: ./back-negocios
-        dockerfile: Dockerfile-prod
-      ports:
-        - "4001:4001"
-      networks: 
-        - my-net
-      environment: 
-        PORT: "4001"
-        MONGO_NDB: mongodb+srv://raulzarza:Qazwsx2121@cluster0-nly0y.mongodb.net/negociosDB
-        JWT_SECRET_TEXT: llave secreta para la segunda version de negdelbar
-        EMAIL_PASSWORD: Y!!rMMB2B!8RNM3
-        NDB_EMAIL: mail@negociosdelbarrio.com
-        ENVIROMENT: prod
-        CLOUDINARY_CLOUD_NAME: dl8uisxpu,
-        CLOUDINARY_API_KEY: 512834466293938
-        CLOUDINARY_API_SECRET: WjmopUAcf-kw9v8qvCVGOZNJjL8
-networks: 
-    my-net:
-      driver: bridge
-      
-
-    
+  client:
+    build:
+      context: ./front-negocios
+      dockerfile: Dockerfile-prod
+    ports:
+      - "4000:80"
+    networks:
+      - my-net
+  api:
+    build:
+      context: ./back-negocios
+      dockerfile: Dockerfile-prod
+    ports:
+      - "4001:4001"
+    networks:
+      - my-net
+    environment:
+      PORT
+      MONGO_NDB
+      JWT_SECRET_TEXT
+      EMAIL_PASSWORD
+      NDB_EMAIL
+      ENVIROMENT
+      CLOUDINARY_CLOUD_NAME
+      CLOUDINARY_API_KEY
+      CLOUDINARY_API_SECRET
+networks:
+  my-net:
+    driver: bridge
