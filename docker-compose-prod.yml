@@ -1,7 +1,7 @@
 version: "3.8"
 
 services:
-  client:
+  nextjs:
     build:
       context: ./front-negocios
       dockerfile: Dockerfile-prod
@@ -9,6 +9,10 @@ services:
       - "4000:80"
     networks:
       - my-net
+  nginx:
+    build: ./nginx
+    ports: 
+      - 80:80
   api:
     build:
       context: ./back-negocios
