@@ -9,10 +9,7 @@ services:
       - "4000:80"
     networks:
       - my-net
-  nginx:
-    build: ./nginx
-    ports: 
-      - 80:80
+ 
   api:
     build:
       context: ./back-negocios
