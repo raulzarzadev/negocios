@@ -7,7 +7,6 @@ const barriosCtrl = {};
 
 barriosCtrl.getBarrios = async (req, res) => {
     const barrios = await Barrio.find()
-    console.log(barrios)
     res.json({ barrios, ok: true, type: "getBarrios" })
 
 };

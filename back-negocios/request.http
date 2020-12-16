@@ -61,3 +61,8 @@ Content-Type:  application/json
     "password":"0123456789"
 }
 
+### GET BARRIOS
+
+
+GET http://localhost:3001/api/barrios
+Content-Type:  application/json

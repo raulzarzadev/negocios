@@ -9,6 +9,7 @@ export default function Footer() {
       <a href="https://www.raulzarza.com/developer" target="__blank">
         raulzarza.com
       </a>
+      o no
     </div>
   );
 }

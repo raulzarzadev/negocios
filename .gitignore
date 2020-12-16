@@ -1,9 +1,9 @@
 .env
-./front-negocios/node_modules/
-./front-negocios/.env
+front-negocios/node_modules/
+front-negocios/.env
 
-./back-negocios/node_modules/
-./back-negocios/.env
+back-negocios/node_modules/
+back-negocios/.env
 # See https://help.github.com/articles/ignoring-files/ for more about ignoring files.
 
 # dependencies

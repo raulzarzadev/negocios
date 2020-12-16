@@ -32,6 +32,8 @@ export default () => (
   </MuiThemeProvider>
 );
 
+console.log("enviroment: ",process.env.REACT_APP_ENVIROMENT)
+
 function App() {
   const { loadingUser, data } = useUser();
   console.log(data);

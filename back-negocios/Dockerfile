@@ -1,4 +1,4 @@
-FROM node:alpine
+FROM node:slim
 
 RUN mkdir -p /usr/src/app
 
@@ -8,6 +8,6 @@ COPY ./ ./
 
 RUN npm install
 
-EXPOSE 4001
+EXPOSE 3001
 
 CMD "npm" "run" "dev"
