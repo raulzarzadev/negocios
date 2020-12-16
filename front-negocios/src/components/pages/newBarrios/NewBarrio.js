@@ -10,14 +10,9 @@ import { makeStyles } from "@material-ui/core";
 import NoLoggedView from "../../NoLoggedView";
 import { useUser } from "../../../context/userContext";
 
-const useStyles = makeStyles((theme) => ({
-  newBarrioContent: {
-    padding: "16px",
-  },
-}));
+
 
 export default function NewBarrio(props) {
-  const classes = useStyles();
   const { isLogged } = useUser();
   const token = localStorage.getItem("access-token");
 
@@ -88,13 +83,11 @@ export default function NewBarrio(props) {
 
   return (
     <>
-      <dev className={classes.newBarrioContent}>
-        {isLogged ? (
-          <NewBarrioForm onSubmit={onSubmit} />
-        ) : (
-          <NoLoggedView text="barrio" />
-        )}
-      </dev>
+      {isLogged ? (
+        <NewBarrioForm onSubmit={onSubmit} />
+      ) : (
+        <NoLoggedView text="barrio" />
+      )}
     </>
   );
 }

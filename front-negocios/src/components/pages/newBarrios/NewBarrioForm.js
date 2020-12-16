@@ -11,6 +11,7 @@ import {
   StepLabel,
   Stepper,
   Typography,
+  Box,
 } from "@material-ui/core";
 import TextField from "@material-ui/core/TextField";
 import { ESTADOS_MX } from "../../../HardData/estadosMX";
@@ -49,6 +50,9 @@ export default function NewBarrioForm({ onSubmit }) {
   const classes = useStyles();
   return (
     <div className={classes.newBarrioContent}>
+      <Box m={3}>
+        <Typography variant="h4">Nuevo barrio</Typography>
+      </Box>
       <Stepper activeStep={activeStep} alternativeLabel>
         {steps.map((label) => (
           <Step key={label}>

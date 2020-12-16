@@ -12,6 +12,7 @@ import MyTextInput from "../atomos/MyTextInput";
 import { CHIP_LABELS } from "../../HardData/CHIPS_LABELS";
 import MyButton from "../atomos/MyButton";
 import AdvertCard from "../atomos/AdvertCard";
+import MyLink from "../atomos/MyLink";
 
 const useStyles = makeStyles((theme) => ({
   root: {
@@ -92,7 +93,7 @@ export default function VerticalStepper({
                   <Box display="inline-block" justifyContent="center">
                     <Box className={classes.formSeccion}>
                       <Box width="200px">
-                        <em>Donde te pueden encontrar</em>
+                        <em>Si tu barrio no esta, agregalo <MyLink to='nuevo-barrio' >Aquí</MyLink></em>
                         <MyTextInput
                           defaultValue={form.state}
                           onChange={handleChange}
