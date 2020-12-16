@@ -10,8 +10,6 @@ services:
       - "3000:3000"
     networks:
       - my-dev-net
-    environment: 
-      - REACT_APP_ENVIROMENT
     volumes: 
       - './front-negocios:/app'
       - '/app/node_modules'
@@ -26,11 +24,11 @@ services:
       - my-dev-net
     environment:
       - PORT
+      - ENVIROMENT
       - MONGO_NDB
       - JWT_SECRET_TEXT
       - EMAIL_PASSWORD
       - NDB_EMAIL
-      - ENVIROMENT
       - CLOUDINARY_CLOUD_NAME
       - CLOUDINARY_API_KEY
       - CLOUDINARY_API_SECRET

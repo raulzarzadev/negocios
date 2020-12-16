@@ -32,7 +32,7 @@ export default () => (
   </MuiThemeProvider>
 );
 
-console.log("enviroment: ",process.env.REACT_APP_ENVIROMENT)
+console.log("Enviroment: ", process.env.NODE_ENV)
 
 function App() {
   const { loadingUser, data } = useUser();
