@@ -72,6 +72,9 @@ export default function VerticalStepper({
   const [chipData] = useState(CHIP_LABELS);
   return (
     <div className={classes.root}>
+      <Box m={3}>
+        <Typography variant="h4">Nuevo anuncio</Typography>
+      </Box>
       <form
         onSubmit={(e) => {
           e.preventDefault();
@@ -79,7 +82,6 @@ export default function VerticalStepper({
         }}
       >
         <Stepper activeStep={activeStep} orientation="vertical">
-
           {steps.map((label, index) => (
             <Step key={label}>
               <StepLabel>

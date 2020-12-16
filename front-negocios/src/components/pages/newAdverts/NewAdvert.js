@@ -9,10 +9,13 @@ import { isAuthenticated } from "../../../utils/user";
 import NoLoggedView from "../../NoLoggedView";
 import useAxios from "../../myHooks/useAxios";
 import VerticalStepper from "../../moleculas/VerticalStepper";
+import { useUser } from "../../../context/userContext";
 
 export default function NewAdvert(props) {
-  const isLogged = isAuthenticated();
-  const { data,  } = useAxios(url + "/barrios");
+  const {isLogged} = useUser()
+  console.log(isLogged)
+  //const isLogged = isAuthenticated();
+  const { data } = useAxios(url + "/barrios");
   const [token, setToken] = useState(localStorage.getItem("access-token"));
   const [status, setStatus] = useState({
     loading: false,
@@ -52,7 +55,7 @@ export default function NewAdvert(props) {
     if (!!labelsSelected) {
       setForm({ ...form, labels: labelsSelected });
     }
-  // eslint-disable-next-line react-hooks/exhaustive-deps
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [labelsSelected]);
 
   const handleSubmit = async () => {
@@ -135,7 +138,7 @@ export default function NewAdvert(props) {
   const [newImage, setNewImage] = useState(null);
   const setImage = (e) => {
     console.log(e.target.files[0]);
-  
+
     setNewImage({
       src: URL.createObjectURL(e.target.files[0]),
       url: e.target.files[0],
@@ -145,7 +148,7 @@ export default function NewAdvert(props) {
 
   useEffect(() => {
     setForm({ ...form, image: newImage });
-  // eslint-disable-next-line react-hooks/exhaustive-deps
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [newImage]);
 
   console.log(form);

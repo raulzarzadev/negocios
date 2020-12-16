@@ -7,6 +7,7 @@ import { getToken, setToken, removeToken } from "../utils/user";
 const UserContext = React.createContext();
 
 export function UserProvider(props) {
+  const [isLogged, setIsLogged] = useState();
   const [loadingUser, setLoadingUser] = useState(true);
   const [userAdverts, setUserAdverts] = useState([]);
   const [data, setData] = useState(null);
@@ -16,12 +17,14 @@ export function UserProvider(props) {
       const token = getToken();
       if (!token) {
         setLoadingUser(false);
+        setIsLogged(false);
         return;
       }
       try {
         const { id } = decode(token);
         const { data } = await Axios.get(`${url}/users/${id}`);
         setData(data);
+        setIsLogged(data.user);
         setUserAdverts(data.adverts);
         setLoadingUser(false);
       } catch (error) {
@@ -42,11 +45,14 @@ export function UserProvider(props) {
     const { data } = await Axios.post(`${url}/users/signin`, form);
     setData(data);
     setToken(data.token);
+    setIsLogged(data.user);
   }
 
   async function signout() {
     removeToken();
     setData(null);
+    setIsLogged(false)
+
   }
 
   const value = useMemo(() => {
@@ -57,8 +63,9 @@ export function UserProvider(props) {
       signup,
       login,
       signout,
+      isLogged,
     };
-  }, [loadingUser, userAdverts, data]);
+  }, [loadingUser, userAdverts, data, isLogged]);
 
   console.log(loadingUser);
 
