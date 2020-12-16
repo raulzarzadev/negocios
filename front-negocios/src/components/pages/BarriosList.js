@@ -16,7 +16,7 @@ const useStyles = makeStyles((theme) => ({
 export default function BarriosList() {
   const classes = useStyles();
   const { data, loading, error } = useAxios(url + "/barrios");
-  console.log(data, loading, error);
+  console.log("get barrios");
   if (loading) return <Loading />;
   if (error) return <FatalError />;
 

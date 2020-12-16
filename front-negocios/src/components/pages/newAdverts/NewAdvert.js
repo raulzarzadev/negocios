@@ -12,8 +12,8 @@ import VerticalStepper from "../../moleculas/VerticalStepper";
 import { useUser } from "../../../context/userContext";
 
 export default function NewAdvert(props) {
-  const {isLogged} = useUser()
-  console.log(isLogged)
+  const { isLogged } = useUser();
+  console.log("isLogged", !!isLogged);
   //const isLogged = isAuthenticated();
   const { data } = useAxios(url + "/barrios");
   const [token, setToken] = useState(localStorage.getItem("access-token"));
@@ -151,7 +151,6 @@ export default function NewAdvert(props) {
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [newImage]);
 
-  console.log(form);
   return (
     <>
       {isLogged ? (
@@ -170,7 +169,7 @@ export default function NewAdvert(props) {
           barriosList={barriosList}
         />
       ) : (
-        <NoLoggedView text="anuncio" />
+        <NoLoggedView text="Nuevo anuncio" />
       )}
     </>
   );

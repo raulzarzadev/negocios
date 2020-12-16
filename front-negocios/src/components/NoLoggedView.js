@@ -7,8 +7,9 @@ export default function NoLoggedView({ text = "anuncio" }) {
 
         <Box display="flex" justifyContent="center">
             <Box maxWidth="400px" my={4}>
-                <Typography variant="h4">Para crear un {text}, primero entra a tu cuenta</Typography>
-                <Link to="/perfil">Ingresa </Link>
+                <Typography variant="h3">{text}</Typography>
+                <Typography variant="h5">Debes acceder primero</Typography>
+                <Link to="/ingresa">Ingresa </Link>
             </Box>
         </Box>
     )

@@ -36,12 +36,12 @@ export function UserProvider(props) {
   }, []);
 
   async function signup(form) {
-    console.log(form);
+    console.log("signup sent");
     const { data } = await Axios.post(`${url}/users/signup`, form);
     setData(data);
   }
   async function login(form) {
-    console.log(form);
+    console.log("login sent");
     const { data } = await Axios.post(`${url}/users/signin`, form);
     setData(data);
     setToken(data.token);
@@ -51,8 +51,7 @@ export function UserProvider(props) {
   async function signout() {
     removeToken();
     setData(null);
-    setIsLogged(false)
-
+    setIsLogged(false);
   }
 
   const value = useMemo(() => {

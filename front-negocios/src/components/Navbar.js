@@ -46,7 +46,6 @@ const useStyles = makeStyles((theme) => ({
 
 export default function Navbar() {
   const { signout: handleSignOut, data } = useUser();
-  console.log(data);
   const classes = useStyles();
   const [anchorEl, setAnchorEl] = React.useState(null);
   const open = Boolean(anchorEl);

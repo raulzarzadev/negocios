@@ -8,7 +8,6 @@ import { useHistory } from 'react-router-dom';
 export default function SignIn() {
     const { login, data, loadingUser } = useUser()
     const history = useHistory()
-    console.log(data)
     if (data?.ok) {
         history.push('/')
     }

@@ -86,7 +86,7 @@ export default function NewBarrio(props) {
       {isLogged ? (
         <NewBarrioForm onSubmit={onSubmit} />
       ) : (
-        <NoLoggedView text="barrio" />
+        <NoLoggedView text="Nuevo barrio" />
       )}
     </>
   );
