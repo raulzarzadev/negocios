@@ -4,7 +4,7 @@ services:
   nextjs:
     build:
       context: ./front-negocios
-      dockerfile: Dockerfile-prod
+      dockerfile: Dockerfile.prod
     ports:
       - "4000:80"
     networks:
@@ -13,7 +13,7 @@ services:
   api:
     build:
       context: ./back-negocios
-      dockerfile: Dockerfile-prod
+      dockerfile: Dockerfile.prod
     ports:
       - "4001:4001"
     networks:

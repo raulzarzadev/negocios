@@ -4,10 +4,12 @@ RUN mkdir -p /app
 
 WORKDIR /app
 
-COPY . /app
+COPY package.json ./
+
+COPY yarn.lock ./
 
 RUN yarn install
 
-EXPOSE 3000
+COPY . .
 
-CMD "yarn" "run" "start"
+CMD "yarn" "start"

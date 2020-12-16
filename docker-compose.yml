@@ -1,7 +1,8 @@
 version: "3.8"
 
 services:
-  client:
+
+  front:
     build:
       context: ./front-negocios
       dockerfile: Dockerfile
@@ -10,10 +11,12 @@ services:
     networks:
       - my-dev-net
     environment: 
-      - REACT_APP_ENVIROMENT
+      - REACT_APP_ENVIROMENT=dev
     volumes: 
-      - .:/usr/src/app/
-  api:
+      - ./front-negocios:/app
+      - /app/node_modules
+
+  back:
     build:
       context: ./back-negocios
       dockerfile: Dockerfile
@@ -31,6 +34,9 @@ services:
       - CLOUDINARY_CLOUD_NAME
       - CLOUDINARY_API_KEY
       - CLOUDINARY_API_SECRET
+    volumes: 
+      - ./back-negocios:/usr/src/app
+
 networks:
   my-dev-net:
     driver: bridge
