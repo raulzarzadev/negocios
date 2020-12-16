@@ -5,9 +5,9 @@ import Navbar from "./Navbar";
 import Loading from "./atomos/Loading";
 
 const useStyles = makeStyles((theme) => ({
-  mainContainer: {
+  layout: {
     marginTop: 0,
-    minHeight: "30rem",
+    minHeight: "70vh",
     textAlign: "center",
     padding: theme.spacing(0.5),
     [theme.breakpoints.up("sm")]: {
@@ -16,13 +16,13 @@ const useStyles = makeStyles((theme) => ({
   },
 }));
 
-export default function MainContainer({ children, isLoading }) {
+export default function MyLayout({ children, isLoading }) {
   const classes = useStyles();
 
   return (
     <>
       <Navbar />
-      <Container className={classes.mainContainer}>
+      <Container className={classes.layout}>
         {isLoading ? <Loading /> : <>{children}</>}
       </Container>
       <Footer />

@@ -17,11 +17,11 @@ import RecoverPassword from "../components/pages/userPage/RecoverPassword.js";
 import Contact from "../components/pages/userPage/Contact";
 import SignUp from "../components/pages/userPage/SignUp";
 import SignIn from "../components/pages/userPage/SignIn";
-import MainContainer from "../components/MainContainer";
 import { UserProvider, useUser } from "../context/userContext";
 import VisulaGuide from "../components/visualGuide/VisulaGuide";
 import { MuiThemeProvider } from "@material-ui/core";
 import newTheme from "../components/theme/theme";
+import MyLayout from "../components/MyLayout";
 
 // eslint-disable-next-line import/no-anonymous-default-export
 export default () => (
@@ -39,7 +39,7 @@ function App() {
   console.log(data);
   return (
     <Router>
-      <MainContainer isLoading={loadingUser}>
+      <MyLayout isLoading={loadingUser}>
         <Switch>
           {/* *** user */}
           <Route exact path="/perfil" component={Profile} />
@@ -64,7 +64,7 @@ function App() {
           <Route exact path="/como-funciona" component={HowItWorks} />
           <Route exact path="/:shortName" component={AdvertsList} />
         </Switch>
-      </MainContainer>
+      </MyLayout>
     </Router>
   );
 }
