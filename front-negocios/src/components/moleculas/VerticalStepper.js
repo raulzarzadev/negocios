@@ -93,7 +93,12 @@ export default function VerticalStepper({
                   <Box display="inline-block" justifyContent="center">
                     <Box className={classes.formSeccion}>
                       <Box width="200px">
-                        <em>Si tu barrio no esta, agregalo <MyLink to='nuevo-barrio' >Aquí</MyLink></em>
+                        <em>
+                          ¿Tu barrio no está?
+                          <MyLink to="nuevo-barrio" decorated>
+                            agregalo
+                          </MyLink>
+                        </em>
                         <MyTextInput
                           defaultValue={form.state}
                           onChange={handleChange}

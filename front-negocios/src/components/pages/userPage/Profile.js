@@ -13,7 +13,7 @@ const useStyles = makeStyles((theme) => ({
 
 export default function NewUser(props) {
   const classes = useStyles();
-  const { data, isLogged } = useUser();
+  const {  isLogged } = useUser();
   const history = useHistory();
   console.log('is logged',!!isLogged);
 

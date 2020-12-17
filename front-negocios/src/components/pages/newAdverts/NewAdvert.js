@@ -5,7 +5,6 @@ import Alert from "@material-ui/lab/Alert";
 import Axios from "axios";
 
 import url from "../../../url/url";
-import { isAuthenticated } from "../../../utils/user";
 import NoLoggedView from "../../NoLoggedView";
 import useAxios from "../../myHooks/useAxios";
 import VerticalStepper from "../../moleculas/VerticalStepper";

@@ -35,7 +35,7 @@ export default () => (
 console.log("Enviroment: ", process.env.NODE_ENV)
 
 function App() {
-  const { loadingUser, data, isLogged  } = useUser();
+  const { loadingUser,  isLogged  } = useUser();
   console.log(isLogged?'isLogged':"notLogged");
   return (
     <Router>

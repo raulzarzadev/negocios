@@ -6,7 +6,6 @@ import NewBarrioForm from "./NewBarrioForm";
 
 import url from "../../../url/url";
 import Axios from "axios";
-import { makeStyles } from "@material-ui/core";
 import NoLoggedView from "../../NoLoggedView";
 import { useUser } from "../../../context/userContext";
 
