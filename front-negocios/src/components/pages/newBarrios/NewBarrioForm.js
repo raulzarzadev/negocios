@@ -86,6 +86,7 @@ export default function NewBarrioForm({ onSubmit }) {
                     <Grid item xs={12} className={classes.input}>
                       <FormControl>
                         <TextField
+                          value={form.name}
                           size="small"
                           name="name"
                           onChange={handleChange}
@@ -100,6 +101,7 @@ export default function NewBarrioForm({ onSubmit }) {
                     <Grid item xs={12} className={classes.input}>
                       <FormControl>
                         <TextField
+                          value={form.shortName}
                           size="small"
                           name="shortName"
                           label="Nombre corto"

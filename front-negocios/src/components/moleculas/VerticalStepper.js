@@ -13,6 +13,7 @@ import { CHIP_LABELS } from "../../HardData/CHIPS_LABELS";
 import MyButton from "../atomos/MyButton";
 import AdvertCard from "../atomos/AdvertCard";
 import MyLink from "../atomos/MyLink";
+import MyModal from "../atomos/MyModal";
 
 const useStyles = makeStyles((theme) => ({
   root: {
@@ -54,11 +55,16 @@ export default function VerticalStepper({
   onSubmit,
   stateList,
   setImage,
+  submitImage,
 }) {
   const classes = useStyles();
   const [activeStep, setActiveStep] = React.useState(0);
   const steps = getSteps();
 
+  const [openModal, setOpenModal] = useState(false);
+  const handleOpenModal = () => {
+    setOpenModal(!openModal);
+  };
   const handleNext = () => {
     setActiveStep((prevActiveStep) => prevActiveStep + 1);
   };
@@ -71,6 +77,7 @@ export default function VerticalStepper({
     setActiveStep(0);
   };
   const [chipData] = useState(CHIP_LABELS);
+
   return (
     <div className={classes.root}>
       <Box m={3}>
@@ -81,6 +88,7 @@ export default function VerticalStepper({
           e.preventDefault();
           onSubmit();
         }}
+        
       >
         <Stepper activeStep={activeStep} orientation="vertical">
           {steps.map((label, index) => (
@@ -290,9 +298,7 @@ export default function VerticalStepper({
                 />
               </Box>
               <Box textAlign="center" m={1}>
-                <Typography>
-                  <em>Sube una imagen</em>
-                </Typography>
+                <em>Sube una imagen</em>
                 <input type="file" name="image" onChange={setImage} />
               </Box>
               <AdvertCard advert={form} />
@@ -326,6 +332,7 @@ export default function VerticalStepper({
           </Paper>
         )}
       </form>
+     
     </div>
   );
 }

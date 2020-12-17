@@ -1,6 +1,8 @@
 const Advert = require("../models/Advert");
 const User = require("../models/User");
 
+const multer = require("multer");
+const path = require("path");
 const cloudinary = require("cloudinary");
 const fs = require("fs-extra");
 
@@ -9,6 +11,17 @@ cloudinary.config({
   api_key: process.env.CLOUDINARY_API_KEY,
   api_secret: process.env.CLOUDINARY_API_SECRET,
 });
+
+const storage = multer.diskStorage({
+  destination: path.join(__dirname, "public/uploads"),
+  filename: (req, file, cb) => {
+    cb(null, new Date().getTime() + path.extname(file.originalname));
+  },
+});
+const upload = multer({
+  storage: storage,
+  limits: { fileSize: 10000000000 },
+}).single("image");
 
 const advertsCtrl = {};
 
@@ -56,8 +69,20 @@ advertsCtrl.createAdvert = async (req, res) => {
 
   //descontar al credito de owner
   console.log("req files", req.file, req.files);
-  const user = await User.findById(req.token.id, { credit: 1 });
 
+
+
+  /* multer */
+  upload(req, res, (err) => {
+    console.log("Request ---", req.body);
+    console.log("Request file ---", req.file); //Here you get file.
+    console.log(err)
+    /*Now do where ever you want to do*/
+    //if (!err) return res.send(200).end();
+  });
+  
+
+  const user = await User.findById(req.token.id, { credit: 1 });
   console.log("image", image);
   await User.findByIdAndUpdate(req.token.id, { $inc: { credit: -price } });
   const result = await cloudinary.v2.uploader.upload(
@@ -66,6 +91,7 @@ advertsCtrl.createAdvert = async (req, res) => {
       console.log(result, error);
     }
   );
+
   console.log("res", result);
 
   // si todo ok, resta credito

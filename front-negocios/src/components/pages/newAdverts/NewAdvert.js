@@ -58,7 +58,7 @@ export default function NewAdvert(props) {
   }, [labelsSelected]);
 
   const handleSubmit = async () => {
-    console.log("subbmited");
+    console.log("submiting", form);
     const body = {
       ...form,
       image: newImage,
@@ -83,7 +83,7 @@ export default function NewAdvert(props) {
         },
         data: body,
       };
-      console.log(body);
+      console.log("body", body);
 
       let res = await Axios(`${url}/adverts`, config);
       console.log("peticion recibida", res);
@@ -135,14 +135,15 @@ export default function NewAdvert(props) {
   }, [data, form?.state]);
 
   const [newImage, setNewImage] = useState(null);
+  console.log("newImage", newImage);
+
   const setImage = (e) => {
     console.log(e.target.files[0]);
-
-    setNewImage({
+   setNewImage({
       src: URL.createObjectURL(e.target.files[0]),
       url: e.target.files[0],
     });
-    setForm({ ...form, image: newImage });
+    setForm({ ...form, image: newImage });  
   };
 
   useEffect(() => {

@@ -13,18 +13,17 @@ const useStyles = makeStyles((theme) => ({
 
 export default function NewUser(props) {
   const classes = useStyles();
-  const {  isLogged } = useUser();
+  const { isLogged } = useUser();
   const history = useHistory();
-  console.log('is logged',!!isLogged);
-
+  console.log("is logged", !!isLogged);
+  console.log(history);
   return (
     <>
-    {isLogged ?
-    <div className={classes.profileContent}>
-      is logged
-    </div>
-    : <NoLoggedView text="Perfil"/>
-      }
+      {isLogged ? (
+        <div className={classes.profileContent}>is logged</div>
+      ) : (
+        <NoLoggedView text="Perfil" />
+      )}
     </>
   );
 }
