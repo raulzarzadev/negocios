@@ -1,7 +1,6 @@
 version: "3.8"
 
 services:
-
   front:
     restart: always
     build:
@@ -11,7 +10,6 @@ services:
       - "4000:80"
     networks:
       - my-net
-
   back:
     restart: always
     build:
@@ -28,7 +26,7 @@ services:
       - EMAIL_PASSWORD
       - NDB_EMAIL
       - ENVIROMENT
-   uploadimage:
+  uploadimage:
     image: raulzarza/uploadimage:latest
     ports:
       - 4042:4042
