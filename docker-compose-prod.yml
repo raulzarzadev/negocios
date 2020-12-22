@@ -28,9 +28,19 @@ services:
       - EMAIL_PASSWORD
       - NDB_EMAIL
       - ENVIROMENT
+   uploadimage:
+    image: raulzarza/uploadimage:latest
+    ports:
+      - 4042:4042
+    networks:
+      - my-net
+    environment:
+      - ENVIROMENT
+      - MONGODB_URI
       - CLOUDINARY_CLOUD_NAME
       - CLOUDINARY_API_KEY
       - CLOUDINARY_API_SECRET
+      - UPLOAD_IMAGE_PORT
       
 networks:
   my-net:
