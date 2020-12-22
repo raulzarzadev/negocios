@@ -31,18 +31,23 @@ import { CHIP_LABELS } from "../../HardData/CHIPS_LABELS";
 const useStyles = makeStyles((theme) => ({
   root: {
     width: "100%",
+
+    /*  width: "100%",
     [theme.breakpoints.up("xs")]: {
-      width: 140,
+      width: ,
     },
     [theme.breakpoints.up("sm")]: {
       width: 240,
-    },
+    }, */
   },
   labelsBox: {
-    display: "flex",
-    justifyContent: "space-between",
-    alignItems: "center",
-    paddingLeft: theme.spacing(2),
+    [theme.breakpoints.up("xs")]: {
+      display: "flex",
+      flexDirection: "row-reverse",
+      alignItems: "baseline",
+      justifyContent: "space-between",
+      paddingLeft: "16px",
+    },
   },
   contactsBox: {
     display: "flex",
@@ -55,12 +60,14 @@ const useStyles = makeStyles((theme) => ({
       fontSize: 20,
     },
   },
+  actionsAdvert: { display: "flex", justifyContent: "flex-end" },
+  cardMedia: { height: 70, objectFit: "contain" },
   cardContent: {
     padding: theme.spacing(0.5),
   },
 }));
 
-export default function AdvertCart({ advert }) {
+export default function AdvertCart({ advert, admin, handleDelete }) {
   const {
     title,
     description,
@@ -79,6 +86,7 @@ export default function AdvertCart({ advert }) {
     labels = [],
     backgroundColor,
     location,
+    _id,
   } = advert;
 
   const classes = useStyles();
@@ -99,6 +107,43 @@ export default function AdvertCart({ advert }) {
   return (
     <Card className={classes.root}>
       <Box className={classes.labelsBox} style={styles || { backgroundColor }}>
+        <Box className={classes.actionsAdvert}>
+          <Tooltip title="Guardar">
+            <IconButton>
+              <BookmarkBorderIcon />
+            </IconButton>
+          </Tooltip>
+          <Tooltip title="Opciones">
+            <IconButton
+              aria-controls="simple-menu"
+              aria-haspopup="true"
+              onClick={handleClickMenu}
+            >
+              <MoreVertIcon />
+            </IconButton>
+          </Tooltip>
+          {admin && (
+            <Menu
+              id="simple-menu"
+              anchorEl={anchorEl}
+              keepMounted
+              open={Boolean(anchorEl)}
+              onClose={handleClose}
+            >
+              <MenuItem onClick={handleClose}>Ver Menú</MenuItem>
+              <MenuItem onClick={handleClose}>Guardar</MenuItem>
+              <MenuItem
+                onClick={() => {
+                  handleDelete(_id);
+                  handleClose();
+                }}
+              >
+                Eliminar
+              </MenuItem>
+              <MenuItem onClick={handleClose}>Editar</MenuItem>
+            </Menu>
+          )}
+        </Box>
         <Box>
           {delivery && (
             <Tooltip
@@ -122,40 +167,12 @@ export default function AdvertCart({ advert }) {
             </Tooltip>
           ))}
         </Box>
-        <Box>
-          <Tooltip title="Guardar">
-            <IconButton>
-              <BookmarkBorderIcon />
-            </IconButton>
-          </Tooltip>
-          <Tooltip title="Opciones">
-            <IconButton
-              aria-controls="simple-menu"
-              aria-haspopup="true"
-              onClick={handleClickMenu}
-            >
-              <MoreVertIcon />
-            </IconButton>
-          </Tooltip>
-          <Menu
-            id="simple-menu"
-            anchorEl={anchorEl}
-            keepMounted
-            open={Boolean(anchorEl)}
-            onClose={handleClose}
-          >
-            <MenuItem onClick={handleClose}>Ver Menú</MenuItem>
-            <MenuItem onClick={handleClose}>Guardar</MenuItem>
-            <MenuItem onClick={handleClose}>Mas detalles</MenuItem>
-            <MenuItem onClick={handleClose}>Editar</MenuItem>
-          </Menu>
-        </Box>
       </Box>
       <CardActionArea onClick={handleOpenModal}>
         <CardMedia
           component="img"
           alt={title}
-          height="120"
+          className={classes.cardMedia}
           src={image?.src || defaultImage}
           title={title}
         />

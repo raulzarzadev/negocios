@@ -1,29 +1,11 @@
 import React from "react";
-
-import { makeStyles } from "@material-ui/core";
 import { useUser } from "../../../context/userContext";
-import { useHistory } from "react-router-dom";
 import NoLoggedView from "../../NoLoggedView";
-
-const useStyles = makeStyles((theme) => ({
-  profileContent: {
-    margin: theme.spacing(4, 0),
-  },
-}));
+import UserView from "./UserView";
 
 export default function NewUser(props) {
-  const classes = useStyles();
-  const { isLogged } = useUser();
-  const history = useHistory();
+  const { isLogged, data } = useUser();
   console.log("is logged", !!isLogged);
-  console.log(history);
-  return (
-    <>
-      {isLogged ? (
-        <div className={classes.profileContent}>is logged</div>
-      ) : (
-        <NoLoggedView text="Perfil" />
-      )}
-    </>
-  );
+  console.log(data);
+  return <>{isLogged ? <UserView user={data.user}  /> : <NoLoggedView text="Perfil" />}</>;
 }

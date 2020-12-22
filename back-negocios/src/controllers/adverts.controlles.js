@@ -1,28 +1,6 @@
 const Advert = require("../models/Advert");
 const User = require("../models/User");
 
-const multer = require("multer");
-const path = require("path");
-const cloudinary = require("cloudinary");
-const fs = require("fs-extra");
-
-cloudinary.config({
-  cloud_name: process.env.CLOUDINARY_CLOUD_NAME,
-  api_key: process.env.CLOUDINARY_API_KEY,
-  api_secret: process.env.CLOUDINARY_API_SECRET,
-});
-
-const storage = multer.diskStorage({
-  destination: path.join(__dirname, "public/uploads"),
-  filename: (req, file, cb) => {
-    cb(null, new Date().getTime() + path.extname(file.originalname));
-  },
-});
-const upload = multer({
-  storage: storage,
-  limits: { fileSize: 10000000000 },
-}).single("image");
-
 const advertsCtrl = {};
 
 advertsCtrl.getAdverts = async (req, res) => {
@@ -52,10 +30,8 @@ advertsCtrl.createAdvert = async (req, res) => {
     instaUrl,
     siteUrl,
     location,
-    image,
-    imgUrl,
-    imgUrlIzq,
     labels,
+    image,
     classification,
     businessMail,
     styles,
@@ -67,32 +43,8 @@ advertsCtrl.createAdvert = async (req, res) => {
     schedule,
   } = req.body;
 
-  //descontar al credito de owner
-  console.log("req files", req.file, req.files);
-
-
-
-  /* multer */
-  upload(req, res, (err) => {
-    console.log("Request ---", req.body);
-    console.log("Request file ---", req.file); //Here you get file.
-    console.log(err)
-    /*Now do where ever you want to do*/
-    //if (!err) return res.send(200).end();
-  });
-  
-
   const user = await User.findById(req.token.id, { credit: 1 });
-  console.log("image", image);
   await User.findByIdAndUpdate(req.token.id, { $inc: { credit: -price } });
-  const result = await cloudinary.v2.uploader.upload(
-    image.src,
-    function (error, result) {
-      console.log(result, error);
-    }
-  );
-
-  console.log("res", result);
 
   // si todo ok, resta credito
   if (price > user.credit)
@@ -105,10 +57,7 @@ advertsCtrl.createAdvert = async (req, res) => {
     postalCode,
     description,
     tel,
-    image: {
-      url: result.url,
-      src: result.public_id,
-    },
+    image,
     whatsApp,
     faceUrl,
     instaUrl,
@@ -116,8 +65,6 @@ advertsCtrl.createAdvert = async (req, res) => {
     businessMail,
     location,
     postalCode,
-    imgUrl,
-    imgUrlIzq,
     labels,
     styles,
     classification,
@@ -125,7 +72,6 @@ advertsCtrl.createAdvert = async (req, res) => {
     delivery,
   });
   await newAdvert.save();
-  await fs.unlink(req.file.path); // elimina fichero creado para imagen
   res.json({ ok: true, message: "Anuncio creado con éxito", newAdvert });
 };
 
@@ -135,8 +81,8 @@ advertsCtrl.deleteAdvert = async (req, res) => {
   const { photo_id } = req.params;
     const photo = await Photo.findByIdAndDelete(photo_id);
     const result = await cloudinary.v2.uploader.destroy(photo.public_id); */
-  await advert.findByIdAndRemove(req.params.id);
-  res.json({ message: "Anuncio eliminada" });
+  await Advert.findByIdAndRemove(req.params.id);
+  res.json({ message: "Advert deleted", ok: true });
 };
 
 advertsCtrl.updateAdvert = async (req, res) => {

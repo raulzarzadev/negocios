@@ -25,11 +25,10 @@ export default function AdvertsList(props) {
       {data.adverts.length > 0 ? (
         <Grid
           container
-          spacing={2}
-          style={{ justifyContent: "center", margin: 0, width: "100%" }}
+          spacing={1}
         >
           {data.adverts.map((advert) => (
-            <Grid item key={advert._id}>
+            <Grid item xs={6} sm={4} md={3} key={advert._id}>
               <AdvertCard advert={advert} />
             </Grid>
           ))}

@@ -54,7 +54,7 @@ export default function CardPaper(props) {
     imgUrl,
     imgUrlDer,
     imgUrlIzq,
-    backgroundColor,
+    backgroundColor = "#fff",
     styles,
     delibery,
   } = props;

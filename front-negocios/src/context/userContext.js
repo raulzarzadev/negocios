@@ -66,7 +66,7 @@ export function UserProvider(props) {
     };
   }, [loadingUser, userAdverts, data, isLogged]);
 
-  console.log(loadingUser);
+  //console.log(loadingUser);
 
   return <UserContext.Provider value={value} {...props} />;
 }

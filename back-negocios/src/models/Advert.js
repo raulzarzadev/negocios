@@ -36,7 +36,7 @@ const advertSquema = new Schema(
     labels: Array,
     // ubicacion
     middlePoint: Boolean,
-    location: Boolean,
+    location: String,
     address: String,
 
     advertContent: {

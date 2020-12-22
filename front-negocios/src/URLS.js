@@ -1,0 +1,1 @@
+export const UPLOAD_IMAGE_SERVICE="http://localhost:4042/upload"

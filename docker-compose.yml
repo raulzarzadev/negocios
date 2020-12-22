@@ -1,7 +1,6 @@
 version: "3.8"
 
 services:
-
   front:
     build:
       context: ./front-negocios
@@ -10,9 +9,9 @@ services:
       - "3000:3000"
     networks:
       - my-dev-net
-    volumes: 
-      - './front-negocios:/app'
-      - '/app/node_modules'
+    volumes:
+      - "./front-negocios:/app"
+      - "/app/node_modules"
 
   back:
     build:
@@ -32,8 +31,22 @@ services:
       - CLOUDINARY_CLOUD_NAME
       - CLOUDINARY_API_KEY
       - CLOUDINARY_API_SECRET
-    volumes: 
+    volumes:
       - ./back-negocios:/usr/src/app
+
+  uploadimage:
+    image: raulzarza/uploadimage:latest
+    ports:
+      - 4042:4042
+    networks:
+      - my-dev-net
+    environment:
+      - ENVIROMENT
+      - MONGODB_URI
+      - CLOUDINARY_CLOUD_NAME
+      - CLOUDINARY_API_KEY
+      - CLOUDINARY_API_SECRET
+      - UPLOAD_IMAGE_PORT
 
 networks:
   my-dev-net:

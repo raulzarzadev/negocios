@@ -3,16 +3,16 @@ import React, { useEffect, useState } from "react";
 import Alert from "@material-ui/lab/Alert";
 
 import Axios from "axios";
-
 import url from "../../../url/url";
 import NoLoggedView from "../../NoLoggedView";
 import useAxios from "../../myHooks/useAxios";
 import VerticalStepper from "../../moleculas/VerticalStepper";
 import { useUser } from "../../../context/userContext";
+import { uploadImage } from "../../../utils/uploadImage";
 
 export default function NewAdvert(props) {
   const { isLogged } = useUser();
-  console.log("isLogged", !!isLogged);
+  //console.log("isLogged", !!isLogged);
   //const isLogged = isAuthenticated();
   const { data } = useAxios(url + "/barrios");
   const [token, setToken] = useState(localStorage.getItem("access-token"));
@@ -58,22 +58,21 @@ export default function NewAdvert(props) {
   }, [labelsSelected]);
 
   const handleSubmit = async () => {
-    console.log("submiting", form);
-    const body = {
-      ...form,
-      image: newImage,
-      labels: labelsSelected,
-      styles: { backgroundColor: form.backgroundColor }, // no estoy muy seguro de que esto se guarde
-    };
-    const barrioDetails = data?.barrios?.filter(
-      (barrio) => barrio.name === form.barrio
-    );
-    body.barrio = barrioDetails[0];
-    setStatus({
-      ...status,
-      loading: true,
-    });
     try {
+      setStatus({ ...status, loading: true });
+      const uploadedImage = await uploadImage(form.image?.url);
+
+      const body = {
+        ...form,
+        image: { src: uploadedImage.data.image?.imageURL },
+        labels: labelsSelected,
+        styles: { backgroundColor: form.backgroundColor }, // no estoy muy seguro de que esto se guarde
+      };
+      const barrioDetails = data?.barrios?.filter(
+        (barrio) => barrio.name === form.barrio
+      );
+      body.barrio = barrioDetails[0];
+
       let config = {
         method: "POST",
         headers: {
@@ -83,20 +82,20 @@ export default function NewAdvert(props) {
         },
         data: body,
       };
-      console.log("body", body);
+      //console.log("body", body);
 
       let res = await Axios(`${url}/adverts`, config);
-      console.log("peticion recibida", res);
+      //console.log("peticion recibida", res);
 
       if (!res.data.ok) {
-        console.log("peticion rechazada", res);
+        // console.log("peticion rechazada", res);
         setStatus({
           status,
           loading: false,
           messageError: <Alert severity="error">{res.data.message} </Alert>,
         });
       } else {
-        console.log("peticion aceptada recuperando token", res.data);
+        //console.log("peticion aceptada recuperando token", res.data);
 
         setToken(res);
         setStatus({
@@ -117,7 +116,6 @@ export default function NewAdvert(props) {
   };
 
   const [barriosList, setBarriosList] = useState([]);
-
   const stateList = data?.barrios?.map((barrio) => barrio.state);
   const stateListCleaned = [...new Set(stateList)];
 
@@ -135,15 +133,13 @@ export default function NewAdvert(props) {
   }, [data, form?.state]);
 
   const [newImage, setNewImage] = useState(null);
-  console.log("newImage", newImage);
 
   const setImage = (e) => {
-    console.log(e.target.files[0]);
-   setNewImage({
+    setNewImage({
       src: URL.createObjectURL(e.target.files[0]),
       url: e.target.files[0],
     });
-    setForm({ ...form, image: newImage });  
+    setForm({ ...form, image: newImage });
   };
 
   useEffect(() => {
@@ -155,6 +151,7 @@ export default function NewAdvert(props) {
     <>
       {isLogged ? (
         <VerticalStepper
+          submiting={status.loading}
           data={data}
           setImage={setImage}
           handleDelete={handleDelete}
