@@ -13,7 +13,6 @@ import { CHIP_LABELS } from "../../HardData/CHIPS_LABELS";
 import MyButton from "../atomos/MyButton";
 import AdvertCard from "../atomos/AdvertCard";
 import MyLink from "../atomos/MyLink";
-import ImageUploader from 'react-images-upload';
 
 const useStyles = makeStyles((theme) => ({
   root: {
