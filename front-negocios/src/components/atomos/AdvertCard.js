@@ -30,6 +30,7 @@ import { CHIP_LABELS } from "../../HardData/CHIPS_LABELS";
 
 const useStyles = makeStyles((theme) => ({
   root: {
+    minWidth: 150,
     width: "100%",
 
     /*  width: "100%",
@@ -61,7 +62,7 @@ const useStyles = makeStyles((theme) => ({
     },
   },
   actionsAdvert: { display: "flex", justifyContent: "flex-end" },
-  cardMedia: { height: 70, objectFit: "contain" },
+  cardMedia: { height: 70, objectFit: "cover" },
   cardContent: {
     padding: theme.spacing(0.5),
   },
@@ -108,40 +109,43 @@ export default function AdvertCart({ advert, admin, handleDelete }) {
     <Card className={classes.root}>
       <Box className={classes.labelsBox} style={styles || { backgroundColor }}>
         <Box className={classes.actionsAdvert}>
-          <Tooltip title="Guardar">
-            <IconButton>
-              <BookmarkBorderIcon />
-            </IconButton>
-          </Tooltip>
-          <Tooltip title="Opciones">
-            <IconButton
-              aria-controls="simple-menu"
-              aria-haspopup="true"
-              onClick={handleClickMenu}
-            >
-              <MoreVertIcon />
-            </IconButton>
-          </Tooltip>
-          {admin && (
-            <Menu
-              id="simple-menu"
-              anchorEl={anchorEl}
-              keepMounted
-              open={Boolean(anchorEl)}
-              onClose={handleClose}
-            >
-              <MenuItem onClick={handleClose}>Ver Menú</MenuItem>
-              <MenuItem onClick={handleClose}>Guardar</MenuItem>
-              <MenuItem
-                onClick={() => {
-                  handleDelete(_id);
-                  handleClose();
-                }}
+          {admin ? (
+            <>
+              <Tooltip title="Opciones">
+                <IconButton
+                  aria-controls="simple-menu"
+                  aria-haspopup="true"
+                  onClick={handleClickMenu}
+                >
+                  <MoreVertIcon />
+                </IconButton>
+              </Tooltip>
+              <Menu
+                id="simple-menu"
+                anchorEl={anchorEl}
+                keepMounted
+                open={Boolean(anchorEl)}
+                onClose={handleClose}
               >
-                Eliminar
-              </MenuItem>
-              <MenuItem onClick={handleClose}>Editar</MenuItem>
-            </Menu>
+                <MenuItem onClick={handleClose}>Ver Menú</MenuItem>
+                <MenuItem onClick={handleClose}>Guardar</MenuItem>
+                <MenuItem
+                  onClick={() => {
+                    handleDelete(_id);
+                    handleClose();
+                  }}
+                >
+                  Eliminar
+                </MenuItem>
+                <MenuItem onClick={handleClose}>Editar</MenuItem>
+              </Menu>
+            </>
+          ) : (
+            <Tooltip title="Guardar">
+              <IconButton>
+                <BookmarkBorderIcon />
+              </IconButton>
+            </Tooltip>
           )}
         </Box>
         <Box>
