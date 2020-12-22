@@ -26,7 +26,7 @@ const useStyles = makeStyles((theme) => ({
     marginBottom: theme.spacing(2),
   },
   resetContainer: {
-    padding: theme.spacing(3),
+    //padding: theme.spacing(3),
   },
   formSeccion: {
     display: "flex",
@@ -258,7 +258,7 @@ export default function VerticalStepper({
                       onClick={handleBack}
                       className={classes.button}
                     >
-                      Regresa
+                      Atras
                     </Button>
                     <Button
                       variant="contained"
@@ -266,9 +266,7 @@ export default function VerticalStepper({
                       onClick={handleNext}
                       className={classes.button}
                     >
-                      {activeStep === steps.length - 1
-                        ? "Terminar"
-                        : "Siguiente"}
+                      Siguiente
                     </Button>
                   </div>
                 </div>
@@ -278,24 +276,20 @@ export default function VerticalStepper({
         </Stepper>
         {activeStep === steps.length && (
           <Paper square elevation={0} className={classes.resetContainer}>
-            <Box display="inline-block" justifyContent="center">
-              <Typography> ¡Listo! ¡Así quedaria tu anucnio!</Typography>
-
-              <Box display="flex">
-                <Typography>
-                  <em>Selecciona el color de fondo</em>
-                </Typography>
+            <Box>
+              <Box>
+                <Typography variant="h5">Selecciona un color:</Typography>
                 <input
                   type="color"
                   name="backgroundColor"
                   onChange={handleChange}
                 />
               </Box>
-              <Box textAlign="center" m={1}>
-                <em>Sube una imagen</em>
+              <Box>
+                <Typography variant="h5">Sube una imagen:</Typography>
                 <input type="file" name="image" onChange={setImage} />
               </Box>
-              <Box maxWidth={250} margin="0 auto">
+              <Box maxWidth={220} margin="0 auto">
                 <AdvertCard advert={form} />
               </Box>
             </Box>

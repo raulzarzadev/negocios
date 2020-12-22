@@ -73,9 +73,6 @@ export default function AdvertCart({ advert, admin, handleDelete }) {
     title,
     description,
     image,
-    /* imgUrl,
-    imgUrlDer,
-    imgUrlIzq, */
     styles,
     delivery,
     googleLocation,
