@@ -40,7 +40,7 @@ function getSteps() {
     "Ubicaca tu anuncio",
     "Clasifica tu anuncio",
     "Detalles de tu anuncio",
-    "Contacto",
+    "Contactos",
   ];
 }
 

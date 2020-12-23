@@ -3,64 +3,72 @@ import MyButton from "../atomos/MyButton";
 import AddCircleOutlineIcon from "@material-ui/icons/AddCircleOutline";
 import MySelectInput from "../atomos/MySelectInput";
 import { CONTACT_TYPES } from "../../HardData/CONTACT_TYPES";
-import { Grid, Typography } from "@material-ui/core";
+import { Box, Grid, Typography } from "@material-ui/core";
 import MyTextInput from "../atomos/MyTextInput";
 
-const CONTACTS = [
-  {
-    type: "ws",
-    value: "+52556973456",
-  },
-];
-
-console.log(CONTACT_TYPES);
 export default function ContactInputs() {
   const [contacts, setContacts] = useState([]);
-  const [contactInput, setContactInput] = useState([{}]);
-  const [contactType, setContactType] = useState("");
-  const [contactValue, setContactValue] = useState("");
+  const [newContact, setNewContact] = useState({});
+  console.log(newContact);
+  console.log(contacts);
 
-  
-  const handleContactType = (e) => {
-    setContactType(e.target.value);
+  const addContact = () => {
+    setContacts([...contacts, newContact]);
   };
-  const handleContactValue = (e) => {
-    setContactValue(e.target.value);
-    console.log(e.target.value);
+  const handleDeleteContact = (contact) => {
+    const arr = contacts.filter((item) => item !== contact);
+    setContacts(arr);
   };
-
-  console.log(contactType, contactValue);
+  const handleChange = (e) => {
+    setNewContact({ ...newContact, [e.target.name]: e.target.value });
+  };
 
   return (
     <div>
       {contacts.map((contact) => (
         <>
-          <em>Contactos guardados:</em>
           <Grid container justify="center">
-            <Grid item>
-              <Typography variant="h6">{contact.label}: </Typography>
+            <Grid item xs={3}>
+              <Typography variant="h6">{contact.contactType}: </Typography>
             </Grid>
-            <Grid item style={{ alignSelf: "center", marginLeft: 12 }}>
-              <Typography variant="p">{contact.value}</Typography>
+            <Grid item style={{ alignSelf: "center", marginLeft: 12 }} xs={6}>
+              <Typography variant="p">{contact.contactValue}</Typography>
+            </Grid>
+            <Grid xs={2}>
+              <Box display="flex" alignContent="center" justifyContent="center">
+                <div
+                  style={{
+                    alignSelf: "center",
+                    margin: "4px",
+                    height: 15,
+                    width: 15,
+                    display: "flex",
+                    alignItems: "center",
+                    justifyContent: "center",
+                    border: "1px solid",
+                    borderRadius: "50px",
+                  }}
+                  onClick={() => handleDeleteContact(contact)}
+                >
+                  X
+                </div>
+              </Box>
             </Grid>
           </Grid>
         </>
       ))}
 
-      {contactInput.map((contact, i) => (
-        <InputContact
-          contactType={contactType}
-          contactValue={contactValue}
-          handleContactType={handleContactType}
-          handleContactValue={handleContactValue}
-          index={i}
-        />
-      ))}
+      <InputContact
+        contactType={newContact.contactType}
+        contactValue={newContact.contactValue}
+        handleChange={handleChange}
+      />
 
       <MyButton
-        onClick={() =>
-          setContactInput([...contactInput, { type: contactType }])
-        }
+        onClick={() => {
+          addContact();
+          setNewContact({});
+        }}
       >
         Agregar contacto <AddCircleOutlineIcon />
       </MyButton>
@@ -68,30 +76,20 @@ export default function ContactInputs() {
   );
 }
 
-const InputContact = ({
-  handleContactInput,
-  handleContactValue,
-  contactType,
-  contactValue,
-  index,
-}) => (
+const InputContact = ({ contactType, contactValue, handleChange }) => (
   <>
     <Grid container>
       <Grid item xs={4} style={{ padding: "4px" }}>
         <MySelectInput
-          name={`contactType-${index}`}
-          value={contactType}
+          name={`contactType`}
+          value={contactType || ""}
           placeholder="Contacto vía"
           options={CONTACT_TYPES}
-          onChange={handleContactValue}
+          onChange={handleChange}
         />
       </Grid>
       <Grid item xs={8} style={{ padding: "4px" }}>
-        <MyTextInput
-          defaultValue={contactValue}
-          name={`contactValue-${index}`}
-          onChange={handleContactInput}
-        />
+        <MyTextInput name={`contactValue`} onChange={handleChange} />
       </Grid>
     </Grid>
   </>
