@@ -10,7 +10,7 @@ export default function MySelectInput({
   value = "",
   name,
   onChange,
-  displayEmpty,
+  displayEmpty = true,
   className,
   inputProps,
   options = [],
@@ -30,9 +30,10 @@ export default function MySelectInput({
         displayEmpty={displayEmpty}
         className={className}
         inputProps={inputProps}
+        placeholder={placeholder}
       >
         <MenuItem value="" disabled>
-          <em>{placeholder}</em>
+          {placeholder}
         </MenuItem>
         {options.map((option) => (
           <MenuItem value={option.value}>{option.label}</MenuItem>

@@ -6,6 +6,7 @@ export default function MyTextInput({
   rows,
   label,
   defaultValue,
+  value,
   id,
   name,
   helperText,
@@ -22,9 +23,9 @@ export default function MyTextInput({
             {label}:
           </Typography>
         )}
-        
       </Box>
       <TextField
+        placeholder={placeholder}
         select={select}
         onChange={onChange}
         fullWidth
@@ -32,6 +33,7 @@ export default function MyTextInput({
         variant="outlined"
         multiline={multiline}
         rows={rows}
+        value={value}
         //label={label}
         defaultValue={defaultValue}
         id={id}

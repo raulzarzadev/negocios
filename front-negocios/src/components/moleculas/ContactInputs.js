@@ -1,16 +1,31 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import MyButton from "../atomos/MyButton";
 import AddCircleOutlineIcon from "@material-ui/icons/AddCircleOutline";
 import MySelectInput from "../atomos/MySelectInput";
 import { CONTACT_TYPES } from "../../HardData/CONTACT_TYPES";
-import { Box, Grid, Typography } from "@material-ui/core";
+import { Grid, IconButton, Typography } from "@material-ui/core";
 import MyTextInput from "../atomos/MyTextInput";
 
 export default function ContactInputs() {
   const [contacts, setContacts] = useState([]);
-  const [newContact, setNewContact] = useState({});
+  const [newContact, setNewContact] = useState({ contactType: "" });
+  const [placeholder, setPlaceholder] = useState("");
   console.log(newContact);
   console.log(contacts);
+
+  useEffect(() => {
+    switch (newContact.contactType) {
+      case "":
+        setPlaceholder("Selecciona el tipo de contacto");
+        break;
+      case "ws":
+        setPlaceholder("Escribe tu whats app");
+        break;
+      default:
+        setPlaceholder("Copia el link");
+        break;
+    }
+  }, [newContact.contactType]);
 
   const addContact = () => {
     setContacts([...contacts, newContact]);
@@ -22,20 +37,23 @@ export default function ContactInputs() {
   const handleChange = (e) => {
     setNewContact({ ...newContact, [e.target.name]: e.target.value });
   };
+  console.log(newContact.contactValue);
 
   return (
     <div>
       {contacts.map((contact) => (
         <>
           <Grid container justify="center">
-            <Grid item xs={3}>
-              <Typography variant="h6">{contact.contactType}: </Typography>
+            <Grid item xs={3} style={{ alignSelf: "center" }}>
+              <Typography variant="h6" align="right">
+                {contact.contactType}:
+              </Typography>
             </Grid>
             <Grid item style={{ alignSelf: "center", marginLeft: 12 }} xs={6}>
               <Typography variant="p">{contact.contactValue}</Typography>
             </Grid>
             <Grid xs={2}>
-              <Box display="flex" alignContent="center" justifyContent="center">
+              <IconButton>
                 <div
                   style={{
                     alignSelf: "center",
@@ -52,7 +70,7 @@ export default function ContactInputs() {
                 >
                   X
                 </div>
-              </Box>
+              </IconButton>
             </Grid>
           </Grid>
         </>
@@ -62,12 +80,14 @@ export default function ContactInputs() {
         contactType={newContact.contactType}
         contactValue={newContact.contactValue}
         handleChange={handleChange}
+        placeholder={placeholder}
       />
 
       <MyButton
+        disabled={!newContact.contactType || !newContact.contactValue}
         onClick={() => {
           addContact();
-          setNewContact({});
+          setNewContact({ contactType: "", contactValue: "" });
         }}
       >
         Agregar contacto <AddCircleOutlineIcon />
@@ -76,20 +96,30 @@ export default function ContactInputs() {
   );
 }
 
-const InputContact = ({ contactType, contactValue, handleChange }) => (
+const InputContact = ({
+  contactType,
+  contactValue,
+  handleChange,
+  placeholder,
+}) => (
   <>
     <Grid container>
       <Grid item xs={4} style={{ padding: "4px" }}>
         <MySelectInput
           name={`contactType`}
           value={contactType || ""}
-          placeholder="Contacto vía"
+          placeholder={"Tipo"}
           options={CONTACT_TYPES}
           onChange={handleChange}
         />
       </Grid>
       <Grid item xs={8} style={{ padding: "4px" }}>
-        <MyTextInput name={`contactValue`} onChange={handleChange} />
+        <MyTextInput
+          placeholder={placeholder}
+          name={`contactValue`}
+          value={contactValue}
+          onChange={handleChange}
+        />
       </Grid>
     </Grid>
   </>

@@ -6,7 +6,7 @@ export default function MyButton({
   onClick,
   label,
   variant,
-  disable,
+  disabled,
   children,
   color,
   fullWidth,
@@ -19,7 +19,7 @@ export default function MyButton({
       onClick={onClick}
       label={label}
       variant={variant}
-      disable={disable}
+      disabled={disabled}
       color={color}
       fullWidth={fullWidth}
       href={href}
