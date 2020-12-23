@@ -15,11 +15,14 @@ export default function MyTextInput({
   placeholder,
 }) {
   return (
-    <Box m={2}>
+    <>
       <Box mr={1}>
-        <Typography align="left" variant="body2">
-          {label}:
-        </Typography>
+        {label && (
+          <Typography align="left" variant="body2">
+            {label}:
+          </Typography>
+        )}
+        
       </Box>
       <TextField
         select={select}
@@ -44,6 +47,6 @@ export default function MyTextInput({
           <MenuItem value={option}>{option}</MenuItem>
         ))}
       </TextField>
-    </Box>
+    </>
   );
 }

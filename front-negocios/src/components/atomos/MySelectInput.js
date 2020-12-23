@@ -7,7 +7,8 @@ import {
 import React from "react";
 
 export default function MySelectInput({
-  value,
+  value = "",
+  name,
   onChange,
   displayEmpty,
   className,
@@ -21,6 +22,7 @@ export default function MySelectInput({
   return (
     <FormControl error={error} size="small" fullWidth focused>
       <Select
+        name={name}
         autoFocus
         variant="outlined"
         value={value}

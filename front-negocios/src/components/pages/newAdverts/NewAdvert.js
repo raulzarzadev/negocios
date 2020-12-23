@@ -149,7 +149,7 @@ export default function NewAdvert(props) {
 
   return (
     <>
-      {isLogged ? (
+      {!isLogged ? (
         <VerticalStepper
           submiting={status.loading}
           data={data}
