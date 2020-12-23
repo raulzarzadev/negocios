@@ -70,6 +70,7 @@ advertsCtrl.createAdvert = async (req, res) => {
     classification,
     backgroundColor,
     delivery,
+    address,
   });
   await newAdvert.save();
   res.json({ ok: true, message: "Anuncio creado con éxito", newAdvert });

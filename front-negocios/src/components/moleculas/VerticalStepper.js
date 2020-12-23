@@ -13,6 +13,7 @@ import { CHIP_LABELS } from "../../HardData/CHIPS_LABELS";
 import MyButton from "../atomos/MyButton";
 import AdvertCard from "../atomos/AdvertCard";
 import MyLink from "../atomos/MyLink";
+import ContactInputs from "./ContactInputs";
 
 const useStyles = makeStyles((theme) => ({
   root: {
@@ -36,10 +37,10 @@ const useStyles = makeStyles((theme) => ({
 
 function getSteps() {
   return [
-    "Ubicación",
-    "Servicios destacables",
+    "Ubicaca tu anuncio",
     "Clasifica tu anuncio",
     "Detalles de tu anuncio",
+    "Contacto",
   ];
 }
 
@@ -102,7 +103,7 @@ export default function VerticalStepper({
                           </MyLink>
                         </em>
                         <MyTextInput
-                          defaultValue={form.state}
+                          defaultValue={form.state || ""}
                           onChange={handleChange}
                           name="state"
                           label="Estado"
@@ -112,7 +113,7 @@ export default function VerticalStepper({
                         />
                         {form?.state && (
                           <MyTextInput
-                            defaultValue={form.barrio}
+                            defaultValue={form.barrio || ""}
                             name="barrio"
                             onChange={handleChange}
                             label="Barrios"
@@ -129,18 +130,18 @@ export default function VerticalStepper({
                         onChange={handleChange}
                         //value="location"
                         control={<Switch color="primary" />}
-                        label="¿Ubicación fija?"
+                        label="¿Tienes un local?"
                         labelPlacement="top"
                         defaultValue={form.location}
                       />
-                      {form?.location && (
+                      {/*  {form?.location && (
                         <MyTextInput
                           name="googleLocation"
                           label="Link de google maps"
                           defaultValue={form.googleLocation}
                           onChange={handleChange}
                         />
-                      )}
+                      )} */}
                       {form?.location && (
                         <MyTextInput
                           name="address"
@@ -154,40 +155,13 @@ export default function VerticalStepper({
                     </div>
                   </Box>
                 )}
+
                 {activeStep === 1 && (
-                  <Box>
-                    <FormControlLabel
-                      defaultValue={form.delivery}
-                      name="delivery"
-                      onChange={handleChange}
-                      control={<Switch color="primary" />}
-                      label="¿A domicilio?"
-                      labelPlacement="top"
-                    />
-
-                    {/*  <FormControlLabel
-                 name="schedule"
-                 onChange={handleChange}
-                 control={<Switch color="primary" />}
-                 label="¿Horario?"
-                 labelPlacement="top"
-               /> */}
-                    <FormControlLabel
-                      defaultValue={form.middlePoint}
-                      name="middlePoint"
-                      onChange={handleChange}
-                      control={<Switch color="primary" />}
-                      label="¿Punto Medio?"
-                      labelPlacement="top"
-                    />
-                  </Box>
-                )}
-
-                {activeStep === 2 && (
                   <>
+                    <em>Max 3 etiquetas</em>
                     <div
                       style={{
-                        width: "50%",
+                        maxWidth: "300px",
                         border: "1px solid black",
                         borderRadius: "16px",
                         padding: "16px",
@@ -223,10 +197,9 @@ export default function VerticalStepper({
                     })}
                   </>
                 )}
-                {activeStep === 3 && (
+                {activeStep === 2 && (
                   <Box display="flex" justifyContent="center" mt={4}>
                     <Box width="80%">
-                      <Typography variant="h5">Detalles del Anuncio</Typography>
                       <MyTextInput
                         onChange={handleChange}
                         defaultValue={form.title}
@@ -244,11 +217,10 @@ export default function VerticalStepper({
                     </Box>
                   </Box>
                 )}
-                {activeStep === 4 && (
-                  <Box>
-                    <Typography variant="h5">Imagenes y extras</Typography>
-                    <em>Pronto podras subir imagenes, menus y más </em>
-                  </Box>
+                {activeStep === 3 && (
+                  <>
+                    <ContactInputs />
+                  </>
                 )}
 
                 <div className={classes.actionsContainer}>
@@ -276,7 +248,7 @@ export default function VerticalStepper({
         </Stepper>
         {activeStep === steps.length && (
           <Paper square elevation={0} className={classes.resetContainer}>
-            <Box>
+            <Box paddingY={2}>
               <Box>
                 <Typography variant="h5">Selecciona un color:</Typography>
                 <input
@@ -289,19 +261,11 @@ export default function VerticalStepper({
                 <Typography variant="h5">Sube una imagen:</Typography>
                 <input type="file" name="image" onChange={setImage} />
               </Box>
-              <Box maxWidth={220} margin="0 auto">
-                <AdvertCard advert={form} />
-              </Box>
             </Box>
-
-            <Box>
-              <Button
-                variant="outlined"
-                onClick={handleReset}
-                className={classes.button}
-              >
-                Editar
-              </Button>
+            <Box maxWidth={220} margin="0 auto">
+              <AdvertCard advert={form} />
+            </Box>
+            <Box paddingY={2}>
               <Box m={2}>
                 <MyButton
                   //onClick={() => console.log("guardar", form, labelsSelected)}
@@ -314,10 +278,12 @@ export default function VerticalStepper({
               </Box>
               <Box m={2}>
                 <MyButton
-                  color="primary"
                   variant="outlined"
-                  label="Solo guardar"
-                />
+                  onClick={handleReset}
+                  className={classes.button}
+                >
+                  Editar
+                </MyButton>
               </Box>
             </Box>
           </Paper>
