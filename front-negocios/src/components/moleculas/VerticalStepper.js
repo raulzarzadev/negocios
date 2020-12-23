@@ -56,6 +56,8 @@ export default function VerticalStepper({
   stateList,
   setImage,
   submiting,
+  contacts,
+  setContacts,
 }) {
   const classes = useStyles();
   const [activeStep, setActiveStep] = React.useState(0);
@@ -72,6 +74,7 @@ export default function VerticalStepper({
   const handleReset = () => {
     setActiveStep(0);
   };
+
   const [chipData] = useState(CHIP_LABELS);
 
   return (
@@ -219,7 +222,10 @@ export default function VerticalStepper({
                 )}
                 {activeStep === 3 && (
                   <>
-                    <ContactInputs />
+                    <ContactInputs
+                      contacts={contacts}
+                      setContacts={setContacts}
+                    />
                   </>
                 )}
 

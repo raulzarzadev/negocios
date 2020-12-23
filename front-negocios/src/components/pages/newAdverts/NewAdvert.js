@@ -64,6 +64,7 @@ export default function NewAdvert(props) {
 
       const body = {
         ...form,
+        contacts,
         image: { src: uploadedImage.data.image?.imageURL },
         labels: labelsSelected,
         styles: { backgroundColor: form.backgroundColor }, // no estoy muy seguro de que esto se guarde
@@ -147,6 +148,9 @@ export default function NewAdvert(props) {
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [newImage]);
 
+  const [contacts, setContacts] = useState([]);
+  console.log(contacts);
+
   return (
     <>
       {!isLogged ? (
@@ -164,6 +168,8 @@ export default function NewAdvert(props) {
           onSubmit={handleSubmit}
           stateList={stateListCleaned}
           barriosList={barriosList}
+          contacts={contacts}
+          setContacts={setContacts}
         />
       ) : (
         <NoLoggedView text="Nuevo anuncio" />

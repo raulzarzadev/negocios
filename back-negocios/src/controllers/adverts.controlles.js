@@ -21,6 +21,7 @@ advertsCtrl.getAdvert = async (req, res) => {
 advertsCtrl.createAdvert = async (req, res) => {
   const {
     title,
+    contacts,
     price,
     postalCode,
     description,
@@ -52,6 +53,7 @@ advertsCtrl.createAdvert = async (req, res) => {
   //creando el anuncio
   const newAdvert = new Advert({
     owner: req.token.id,
+    contacts,
     barrio,
     title,
     postalCode,

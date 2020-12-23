@@ -6,12 +6,10 @@ import { CONTACT_TYPES } from "../../HardData/CONTACT_TYPES";
 import { Grid, IconButton, Typography } from "@material-ui/core";
 import MyTextInput from "../atomos/MyTextInput";
 
-export default function ContactInputs() {
-  const [contacts, setContacts] = useState([]);
+export default function ContactInputs({contacts, setContacts}) {
+  // [contacts, setContacts] = useState([]);
   const [newContact, setNewContact] = useState({ contactType: "" });
   const [placeholder, setPlaceholder] = useState("");
-  console.log(newContact);
-  console.log(contacts);
 
   useEffect(() => {
     switch (newContact.contactType) {
