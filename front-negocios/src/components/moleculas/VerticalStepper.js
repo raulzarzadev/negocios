@@ -36,25 +36,18 @@ const useStyles = makeStyles((theme) => ({
 }));
 
 function getSteps() {
-  return [
-    "Ubica tu anuncio",
-    "Clasifica tu anuncio",
-    "Detalles de tu anuncio",
-    "Contactos",
-  ];
+  return ["Clasifica tu anuncio", "Detalles de tu anuncio", "Contactos"];
 }
 
 export default function VerticalStepper({
   PageTitle,
   handleChange,
   form,
-  barriosList,
   handleDeleteChip,
   hanldeAddToLabelList,
   labelsSelected = [],
   labelDisabled,
   onSubmit,
-  stateList,
   setImage,
   submiting,
   contacts,
@@ -97,73 +90,6 @@ export default function VerticalStepper({
               </StepLabel>
               <StepContent>
                 {activeStep === 0 && (
-                  <Box display="inline-block" justifyContent="center">
-                    <Box className={classes.formSeccion}>
-                      <Box width="200px">
-                        <em>
-                          ¿Tu barrio no está?
-                          <MyLink to="nuevo-barrio" decorated>
-                            agregalo
-                          </MyLink>
-                        </em>
-                        <MyTextInput
-                          defaultValue={form.state || ""}
-                          onChange={handleChange}
-                          name="state"
-                          label="Estado"
-                          select
-                          options={stateList}
-                          placeholder="Seleccionar"
-                        />
-                        {form?.state && (
-                          <MyTextInput
-                            defaultValue={form.barrio || ""}
-                            name="barrio"
-                            onChange={handleChange}
-                            label="Barrios"
-                            select
-                            options={barriosList}
-                            placeholder="Seleccionar"
-                          />
-                        )}
-                      </Box>
-                    </Box>
-                    <div style={{ maxWidth: 320 }}>
-                      <FormControlLabel
-                        name="location"
-                        control={
-                          <Switch
-                            onChange={handleChange}
-                            color="primary"
-                            checked={!!form.location}
-                          />
-                        }
-                        label="¿Tienes un local?"
-                        labelPlacement="top"
-                      />
-                      {/*  {form?.location && (
-                        <MyTextInput
-                          name="googleLocation"
-                          label="Link de google maps"
-                          defaultValue={form.googleLocation}
-                          onChange={handleChange}
-                        />
-                      )} */}
-                      {form?.location && (
-                        <MyTextInput
-                          name="address"
-                          label="Dirección / Referencias"
-                          multiline
-                          rows={2}
-                          defaultValue={form.address}
-                          onChange={handleChange}
-                        />
-                      )}
-                    </div>
-                  </Box>
-                )}
-
-                {activeStep === 1 && (
                   <>
                     <em>Max 3 etiquetas</em>
                     <div
@@ -204,7 +130,7 @@ export default function VerticalStepper({
                     })}
                   </>
                 )}
-                {activeStep === 2 && (
+                {activeStep === 1 && (
                   <Box display="flex" justifyContent="center" mt={4}>
                     <Box width="80%">
                       <MyTextInput
@@ -224,7 +150,7 @@ export default function VerticalStepper({
                     </Box>
                   </Box>
                 )}
-                {activeStep === 3 && (
+                {activeStep === 2 && (
                   <>
                     <ContactInputs
                       contacts={contacts}
