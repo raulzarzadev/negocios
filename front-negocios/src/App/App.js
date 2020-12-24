@@ -22,6 +22,7 @@ import VisulaGuide from "../components/visualGuide/VisulaGuide";
 import { MuiThemeProvider } from "@material-ui/core";
 import newTheme from "../components/theme/theme";
 import MyLayout from "../components/MyLayout";
+import EditAdvert from "../components/pages/EditAvert/EditAdvert";
 
 // eslint-disable-next-line import/no-anonymous-default-export
 export default () => (
@@ -55,6 +56,7 @@ function App() {
           <Route exact path="/signup/:token" component={Profile} />
           {/* *** autentication required */}
           <Route exact path="/nuevo-anuncio" component={NewAdvert} />
+          <Route exact path="/editar/:id" component={NewAdvert} editar />
           <Route exact path="/nuevo-barrio" component={NewBarrio} />
           {/* *** always accessible */}
           <Route exact path="/" component={Home} />

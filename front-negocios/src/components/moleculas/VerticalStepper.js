@@ -45,10 +45,11 @@ function getSteps() {
 }
 
 export default function VerticalStepper({
+  title,
   handleChange,
   form,
   barriosList,
-  handleDelete,
+  handleDeleteChip,
   hanldeAddToLabelList,
   labelsSelected = [],
   labelDisabled,
@@ -80,7 +81,7 @@ export default function VerticalStepper({
   return (
     <div className={classes.root}>
       <Box m={3}>
-        <Typography variant="h4">Nuevo anuncio</Typography>
+        <Typography variant="h4">{title}</Typography>
       </Box>
       <form
         onSubmit={(e) => {
@@ -179,7 +180,7 @@ export default function VerticalStepper({
                           color={chip.color || "primary"}
                           label={chip.label}
                           size="small"
-                          onDelete={handleDelete(chip)}
+                          onDelete={handleDeleteChip(chip)}
                           className={classes.chip}
                         />
                       ))}

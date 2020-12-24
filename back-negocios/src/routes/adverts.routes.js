@@ -15,11 +15,15 @@ const {
 router.route('/')
     .get(getAdverts)
     .post(isAuthenticated,createAdvert)
+    
 
 router.route('/:id')
     .get(getAdvertsByUser)
     .delete(isAuthenticated, deleteAdvert)
     .put(isAuthenticated, updateAdvert)
+
+router.route('/editar/:id')
+    .get(isAuthenticated, getAdvert)
 
 
 module.exports = router;

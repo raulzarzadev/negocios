@@ -9,39 +9,13 @@ import useAxios from "../../myHooks/useAxios";
 import VerticalStepper from "../../moleculas/VerticalStepper";
 import { useUser } from "../../../context/userContext";
 import { uploadImage } from "../../../utils/uploadImage";
-import { useHistory, useParams } from "react-router-dom";
-export default function NewAdvert(props) {
-  const [token, setToken] = useState(localStorage.getItem("access-token"));
+
+export default function EditAdvert(props) {
   const { isLogged } = useUser();
-  const history = useHistory();
-  const params = useParams();
-
-  console.log(params);
-
-  let title = "Nuevo anuncio";
-  if (params.id) title = "Editar Anuncio";
-
-  useEffect(() => {
-    if (params.id) {
-      console.log(`${url}/editar/${params.id}`);
-      Axios.get(`${url}/adverts/editar/${params.id}`, {
-        headers: {
-          Accept: "application/json",
-          "Content-Type": "application/json",
-          "access-token": token,
-        },
-      })
-        .then((res) => setAdvert(res.data.advert))
-        .catch((err) => console.log(err));
-    }
-  }, []);
-
-  const [advert, setAdvert] = useState({});
-  console.log(advert);
-
   //console.log("isLogged", !!isLogged);
   //const isLogged = isAuthenticated();
   const { data } = useAxios(url + "/barrios");
+  const [token, setToken] = useState(localStorage.getItem("access-token"));
   const [status, setStatus] = useState({
     loading: false,
     messageError: "",
@@ -130,7 +104,7 @@ export default function NewAdvert(props) {
           messageError: <Alert severity="success">{res.data.message} </Alert>,
         });
         setTimeout(() => {
-          history.push("/perfil");
+          props.history.push("/perfil");
         }, 1500);
       }
     } catch (error) {
@@ -182,7 +156,7 @@ export default function NewAdvert(props) {
     <>
       {isLogged ? (
         <VerticalStepper
-          title={title}
+          title="Editar Anuncio"
           submiting={status.loading}
           data={data}
           setImage={setImage}
@@ -200,7 +174,7 @@ export default function NewAdvert(props) {
           setContacts={setContacts}
         />
       ) : (
-        <NoLoggedView text={title} />
+        <NoLoggedView text="Nuevo anuncio" />
       )}
     </>
   );

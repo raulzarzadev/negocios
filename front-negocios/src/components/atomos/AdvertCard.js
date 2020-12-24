@@ -7,6 +7,7 @@ import CardContent from "@material-ui/core/CardContent";
 import CardMedia from "@material-ui/core/CardMedia";
 import Typography from "@material-ui/core/Typography";
 import defaultImage from "../../assets/negdelbar_logo.png";
+import { useHistory } from "react-router-dom";
 
 import BookmarkBorderIcon from "@material-ui/icons/BookmarkBorder";
 
@@ -28,14 +29,6 @@ const useStyles = makeStyles((theme) => ({
   root: {
     minWidth: 150,
     width: "100%",
-
-    /*  width: "100%",
-    [theme.breakpoints.up("xs")]: {
-      width: ,
-    },
-    [theme.breakpoints.up("sm")]: {
-      width: 240,
-    }, */
   },
   labelsBox: {
     [theme.breakpoints.up("xs")]: {
@@ -79,6 +72,7 @@ export default function AdvertCart({ advert, admin, handleDelete }) {
   } = advert;
 
   const classes = useStyles();
+  const history = useHistory();
   const [openModal, setOpenModal] = useState(false);
   const handleOpenModal = () => {
     setOpenModal(!openModal);
@@ -88,6 +82,9 @@ export default function AdvertCart({ advert, admin, handleDelete }) {
 
   const handleClickMenu = (event) => {
     setAnchorEl(event.currentTarget);
+  };
+  const handleEdit = (advertId) => {
+    history.push(`/editar/${advertId}`);
   };
 
   const handleClose = () => {
@@ -125,7 +122,7 @@ export default function AdvertCart({ advert, admin, handleDelete }) {
                 >
                   Eliminar
                 </MenuItem>
-                <MenuItem onClick={handleClose}>Editar</MenuItem>
+                <MenuItem onClick={() => handleEdit(_id)}>Editar</MenuItem>
               </Menu>
             </>
           ) : (
