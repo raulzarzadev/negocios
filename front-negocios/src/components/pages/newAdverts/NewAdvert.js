@@ -60,6 +60,7 @@ export default function NewAdvert(props) {
   const handleSubmit = async () => {
     try {
       setStatus({ ...status, loading: true });
+
       const uploadedImage = await uploadImage(form.image?.url);
 
       const body = {
@@ -67,8 +68,11 @@ export default function NewAdvert(props) {
         contacts,
         image: { src: uploadedImage.data.image?.imageURL },
         labels: labelsSelected,
-        styles: { backgroundColor: form.backgroundColor }, // no estoy muy seguro de que esto se guarde
+        // no estoy muy seguro de que esto se guarde
+        styles: { backgroundColor: form.backgroundColor },
       };
+
+      //arreglando el nombre debarrio
       const barrioDetails = data?.barrios?.filter(
         (barrio) => barrio.name === form.barrio
       );
@@ -83,28 +87,25 @@ export default function NewAdvert(props) {
         },
         data: body,
       };
-      //console.log("body", body);
-
       let res = await Axios(`${url}/adverts`, config);
-      //console.log("peticion recibida", res);
 
       if (!res.data.ok) {
-        // console.log("peticion rechazada", res);
         setStatus({
           status,
           loading: false,
           messageError: <Alert severity="error">{res.data.message} </Alert>,
         });
       } else {
-        //console.log("peticion aceptada recuperando token", res.data);
-
+        console.log("response ok", res.data.ok);
         setToken(res);
         setStatus({
           status,
           loading: false,
           messageError: <Alert severity="success">{res.data.message} </Alert>,
         });
-        props.history.push("/perfil");
+        setTimeout(() => {
+          props.history.push("/perfil");
+        }, 1500);
       }
     } catch (error) {
       console.log("error capturado", error);
@@ -153,7 +154,7 @@ export default function NewAdvert(props) {
 
   return (
     <>
-      {!isLogged ? (
+      {isLogged ? (
         <VerticalStepper
           submiting={status.loading}
           data={data}

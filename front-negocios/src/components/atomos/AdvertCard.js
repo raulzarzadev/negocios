@@ -9,12 +9,8 @@ import Typography from "@material-ui/core/Typography";
 import defaultImage from "../../assets/negdelbar_logo.png";
 
 import BookmarkBorderIcon from "@material-ui/icons/BookmarkBorder";
-import WhatsAppIcon from "@material-ui/icons/WhatsApp";
-import CallIcon from "@material-ui/icons/Call";
-import FacebookIcon from "@material-ui/icons/Facebook";
-import WebIcon from "@material-ui/icons/Web";
+
 import MoreVertIcon from "@material-ui/icons/MoreVert";
-import InstagramIcon from "@material-ui/icons/Instagram";
 import LocationOnIcon from "@material-ui/icons/LocationOn";
 import {
   Box,
@@ -25,8 +21,8 @@ import {
   Tooltip,
 } from "@material-ui/core";
 import MyModal from "./MyModal";
-import MotorcycleIcon from "@material-ui/icons/Motorcycle";
 import { CHIP_LABELS } from "../../HardData/CHIPS_LABELS";
+import ContactLink from "./ContactLink";
 
 const useStyles = makeStyles((theme) => ({
   root: {
@@ -45,7 +41,7 @@ const useStyles = makeStyles((theme) => ({
     [theme.breakpoints.up("xs")]: {
       display: "flex",
       flexDirection: "row-reverse",
-      alignItems: "baseline",
+      alignItems: "center",
       justifyContent: "space-between",
       paddingLeft: "16px",
     },
@@ -74,17 +70,12 @@ export default function AdvertCart({ advert, admin, handleDelete }) {
     description,
     image,
     styles,
-    delivery,
     googleLocation,
-    whatsApp,
-    tel,
-    faceUrl,
-    instaUrl,
-    siteUrl,
     labels = [],
     backgroundColor,
     location,
     _id,
+    contacts,
   } = advert;
 
   const classes = useStyles();
@@ -146,14 +137,6 @@ export default function AdvertCart({ advert, admin, handleDelete }) {
           )}
         </Box>
         <Box>
-          {delivery && (
-            <Tooltip
-              title="Entrega a domicilio"
-              style={{ fontSize: 18, margin: "0 2px" }}
-            >
-              <MotorcycleIcon />
-            </Tooltip>
-          )}
           {labels?.map((label, i) => (
             <Tooltip
               key={i}
@@ -196,9 +179,7 @@ export default function AdvertCart({ advert, admin, handleDelete }) {
           </Typography>
         </CardContent>
       </CardActionArea>
-      <MyModal open={openModal} handleOpenModal={handleOpenModal}>
-        <div> Aca iria el menu</div>
-      </MyModal>
+
       <CardActions style={styles || { backgroundColor }}>
         <Box className={classes.contactsBox}>
           {location && (
@@ -208,49 +189,14 @@ export default function AdvertCart({ advert, admin, handleDelete }) {
               </IconButton>
             </Tooltip>
           )}
-          {whatsApp && (
-            <Tooltip title="Mensaje WhatsApp ">
-              <IconButton
-                href={`https://wa.me/521${whatsApp.replace(
-                  / /g,
-                  ""
-                )}?text=Hola,%20te%20encontre%20en%20negociosdelbarrio.com%20y%20quisiera..`}
-              >
-                <WhatsAppIcon />
-              </IconButton>
-            </Tooltip>
-          )}
-          {instaUrl && (
-            <Tooltip title="Llamar a ">
-              <IconButton href={instaUrl}>
-                <InstagramIcon />
-              </IconButton>
-            </Tooltip>
-          )}
-
-          {tel && (
-            <Tooltip title="Llamar a ">
-              <IconButton href={`tel:${tel}`} size="small">
-                <CallIcon />
-              </IconButton>
-            </Tooltip>
-          )}
-          {faceUrl && (
-            <Tooltip title="Facebook Page">
-              <IconButton href={faceUrl} size="small">
-                <FacebookIcon />
-              </IconButton>
-            </Tooltip>
-          )}
-          {siteUrl && (
-            <Tooltip title="Visitar">
-              <IconButton href={instaUrl} size="small">
-                <WebIcon />
-              </IconButton>
-            </Tooltip>
-          )}
+          {contacts.map((contact) => (
+            <ContactLink contact={contact} />
+          ))}
         </Box>
       </CardActions>
+      <MyModal open={openModal} handleOpenModal={handleOpenModal}>
+        <div> Aca iria el menu</div>
+      </MyModal>
     </Card>
   );
 }

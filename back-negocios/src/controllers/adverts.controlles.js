@@ -5,17 +5,17 @@ const advertsCtrl = {};
 
 advertsCtrl.getAdverts = async (req, res) => {
   const adverts = await Advert.find();
-  res.json(adverts);
+  res.json({ ok: true, adverts });
 };
 
 advertsCtrl.getAdvertsByUser = async (req, res) => {
   const adverts = await Advert.find({ owner: req.params.user });
-  res.json(adverts);
+  res.json({ ok: true, adverts });
 };
 
 advertsCtrl.getAdvert = async (req, res) => {
   const advert = await Advert.findById(req.params.id);
-  res.json(advert);
+  res.json({ ok: true, advert });
 };
 
 advertsCtrl.createAdvert = async (req, res) => {
