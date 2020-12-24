@@ -189,7 +189,7 @@ export default function AdvertCart({ advert, admin, handleDelete }) {
               </IconButton>
             </Tooltip>
           )}
-          {contacts.map((contact) => (
+          {contacts?.map((contact) => (
             <ContactLink contact={contact} />
           ))}
         </Box>

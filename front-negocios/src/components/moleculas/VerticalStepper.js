@@ -37,7 +37,7 @@ const useStyles = makeStyles((theme) => ({
 
 function getSteps() {
   return [
-    "Ubicaca tu anuncio",
+    "Ubica tu anuncio",
     "Clasifica tu anuncio",
     "Detalles de tu anuncio",
     "Contactos",
