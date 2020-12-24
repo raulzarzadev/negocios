@@ -45,7 +45,7 @@ function getSteps() {
 }
 
 export default function VerticalStepper({
-  title,
+  PageTitle,
   handleChange,
   form,
   barriosList,
@@ -81,7 +81,7 @@ export default function VerticalStepper({
   return (
     <div className={classes.root}>
       <Box m={3}>
-        <Typography variant="h4">{title}</Typography>
+        <Typography variant="h4">{PageTitle}</Typography>
       </Box>
       <form
         onSubmit={(e) => {
@@ -91,7 +91,7 @@ export default function VerticalStepper({
       >
         <Stepper activeStep={activeStep} orientation="vertical">
           {steps.map((label, index) => (
-            <Step key={label}>
+            <Step key={index}>
               <StepLabel>
                 <Typography variant="h5">{label}</Typography>
               </StepLabel>
@@ -131,12 +131,15 @@ export default function VerticalStepper({
                     <div style={{ maxWidth: 320 }}>
                       <FormControlLabel
                         name="location"
-                        onChange={handleChange}
-                        //value="location"
-                        control={<Switch color="primary" />}
+                        control={
+                          <Switch
+                            onChange={handleChange}
+                            color="primary"
+                            checked={!!form.location}
+                          />
+                        }
                         label="¿Tienes un local?"
                         labelPlacement="top"
-                        defaultValue={form.location}
                       />
                       {/*  {form?.location && (
                         <MyTextInput
@@ -261,6 +264,7 @@ export default function VerticalStepper({
                 <input
                   type="color"
                   name="backgroundColor"
+                  defaultValue={form.backgroundColor}
                   onChange={handleChange}
                 />
               </Box>

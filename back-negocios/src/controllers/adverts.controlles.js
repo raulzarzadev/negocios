@@ -44,12 +44,14 @@ advertsCtrl.createAdvert = async (req, res) => {
     schedule,
   } = req.body;
 
+  /* TODO ahora no se restan form credit  cuando creas un adert */
+  /* 
   const user = await User.findById(req.token.id, { credit: 1 });
-  await User.findByIdAndUpdate(req.token.id, { $inc: { credit: -price } });
+  await User.findByIdAndUpdate(req.token.id, { $inc: { credit: - price } });
 
   // si todo ok, resta credito
   if (price > user.credit)
-    return res.json({ ok: false, message: "saldo insuficiente" });
+    return res.json({ ok: false, message: "saldo insuficiente" }); */
   //creando el anuncio
   const newAdvert = new Advert({
     owner: req.token.id,
@@ -91,6 +93,8 @@ advertsCtrl.deleteAdvert = async (req, res) => {
 advertsCtrl.updateAdvert = async (req, res) => {
   const {
     title,
+    contacts,
+    postalCode,
     description,
     tel,
     whatsApp,
@@ -98,18 +102,39 @@ advertsCtrl.updateAdvert = async (req, res) => {
     instaUrl,
     siteUrl,
     location,
+    labels,
+    image,
+    classification,
+    businessMail,
+    styles,
+    backgroundColor,
+    delivery,
+    barrio,
+    address,
   } = req.body;
-  await advert.findByIdAndUpdate(req.params.id, {
+  await Advert.findByIdAndUpdate(req.params.id, {
+    contacts,
+    barrio,
     title,
+    postalCode,
     description,
     tel,
+    image,
     whatsApp,
     faceUrl,
     instaUrl,
     siteUrl,
+    businessMail,
     location,
+    postalCode,
+    labels,
+    styles,
+    classification,
+    backgroundColor,
+    delivery,
+    address,
   });
-  res.json({ message: "Actualizando Anuncio" });
+  res.json({ ok: true, message: "Actualizando Anuncio" });
 };
 
 module.exports = advertsCtrl;

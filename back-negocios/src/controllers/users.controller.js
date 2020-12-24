@@ -22,6 +22,7 @@ usersCtrl.getUser = async (req, res) => {
   const { _id, email, rol, emailConfirmed, credit } = await User.findById(
     req.params.id
   );
+  
   if (emailConfirmed) {
     const adverts = await Advert.find({ owner: req.params.id });
     const setUser = {

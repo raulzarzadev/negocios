@@ -10,19 +10,23 @@ import VerticalStepper from "../../moleculas/VerticalStepper";
 import { useUser } from "../../../context/userContext";
 import { uploadImage } from "../../../utils/uploadImage";
 import { useHistory, useParams } from "react-router-dom";
+import { getAdvert } from "../../../utils/adverts";
 export default function NewAdvert(props) {
   const [token, setToken] = useState(localStorage.getItem("access-token"));
   const { isLogged } = useUser();
   const history = useHistory();
   const params = useParams();
 
-  console.log(params);
-
-  let title = "Nuevo anuncio";
-  if (params.id) title = "Editar Anuncio";
+  let PageTitle = "Nuevo anuncio";
+  if (params.id) PageTitle = "Editar Anuncio";
 
   useEffect(() => {
     if (params.id) {
+      getAdvert(params.id)
+        .then((res) => setAdvert(res.data.advert))
+        .catch((err) => console.log(err));
+    }
+    /* if (params.id) {
       console.log(`${url}/editar/${params.id}`);
       Axios.get(`${url}/adverts/editar/${params.id}`, {
         headers: {
@@ -31,14 +35,39 @@ export default function NewAdvert(props) {
           "access-token": token,
         },
       })
-        .then((res) => setAdvert(res.data.advert))
+        .then((res) => {
+          const {
+            title,
+            description,
+            barrio,
+            image,
+            labels,
+            contacts,
+            backgroundColor,
+            location,
+            address,
+          } = res.data.advert;
+          setAdvert(res.data.advert);
+          setForm({
+            ...form,
+            title,
+            description,
+            state: barrio.state,
+            barrio: barrio.name,
+            image,
+            backgroundColor,
+            location,
+            address,
+            contacts,
+          });
+          setContacts(contacts);
+          setLabelsSelected(labels);
+        })
         .catch((err) => console.log(err));
-    }
-  }, []);
-
-  const [advert, setAdvert] = useState({});
+    } */
+  }, [params.id]);
+  const [advert, setAdvert] = useState(null);
   console.log(advert);
-
   //console.log("isLogged", !!isLogged);
   //const isLogged = isAuthenticated();
   const { data } = useAxios(url + "/barrios");
@@ -83,26 +112,48 @@ export default function NewAdvert(props) {
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [labelsSelected]);
 
+  async function updateAdvert(body) {
+    let config = {
+      method: "PUT",
+      headers: {
+        Accept: "application/json",
+        "Content-Type": "application/json",
+        "access-token": token,
+      },
+      data: body,
+    };
+    const res = await Axios(`${url}/adverts/${advert._id}`, config);
+    console.log(res);
+    setTimeout(() => {
+      window.location.href("/perfil");
+    }, 1500);
+    return res;
+  }
+
   const handleSubmit = async () => {
+    const uploadedImage = await uploadImage(form.image?.url);
+    const body = {
+      ...form,
+      contacts,
+      image: { src: uploadedImage.data.image?.imageURL },
+      labels: labelsSelected,
+      // no estoy muy seguro de que esto se guarde
+      styles: { backgroundColor: form.backgroundColor },
+    };
+
+    //arreglando el nombre debarrio
+    const barrioDetails = data?.barrios?.filter(
+      (barrio) => barrio.name === form.barrio
+    );
+    body.barrio = barrioDetails[0];
+    console.log("body", body);
+    if (advert) {
+      const updatedAdevet = updateAdvert(body);
+      console.log(updatedAdevet);
+      return;
+    }
     try {
       setStatus({ ...status, loading: true });
-
-      const uploadedImage = await uploadImage(form.image?.url);
-
-      const body = {
-        ...form,
-        contacts,
-        image: { src: uploadedImage.data.image?.imageURL },
-        labels: labelsSelected,
-        // no estoy muy seguro de que esto se guarde
-        styles: { backgroundColor: form.backgroundColor },
-      };
-
-      //arreglando el nombre debarrio
-      const barrioDetails = data?.barrios?.filter(
-        (barrio) => barrio.name === form.barrio
-      );
-      body.barrio = barrioDetails[0];
 
       let config = {
         method: "POST",
@@ -175,32 +226,35 @@ export default function NewAdvert(props) {
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [newImage]);
 
-  const [contacts, setContacts] = useState([]);
-  console.log(contacts);
+  const [contacts, setContacts] = useState(form?.contacts || []);
 
+  console.log(advert);
+  console.log(labelsSelected);
+  console.log(contacts);
   return (
     <>
       {isLogged ? (
         <VerticalStepper
-          title={title}
-          submiting={status.loading}
-          data={data}
+          advert={advert}
+          PageTitle={PageTitle}
           setImage={setImage}
+          data={data}
+          form={form}
+          contacts={contacts}
+          setContacts={setContacts}
+          submiting={status.loading}
           handleDeleteChip={handleDeleteChip}
           labelsSelected={labelsSelected}
           labelDisabled={labelDisabled}
           hanldeAddToLabelList={hanldeAddToLabelList}
           message={status.messageError}
-          form={form}
           handleChange={handleChange}
           onSubmit={handleSubmit}
           stateList={stateListCleaned}
           barriosList={barriosList}
-          contacts={contacts}
-          setContacts={setContacts}
         />
       ) : (
-        <NoLoggedView text={title} />
+        <NoLoggedView text={PageTitle} />
       )}
     </>
   );

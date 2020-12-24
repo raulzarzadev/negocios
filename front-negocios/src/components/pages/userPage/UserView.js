@@ -7,8 +7,6 @@ import url from "../../../url/url";
 
 const token = getToken();
 
-/* 
-import { Link } from 'react-router-dom'; */
 const useStyles = makeStyles(() => ({
   userLine: {
     display: "flex",
@@ -17,6 +15,7 @@ const useStyles = makeStyles(() => ({
   },
 }));
 export default function UserView({ user }) {
+
   const classes = useStyles();
 
   const [adverts, setAdverts] = useState(user.adverts || []);

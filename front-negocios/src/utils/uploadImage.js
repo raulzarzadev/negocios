@@ -18,3 +18,5 @@ export async function uploadImage(image) {
 
   return res;
 }
+
+
