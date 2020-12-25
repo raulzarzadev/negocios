@@ -6,8 +6,8 @@ import { CONTACT_TYPES } from "../../HardData/CONTACT_TYPES";
 import { Grid, IconButton, Typography } from "@material-ui/core";
 import MyTextInput from "../atomos/MyTextInput";
 
-export default function ContactInputs({ contacts = [], setContacts }) {
-  // [contacts, setContacts] = useState([]);
+export default function ContactInputs({ advert, setAdvert }) {
+  const [contacts, setContacts] = useState(advert.contacts || []);
   const [newContact, setNewContact] = useState({ contactType: "" });
   const [placeholder, setPlaceholder] = useState("");
 
@@ -28,6 +28,10 @@ export default function ContactInputs({ contacts = [], setContacts }) {
   const addContact = () => {
     setContacts([...contacts, newContact]);
   };
+  useEffect(() => {
+    setAdvert({ ...advert, contacts });
+  }, [contacts]);
+
   const handleDeleteContact = (contact) => {
     const arr = contacts.filter((item) => item !== contact);
     setContacts(arr);

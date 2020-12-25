@@ -20,9 +20,9 @@ router.route('/')
 router.route('/:id')
     .get(getAdvertsByUser)
     .delete(isAuthenticated, deleteAdvert)
-    .put(isAuthenticated, updateAdvert)
-
+    
 router.route('/editar/:id')
+    .put( updateAdvert)
     .get(isAuthenticated, getAdvert)
 
 

@@ -18,6 +18,7 @@ const host =
 
 const usersCtrl = {};
 
+
 usersCtrl.getUser = async (req, res) => {
   const { _id, email, rol, emailConfirmed, credit } = await User.findById(
     req.params.id

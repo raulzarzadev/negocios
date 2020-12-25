@@ -111,7 +111,8 @@ advertsCtrl.updateAdvert = async (req, res) => {
     delivery,
     barrio,
     address,
-  } = req.body;
+  } = req.body.data;
+  
   await Advert.findByIdAndUpdate(req.params.id, {
     contacts,
     barrio,

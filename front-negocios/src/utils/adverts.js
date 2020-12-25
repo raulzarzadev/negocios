@@ -24,6 +24,17 @@ export function postAdvert(advert) {
   });
 }
 
+export function updateAdvert(id, advert) {
+  return axios.put(`${url}/adverts/editar/${id}`, {
+    headers: {
+      Accept: "application/json",
+      "Content-Type": "application/json",
+      "access-token": token,
+    },
+    data: advert,
+  });
+}
+
 export function getAllBarrios() {
   return axios.get(`${url}/barrios`, {
     headers: {

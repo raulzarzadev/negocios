@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React from "react";
 import { makeStyles } from "@material-ui/core/styles";
 import Stepper from "@material-ui/core/Stepper";
 import Step from "@material-ui/core/Step";
@@ -7,13 +7,13 @@ import StepContent from "@material-ui/core/StepContent";
 import Button from "@material-ui/core/Button";
 import Paper from "@material-ui/core/Paper";
 import Typography from "@material-ui/core/Typography";
-import { Box, Chip, FormControlLabel, Switch } from "@material-ui/core";
+import { Box } from "@material-ui/core";
 import MyTextInput from "../atomos/MyTextInput";
-import { CHIP_LABELS } from "../../HardData/CHIPS_LABELS";
 import MyButton from "../atomos/MyButton";
 import AdvertCard from "../atomos/AdvertCard";
-import MyLink from "../atomos/MyLink";
+//import MyLink from "../atomos/MyLink";
 import ContactInputs from "./ContactInputs";
+import SelectLabels from "./SelectLabels";
 
 const useStyles = makeStyles((theme) => ({
   root: {
@@ -42,16 +42,11 @@ function getSteps() {
 export default function VerticalStepper({
   PageTitle,
   handleChange,
-  form,
-  handleDeleteChip,
-  hanldeAddToLabelList,
-  labelsSelected = [],
-  labelDisabled,
+  advert,
+  setAdvert,
   onSubmit,
   setImage,
   submiting,
-  contacts,
-  setContacts,
 }) {
   const classes = useStyles();
   const [activeStep, setActiveStep] = React.useState(0);
@@ -68,8 +63,6 @@ export default function VerticalStepper({
   const handleReset = () => {
     setActiveStep(0);
   };
-
-  const [chipData] = useState(CHIP_LABELS);
 
   return (
     <div className={classes.root}>
@@ -91,43 +84,7 @@ export default function VerticalStepper({
               <StepContent>
                 {activeStep === 0 && (
                   <>
-                    <em>Max 3 etiquetas</em>
-                    <div
-                      style={{
-                        maxWidth: "300px",
-                        border: "1px solid black",
-                        borderRadius: "16px",
-                        padding: "16px",
-                        minHeight: "48px",
-                        margin: "16px auto",
-                      }}
-                    >
-                      {labelsSelected?.map((chip) => (
-                        <Chip
-                          style={{ margin: "4px" }}
-                          icon={chip.icon}
-                          color={chip.color || "primary"}
-                          label={chip.label}
-                          size="small"
-                          onDelete={handleDeleteChip(chip)}
-                          className={classes.chip}
-                        />
-                      ))}
-                    </div>
-                    {chipData.map((chip) => {
-                      return (
-                        <Chip
-                          disabled={labelDisabled}
-                          style={{ margin: "4px" }}
-                          icon={chip.icon}
-                          color={chip.color || "primary"}
-                          label={chip.label}
-                          size="small"
-                          onClick={() => hanldeAddToLabelList(chip)}
-                          className={classes.chip}
-                        />
-                      );
-                    })}
+                    <SelectLabels advert={advert} setAdvert={setAdvert} />
                   </>
                 )}
                 {activeStep === 1 && (
@@ -135,13 +92,13 @@ export default function VerticalStepper({
                     <Box width="80%">
                       <MyTextInput
                         onChange={handleChange}
-                        defaultValue={form.title}
+                        defaultValue={advert?.title}
                         name="title"
                         label="Titulo"
                       />
                       <MyTextInput
                         onChange={handleChange}
-                        defaultValue={form.description}
+                        defaultValue={advert?.description}
                         name="description"
                         label="Descripción"
                         multiline
@@ -152,10 +109,7 @@ export default function VerticalStepper({
                 )}
                 {activeStep === 2 && (
                   <>
-                    <ContactInputs
-                      contacts={contacts}
-                      setContacts={setContacts}
-                    />
+                    <ContactInputs advert={advert} setAdvert={setAdvert} />
                   </>
                 )}
 
@@ -190,7 +144,7 @@ export default function VerticalStepper({
                 <input
                   type="color"
                   name="backgroundColor"
-                  defaultValue={form.backgroundColor}
+                  defaultValue={advert?.backgroundColor}
                   onChange={handleChange}
                 />
               </Box>
@@ -200,16 +154,15 @@ export default function VerticalStepper({
               </Box>
             </Box>
             <Box maxWidth={220} margin="0 auto">
-              <AdvertCard advert={form} />
+              <AdvertCard advert={advert} />
             </Box>
             <Box paddingY={2}>
               <Box m={2}>
                 <MyButton
-                  //onClick={() => console.log("guardar", form, labelsSelected)}
                   type="submit"
                   color="primary"
                   variant="contained"
-                  label="Guardar y Publicar"
+                  label="Guardar Anuncio"
                   loading={submiting}
                 />
               </Box>

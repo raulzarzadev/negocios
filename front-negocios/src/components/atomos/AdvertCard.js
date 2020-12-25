@@ -57,7 +57,11 @@ const useStyles = makeStyles((theme) => ({
   },
 }));
 
-export default function AdvertCart({ advert, admin, handleDelete }) {
+export default function AdvertCart({
+  advert = {},
+  admin = false,
+  handleDelete,
+}) {
   const {
     title,
     description,

@@ -21,10 +21,7 @@ const advertSquema = new Schema(
     businessMail: String,
     postalCode: String,
     contacts: Array,
-    image: {
-      url: String,
-      src: String,
-    },
+    image: Object,
     imgUrl: String,
     imgUrlIzq: String,
     labels: String,
