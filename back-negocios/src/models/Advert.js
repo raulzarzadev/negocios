@@ -4,7 +4,6 @@ const advertSquema = new Schema(
   {
     barrio: {
       type: Object,
-      required: true,
     },
     owner: {
       type: String,

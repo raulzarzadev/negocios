@@ -30,6 +30,7 @@ export default function ContactInputs({ advert, setAdvert }) {
   };
   useEffect(() => {
     setAdvert({ ...advert, contacts });
+  // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [contacts]);
 
   const handleDeleteContact = (contact) => {

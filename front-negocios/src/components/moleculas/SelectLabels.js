@@ -3,28 +3,21 @@ import React, { useEffect, useState } from "react";
 import { CHIP_LABELS } from "../../HardData/CHIPS_LABELS";
 
 export default function SelectLabels({ advert, setAdvert }) {
-  const [labelsSelected, setLabelsSelected] = useState([]);
-  const [disable, setDisable] = useState(false);
-
-  const handleDeleteChip = (chipToDelete) => () => {
-    if (labelsSelected.length <= 3) setDisable(false);
-    setLabelsSelected((chips) =>
-      chips?.filter((chip) => chip?.key !== chipToDelete?.key)
-    );
-    setAdvert({ ...advert, labels: labelsSelected });
+  /* TODO no carga las labels existentes */
+  const [labelsSelected, setLabelsSelected] = useState(advert?.labels || []);
+  const handleDeleteChip = (chip) => () => {
+    let res = labelsSelected.filter((element) => element !== chip);
+    setLabelsSelected(res);
   };
 
-  const hanldeAddToLabelList = (newLabel) => {
-    if (labelsSelected.length >= 2) {
-      setDisable(true);
-    }
-    setLabelsSelected([...labelsSelected, newLabel]);
-    setAdvert({ ...advert, labels: labelsSelected });
+  const hanldeAddChip = (chip) => {
+    setLabelsSelected([...labelsSelected, chip]);
   };
 
+  console.log(labelsSelected);
   useEffect(() => {
-    setLabelsSelected(advert.labels);
-  }, [advert.labels]);
+    setAdvert({ ...advert, labels: labelsSelected });
+  }, [labelsSelected]);
 
   return (
     <div>
@@ -42,9 +35,9 @@ export default function SelectLabels({ advert, setAdvert }) {
         {labelsSelected?.map((chip) => (
           <Chip
             style={{ margin: "4px" }}
-            icon={chip.icon}
-            color={chip.color || "primary"}
-            label={chip.label}
+            icon={chip?.icon}
+            color={chip?.color || "primary"}
+            label={chip?.label}
             size="small"
             onDelete={handleDeleteChip(chip)}
           />
@@ -53,13 +46,13 @@ export default function SelectLabels({ advert, setAdvert }) {
       {CHIP_LABELS.map((chip) => {
         return (
           <Chip
-            disabled={disable}
+            disabled={labelsSelected?.length > 2}
             style={{ margin: "4px" }}
-            icon={chip.icon}
-            color={chip.color || "primary"}
-            label={chip.label}
+            icon={chip?.icon}
+            color={chip?.color || "primary"}
+            label={chip?.label}
             size="small"
-            onClick={() => hanldeAddToLabelList(chip)}
+            onClick={() => hanldeAddChip(chip)}
           />
         );
       })}

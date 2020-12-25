@@ -42,7 +42,7 @@ advertsCtrl.createAdvert = async (req, res) => {
     state,
     address,
     schedule,
-  } = req.body;
+  } = req.body.data;
 
   /* TODO ahora no se restan form credit  cuando creas un adert */
   /* 
@@ -135,6 +135,7 @@ advertsCtrl.updateAdvert = async (req, res) => {
     delivery,
     address,
   });
+  
   res.json({ ok: true, message: "Actualizando Anuncio" });
 };
 

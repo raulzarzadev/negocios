@@ -7,20 +7,18 @@ import { uploadImage } from "../../../utils/uploadImage";
 import { useParams } from "react-router-dom";
 import { getAdvert, postAdvert, updateAdvert } from "../../../utils/adverts";
 
-export default function NewAdvert(props) {
+export default function NewAdvert() {
   const params = useParams();
+  const [toEdit] = useState(!!params.id);
   const { isLogged } = useUser();
-  const [advert, setAdvert] = useState(null);
-  const [newAdvert, setNewAdvert] = useState({});
   const [pageTitle, setPageTitle] = useState("Nuevo Anucnio");
   const [loading, setLoading] = useState(true);
   const [newImage, setNewImage] = useState(null);
 
-  console.log(pageTitle);
-  console.log(!!params.id);
+  const [advert, setAdvert] = useState({});
 
   useEffect(() => {
-    if (!!params.id) {
+    if (toEdit) {
       setLoading(true);
       setPageTitle("Editar Anuncio");
       getAdvert(params.id)
@@ -34,51 +32,43 @@ export default function NewAdvert(props) {
         });
     }
     setLoading(false);
-  }, [params.id]);
+  }, [params.id, toEdit]);
 
   const handleChange = (e) => {
-    console.log(e.target);
-    if (advert) {
-      setAdvert({ ...advert, [e.target.name]: e.target.value });
-    } else {
-      setNewAdvert({ ...advert, [e.target.name]: e.target.value });
-    }
+    setAdvert({ ...advert, [e.target.name]: e.target.value });
   };
+
+  const redirectToProfile = () => {
+    setTimeout(() => {
+      setLoading(false);
+      window.location.href = "/perfil";
+    }, 1000);
+  };
+
+  async function upImage() {
+    console.log(newImage.url);
+    const { data } = await uploadImage(newImage.url);
+    setAdvert({ ...advert, image: { src: data.imageUrl } });
+    console.log(data, advert);
+    return data.image;
+  }
 
   const handleSubmit = async () => {
     setLoading(true);
-    async function upImage() {
-      console.log(newImage.url);
-      const { data } = await uploadImage(newImage.url);
-      console.log(data);
-      return data.image;
-    }
-    if (newImage) {
-      const image = upImage();
-      console.log(image);
-    }
+    try {
+      const resUpImage = newImage ? await upImage() : "not new image";
 
-    if (advert) {
-      console.log(advert);
-      updateAdvert(advert._id, advert)
-        .then((res) => {
-          setLoading(false);
-          console.log(res);
-        })
-        .catch((err) => {
-          setLoading(false);
-          console.log(err);
-        });
-    } else {
-      postAdvert(newAdvert)
-        .then((res) => {
-          setLoading(false);
-          console.log(res);
-        })
-        .catch((err) => {
-          setLoading(false);
-          console.log(err);
-        });
+      const resUpAdvert = toEdit
+        ? await updateAdvert(advert._id, advert)
+        : await postAdvert(advert);
+
+      redirectToProfile();
+
+      console.log(resUpImage);
+      console.log(resUpAdvert);
+    } catch (err) {
+      setLoading(false);
+      console.log(err);
     }
   };
 
@@ -95,17 +85,15 @@ export default function NewAdvert(props) {
 
   if (loading) return "loading...";
 
-  console.log(advert, newAdvert);
-
   return (
     <>
       {isLogged ? (
         <VerticalStepper
           PageTitle={pageTitle}
-          advert={advert || newAdvert}
-          setAdvert={advert ? setAdvert : setNewAdvert}
+          advert={advert}
+          setAdvert={setAdvert}
           setImage={setImage}
-          contacts={advert?.contacts || newAdvert?.contacts}
+          contacts={advert?.contacts}
           loading={loading}
           handleChange={handleChange}
           onSubmit={handleSubmit}

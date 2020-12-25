@@ -22,7 +22,9 @@ router.route("/signup/:token").post(confirmEmail);
 
 router.route("/signin").post(signIn);
 
-router.route("/addCredit").get(getCredit).post(isAuthenticated, addCredit);
+router.route("/addCredit")
+  .get(getCredit)
+  .post(isAuthenticated, addCredit);
 
 router
   .route("/:id")
