@@ -15,14 +15,18 @@ advertsCtrl.getAdvertsByUser = async (req, res) => {
 
 advertsCtrl.getAdvert = async (req, res) => {
   const advert = await Advert.findById(req.params.id);
+  //console.log('getadvert', req.user)
   res.json({ ok: true, advert });
 };
 
 advertsCtrl.createAdvert = async (req, res) => {
+  //console.log("creating advert", req.body.advert);
+  //console.log(req.user)
+  //console.log(req.token)
+
   const {
     title,
     contacts,
-    price,
     postalCode,
     description,
     tel,
@@ -39,10 +43,11 @@ advertsCtrl.createAdvert = async (req, res) => {
     backgroundColor,
     delivery,
     barrio,
-    state,
     address,
+    price,
+    state,
     schedule,
-  } = req.body.data;
+  } = req.body.advert;
 
   /* TODO ahora no se restan form credit  cuando creas un adert */
   /* 
@@ -53,8 +58,9 @@ advertsCtrl.createAdvert = async (req, res) => {
   if (price > user.credit)
     return res.json({ ok: false, message: "saldo insuficiente" }); */
   //creando el anuncio
+
   const newAdvert = new Advert({
-    owner: req.token.id,
+    owner: req.user.id,
     contacts,
     barrio,
     title,
@@ -80,16 +86,6 @@ advertsCtrl.createAdvert = async (req, res) => {
   res.json({ ok: true, message: "Anuncio creado con éxito", newAdvert });
 };
 
-advertsCtrl.deleteAdvert = async (req, res) => {
-  //TODO falta eliminar la imagen de cludinary
-  /* ejemplo traido desde https://github.com/raulzarzadev/express-multer/blob/master/src/routes/index.js  
-  const { photo_id } = req.params;
-    const photo = await Photo.findByIdAndDelete(photo_id);
-    const result = await cloudinary.v2.uploader.destroy(photo.public_id); */
-  await Advert.findByIdAndRemove(req.params.id);
-  res.json({ message: "Advert deleted", ok: true });
-};
-
 advertsCtrl.updateAdvert = async (req, res) => {
   const {
     title,
@@ -111,8 +107,8 @@ advertsCtrl.updateAdvert = async (req, res) => {
     delivery,
     barrio,
     address,
-  } = req.body.data;
-  
+  } = req.body.advert;
+
   await Advert.findByIdAndUpdate(req.params.id, {
     contacts,
     barrio,
@@ -135,8 +131,18 @@ advertsCtrl.updateAdvert = async (req, res) => {
     delivery,
     address,
   });
-  
+
   res.json({ ok: true, message: "Actualizando Anuncio" });
+};
+
+advertsCtrl.deleteAdvert = async (req, res) => {
+  //TODO falta eliminar la imagen de cludinary
+  /* ejemplo traido desde https://github.com/raulzarzadev/express-multer/blob/master/src/routes/index.js  
+  const { photo_id } = req.params;
+    const photo = await Photo.findByIdAndDelete(photo_id);
+    const result = await cloudinary.v2.uploader.destroy(photo.public_id); */
+  await Advert.findByIdAndRemove(req.params.id);
+  res.json({ message: "Advert deleted", ok: true });
 };
 
 module.exports = advertsCtrl;

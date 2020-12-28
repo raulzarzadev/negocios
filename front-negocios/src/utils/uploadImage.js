@@ -4,6 +4,7 @@ import { UPLOAD_IMAGE_SERVICE } from "../URLS";
 export async function uploadImage(image) {
   const formData = new FormData();
   formData.append("image", image);
+
   let config = {
     method: "POST",
     headers: {

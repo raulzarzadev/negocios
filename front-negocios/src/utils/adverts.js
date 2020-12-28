@@ -13,12 +13,12 @@ export function getAdvert(id) {
 }
 
 export function postAdvert(advert) {
-  return axios.post(`${url}/adverts`, { data: advert });
+  return axios.post(`${url}/adverts`, { advert });
 }
 
 export function updateAdvert(id, advert) {
   return axios.put(`${url}/adverts/editar/${id}`, {
-    data: advert,
+    advert
   });
 }
 

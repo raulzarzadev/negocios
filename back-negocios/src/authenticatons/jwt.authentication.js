@@ -8,18 +8,21 @@ const isAuthenticated = (req, res, next) => {
       message: "Sin token",
     });
   }
-  //token = token.replace('Bearer ', '')
-  jwt.verify(token, process.env.JWT_SECRET_TEXT, function (err, token) {
-    if (err) {
+  //token = token.replace('Bearer ', ''
+  try {
+    var decoded = jwt.verify(token, process.env.JWT_SECRET_TEXT);
+    req.token = token;
+    req.user = decoded
+    next();
+  } catch (error) {
+    console.log(error)
+    if (error) {
       return res.status(401).send({
         ok: false,
         message: "Toket inválido",
       });
-    } else {
-      req.token = token;
-      next();
     }
-  });
+  }
 };
 
 module.exports = isAuthenticated;

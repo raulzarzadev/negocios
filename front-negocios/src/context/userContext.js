@@ -6,6 +6,12 @@ import { getToken, setToken, removeToken } from "../utils/user";
 
 const UserContext = React.createContext();
 
+const token = getToken();
+Axios.defaults.headers = {
+  "Content-Type": "application/json",
+  "access-token": token,
+};
+
 export function UserProvider(props) {
   const [isLogged, setIsLogged] = useState();
   const [loadingUser, setLoadingUser] = useState(true);
@@ -14,7 +20,6 @@ export function UserProvider(props) {
 
   useEffect(() => {
     async function loadingUser() {
-      const token = getToken();
       if (!token) {
         setLoadingUser(false);
         setIsLogged(false);
@@ -40,6 +45,7 @@ export function UserProvider(props) {
     const { data } = await Axios.post(`${url}/users/signup`, form);
     setData(data);
   }
+
   async function login(form) {
     console.log("login sent");
     const { data } = await Axios.post(`${url}/users/signin`, form);

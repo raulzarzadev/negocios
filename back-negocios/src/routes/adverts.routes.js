@@ -22,7 +22,7 @@ router.route('/:id')
     .delete(isAuthenticated, deleteAdvert)
     
 router.route('/editar/:id')
-    .put( updateAdvert)
+    .put(updateAdvert)
     .get(isAuthenticated, getAdvert)
 
 

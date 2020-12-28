@@ -46,7 +46,7 @@ export default function VerticalStepper({
   setAdvert,
   onSubmit,
   setImage,
-  submiting,
+  loading,
 }) {
   const classes = useStyles();
   const [activeStep, setActiveStep] = React.useState(0);
@@ -163,7 +163,7 @@ export default function VerticalStepper({
                   color="primary"
                   variant="contained"
                   label="Guardar Anuncio"
-                  loading={submiting}
+                  loading={loading}
                 />
               </Box>
               <Box m={2}>

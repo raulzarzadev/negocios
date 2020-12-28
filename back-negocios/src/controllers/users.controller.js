@@ -101,7 +101,8 @@ usersCtrl.signIn = async (req, res) => {
     rol: user.rol,
   };
   const token = await jwt.sign(payload, process.env.JWT_SECRET_TEXT, {
-    expiresIn: 60 * 60 * 24,
+   // TODO complementar expiración?
+   // expiresIn: 60 * 60 * 24,
   });
 
   res.json({

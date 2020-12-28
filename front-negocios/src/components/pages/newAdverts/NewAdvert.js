@@ -33,6 +33,7 @@ export default function NewAdvert() {
     }
     setLoading(false);
   }, [params.id, toEdit]);
+  
 
   const handleChange = (e) => {
     setAdvert({ ...advert, [e.target.name]: e.target.value });
@@ -42,46 +43,46 @@ export default function NewAdvert() {
     setTimeout(() => {
       setLoading(false);
       window.location.href = "/perfil";
-    }, 1000);
+    }, 300);
   };
-
-  async function upImage() {
-    console.log(newImage.url);
-    const { data } = await uploadImage(newImage.url);
-    setAdvert({ ...advert, image: { src: data.imageUrl } });
-    console.log(data, advert);
-    return data.image;
-  }
 
   const handleSubmit = async () => {
     setLoading(true);
     try {
-      const resUpImage = newImage ? await upImage() : "not new image";
-
-      const resUpAdvert = toEdit
-        ? await updateAdvert(advert._id, advert)
-        : await postAdvert(advert);
-
+      let imageSrc = advert.image || "";
+      if (newImage) {
+        const {
+          data: { image },
+        } = await uploadImage(newImage);
+        imageSrc = image.imageURL;
+      }
+      const res = toEdit
+        ? await updateAdvert(advert._id, {
+            ...advert,
+            image: { src: imageSrc },
+          })
+        : await postAdvert({
+            ...advert,
+            image: { src: imageSrc },
+          });
+      console.log(res);
       redirectToProfile();
-
-      console.log(resUpImage);
-      console.log(resUpAdvert);
-    } catch (err) {
-      setLoading(false);
-      console.log(err);
+    } catch (error) {
+      console.log(error);
     }
+
+    setLoading(false);
   };
 
-  const setImage = (e) => {
-    setNewImage({
-      src: URL.createObjectURL(e.target.files[0]),
-      url: e.target.files[0],
+  const setImage = async (e) => {
+    setNewImage(e.target.files[0]);
+    setAdvert({
+      ...advert,
+      image: {
+        src: URL.createObjectURL(e.target.files[0]),
+      },
     });
   };
-
-  useEffect(() => {
-    setAdvert({ ...advert, image: newImage });
-  }, [newImage]);
 
   if (loading) return "loading...";
 
@@ -104,3 +105,36 @@ export default function NewAdvert() {
     </>
   );
 }
+
+/* 
+ setNewImage({
+      src: URL.createObjectURL(e.target.files[0]),
+      url: ,
+    }); 
+    setNewImage({
+      ...advert?.image,
+      src: URL.createObjectURL(e.target.files[0]),
+      url: e.target.files[0],
+    });
+    setAdvert({ ...advert, image: { src: newImage?.src } });
+
+    if (newImage) {
+      const {
+        data: { image },
+      } = await uploadImage(newImage);
+      setAdvert({
+        ...advert,
+        image: { url: newImage, imageURL: image.imageURL, src: image.imageURL },
+      });
+      toEdit && await updateAdvert(advert._id, advert);
+    }else{
+      
+    }
+    const resUpAdvert = toEdit
+      ? await updateAdvert(advert._id, advert)
+      : await postAdvert(advert);
+    console.log(resUpAdvert);
+    /*
+    //redirectToProfile();
+      //console.log(resUpAdvert);
+      */

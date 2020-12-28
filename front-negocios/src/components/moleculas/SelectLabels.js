@@ -14,7 +14,7 @@ export default function SelectLabels({ advert, setAdvert }) {
     setLabelsSelected([...labelsSelected, chip]);
   };
 
-  console.log(labelsSelected);
+  //console.log(labelsSelected);
   useEffect(() => {
     setAdvert({ ...advert, labels: labelsSelected });
   }, [labelsSelected]);
