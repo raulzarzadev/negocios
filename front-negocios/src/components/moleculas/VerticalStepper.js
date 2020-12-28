@@ -15,6 +15,9 @@ import AdvertCard from "../atomos/AdvertCard";
 import ContactInputs from "./ContactInputs";
 import SelectLabels from "./SelectLabels";
 
+import BackupIcon from "@material-ui/icons/Backup";
+import ColorLensIcon from "@material-ui/icons/ColorLens";
+
 const useStyles = makeStyles((theme) => ({
   root: {
     width: "100%",
@@ -36,7 +39,7 @@ const useStyles = makeStyles((theme) => ({
 }));
 
 function getSteps() {
-  return ["Clasifica tu anuncio", "Detalles de tu anuncio", "Contactos"];
+  return ["Titulo y descripción ", "Clasificación", "Contactos"];
 }
 
 export default function VerticalStepper({
@@ -82,46 +85,52 @@ export default function VerticalStepper({
                 <Typography variant="h5">{label}</Typography>
               </StepLabel>
               <StepContent>
-                {activeStep === 0 && (
-                  <>
-                    <SelectLabels advert={advert} setAdvert={setAdvert} />
-                  </>
-                )}
-                {activeStep === 1 && (
-                  <Box display="flex" justifyContent="center" mt={4}>
-                    <Box width="80%">
-                      <MyTextInput
-                        onChange={handleChange}
-                        defaultValue={advert?.title}
-                        name="title"
-                        label="Titulo"
-                      />
-                      <MyTextInput
-                        onChange={handleChange}
-                        defaultValue={advert?.description}
-                        name="description"
-                        label="Descripción"
-                        multiline
-                        rows={4}
-                      />
+                <div>
+                  {activeStep !== 0 && (
+                    <Box m={4}>
+                      <MyButton
+                        variant="outlined"
+                        disabled={activeStep === 0}
+                        onClick={handleBack}
+                        className={classes.button}
+                      >
+                        Atras
+                      </MyButton>
                     </Box>
-                  </Box>
-                )}
-                {activeStep === 2 && (
-                  <>
-                    <ContactInputs advert={advert} setAdvert={setAdvert} />
-                  </>
-                )}
+                  )}
 
-                <div className={classes.actionsContainer}>
-                  <div>
-                    <Button
-                      disabled={activeStep === 0}
-                      onClick={handleBack}
-                      className={classes.button}
-                    >
-                      Atras
-                    </Button>
+                  {activeStep === 0 && (
+                    <Box display="flex" justifyContent="center" mt={4}>
+                      <Box width="80%">
+                        <MyTextInput
+                          onChange={handleChange}
+                          defaultValue={advert?.title}
+                          name="title"
+                          label="Titulo"
+                        />
+                        <MyTextInput
+                          onChange={handleChange}
+                          defaultValue={advert?.description}
+                          name="description"
+                          label="Descripción"
+                          multiline
+                          rows={4}
+                        />
+                      </Box>
+                    </Box>
+                  )}
+                  {activeStep === 1 && (
+                    <>
+                      <SelectLabels advert={advert} setAdvert={setAdvert} />
+                    </>
+                  )}
+                  {activeStep === 2 && (
+                    <>
+                      <ContactInputs advert={advert} setAdvert={setAdvert} />
+                    </>
+                  )}
+
+                  <div className={classes.actionsContainer}>
                     <Button
                       variant="contained"
                       color="primary"
@@ -138,26 +147,63 @@ export default function VerticalStepper({
         </Stepper>
         {activeStep === steps.length && (
           <Paper square elevation={0} className={classes.resetContainer}>
+            <MyButton
+              variant="outlined"
+              onClick={handleReset}
+              className={classes.button}
+            >
+              Regresar
+            </MyButton>
             <Box paddingY={2}>
               <Box>
                 <Typography variant="h5">Selecciona un color:</Typography>
+
                 <input
-                  type="color"
                   name="backgroundColor"
                   defaultValue={advert?.backgroundColor}
+                  accept="image/*"
+                  className={classes.input}
+                  style={{ display: "none" }}
+                  id="raised-button-color"
+                  type="color"
                   onChange={handleChange}
                 />
+                <label htmlFor="raised-button-color">
+                  <Button
+                    variant="raised"
+                    component="span"
+                    className={classes.button}
+                  >
+                    Selecciona Color <ColorLensIcon fontSize="small" style={{ margin: "4px" }} />
+                  </Button>
+                </label>
               </Box>
               <Box>
-                <Typography variant="h5">Sube una imagen:</Typography>
-                <input type="file" name="image" onChange={setImage} />
+                <input
+                  accept="image/*"
+                  className={classes.input}
+                  style={{ display: "none" }}
+                  id="raised-button-file"
+                  type="file"
+                  onChange={setImage}
+                />
+                <label htmlFor="raised-button-file">
+                  <Button
+                    variant="raised"
+                    component="span"
+                    className={classes.button}
+                  >
+                    Subir imagen{" "}
+                    <BackupIcon fontSize="small" style={{ margin: "4px" }} />
+                  </Button>
+                </label>
               </Box>
             </Box>
             <Box maxWidth={220} margin="0 auto">
               <AdvertCard advert={advert} />
             </Box>
             <Box paddingY={2}>
-              <Box m={2}>
+              <Box m={4}>
                 <MyButton
                   type="submit"
                   color="primary"
@@ -165,15 +211,6 @@ export default function VerticalStepper({
                   label="Guardar Anuncio"
                   loading={loading}
                 />
-              </Box>
-              <Box m={2}>
-                <MyButton
-                  variant="outlined"
-                  onClick={handleReset}
-                  className={classes.button}
-                >
-                  Editar
-                </MyButton>
               </Box>
             </Box>
           </Paper>

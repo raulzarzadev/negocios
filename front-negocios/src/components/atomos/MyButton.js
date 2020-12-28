@@ -24,7 +24,7 @@ export default function MyButton({
       fullWidth={fullWidth}
       href={href}
       size={size}
-      type
+      type={type}
     >
       {label}
       {children}

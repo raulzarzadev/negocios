@@ -27,7 +27,6 @@ import ContactLink from "./ContactLink";
 
 const useStyles = makeStyles((theme) => ({
   root: {
-    minWidth: 150,
     width: "100%",
   },
   labelsBox: {
@@ -176,7 +175,9 @@ export default function AdvertCart({
             component="p"
             classes={classes.advertDescription}
           >
-            {description}
+            {description?.length > 80
+              ? description.slice(0, 80) + "..."
+              : description}
           </Typography>
         </CardContent>
       </CardActionArea>

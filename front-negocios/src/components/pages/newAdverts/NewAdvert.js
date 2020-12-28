@@ -33,7 +33,6 @@ export default function NewAdvert() {
     }
     setLoading(false);
   }, [params.id, toEdit]);
-  
 
   const handleChange = (e) => {
     setAdvert({ ...advert, [e.target.name]: e.target.value });
@@ -105,36 +104,3 @@ export default function NewAdvert() {
     </>
   );
 }
-
-/* 
- setNewImage({
-      src: URL.createObjectURL(e.target.files[0]),
-      url: ,
-    }); 
-    setNewImage({
-      ...advert?.image,
-      src: URL.createObjectURL(e.target.files[0]),
-      url: e.target.files[0],
-    });
-    setAdvert({ ...advert, image: { src: newImage?.src } });
-
-    if (newImage) {
-      const {
-        data: { image },
-      } = await uploadImage(newImage);
-      setAdvert({
-        ...advert,
-        image: { url: newImage, imageURL: image.imageURL, src: image.imageURL },
-      });
-      toEdit && await updateAdvert(advert._id, advert);
-    }else{
-      
-    }
-    const resUpAdvert = toEdit
-      ? await updateAdvert(advert._id, advert)
-      : await postAdvert(advert);
-    console.log(resUpAdvert);
-    /*
-    //redirectToProfile();
-      //console.log(resUpAdvert);
-      */

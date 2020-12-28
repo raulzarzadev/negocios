@@ -18,8 +18,11 @@ export function postAdvert(advert) {
 
 export function updateAdvert(id, advert) {
   return axios.put(`${url}/adverts/editar/${id}`, {
-    advert
+    advert,
   });
+}
+export function deleteAdvert(id) {
+  return axios.delete(`${url}/adverts/${id}`);
 }
 
 export function getAllBarrios() {

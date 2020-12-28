@@ -1,35 +1,29 @@
 import React, { useState } from "react";
 import { Box, Typography, makeStyles } from "@material-ui/core";
 import AdvertCard from "../../atomos/AdvertCard";
-import Axios from "axios";
-import { getToken } from "../../../utils/user";
-import url from "../../../url/url";
-
-const token = getToken();
+import { deleteAdvert } from "../../../utils/adverts";
 
 const useStyles = makeStyles(() => ({
   userLine: {
     display: "flex",
     overflowX: "auto",
     padding: `0 12px`,
+    border: "1px solid",
+    minHeight: "50px",
+    boxShadow: `
+    -moz-box-shadow:    inset 0 0 5px #000000;
+    -webkit-box-shadow: inset 0 0 5px #000000;
+    box-shadow:         inset 0 0 5px #000000;
+ `,
   },
 }));
 export default function UserView({ user }) {
-
   const classes = useStyles();
 
   const [adverts, setAdverts] = useState(user.adverts || []);
-
+  const [publishAdverts, setPublishAdverts] = useState([]);
   async function handleDeleteAdvert(id) {
-    let config = {
-      method: "DELETE",
-      headers: {
-        Accept: "application/json",
-        "Content-Type": "application/json",
-        "access-token": token,
-      },
-    };
-    await Axios(`${url}/adverts/${id}`, config);
+    await deleteAdvert(id);
     setAdverts(adverts.filter((advert) => advert._id !== id));
   }
 
@@ -41,11 +35,31 @@ export default function UserView({ user }) {
         Credit:<strong> ${user.credit.toFixed(2)}</strong>
       </Typography>
 
-      <Typography variant="h4">Anuncios Publicados</Typography>
+      <Typography variant="h6">Anuncios Publicados</Typography>
       <Box>
         <div className={classes.userLine}>
-          {adverts.map((advert) => (
-            <Box m={1} item key={advert._id}>
+          {publishAdverts.map((advert) => (
+            <Box m={1} item key={advert._id} minWidth="200px">
+              <AdvertCard
+                advert={advert}
+                admin
+                handleDelete={handleDeleteAdvert}
+              />
+            </Box>
+          ))}
+          <Box width="100%" m={2}>
+            <Typography align="center">
+              No hay anuncioas publicados aún
+            </Typography>
+          </Box>
+        </div>
+      </Box>
+
+      <Typography variant="h6">Anuncios Creados</Typography>
+      <Box>
+        <div className={classes.userLine}>
+          {adverts.reverse().map((advert) => (
+            <Box m={1} item key={advert._id} minWidth="200px">
               <AdvertCard
                 advert={advert}
                 admin

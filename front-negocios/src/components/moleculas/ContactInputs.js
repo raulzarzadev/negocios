@@ -3,8 +3,9 @@ import MyButton from "../atomos/MyButton";
 import AddCircleOutlineIcon from "@material-ui/icons/AddCircleOutline";
 import MySelectInput from "../atomos/MySelectInput";
 import { CONTACT_TYPES } from "../../HardData/CONTACT_TYPES";
-import { Grid, IconButton, Typography } from "@material-ui/core";
+import { Box, Grid, IconButton, Typography } from "@material-ui/core";
 import MyTextInput from "../atomos/MyTextInput";
+import DeleteForeverIcon from "@material-ui/icons/DeleteForever";
 
 export default function ContactInputs({ advert, setAdvert }) {
   const [contacts, setContacts] = useState(advert.contacts || []);
@@ -19,18 +20,22 @@ export default function ContactInputs({ advert, setAdvert }) {
       case "ws":
         setPlaceholder("Escribe tu whats app");
         break;
+      case "tel":
+        setPlaceholder("Numero de teléfono");
+        break;
       default:
         setPlaceholder("Copia el link");
         break;
     }
   }, [newContact.contactType]);
 
+
   const addContact = () => {
     setContacts([...contacts, newContact]);
   };
   useEffect(() => {
     setAdvert({ ...advert, contacts });
-  // eslint-disable-next-line react-hooks/exhaustive-deps
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [contacts]);
 
   const handleDeleteContact = (contact) => {
@@ -46,33 +51,23 @@ export default function ContactInputs({ advert, setAdvert }) {
       {contacts.map((contact) => (
         <>
           <Grid container justify="center">
-            <Grid item xs={3} style={{ alignSelf: "center" }}>
-              <Typography variant="h6" align="right">
+            <Grid xs={2}>
+              <IconButton
+                size="small"
+                onClick={() => handleDeleteContact(contact)}
+              >
+                <DeleteForeverIcon />
+              </IconButton>
+            </Grid>
+            <Grid item xs={2} style={{ alignSelf: "center" }}>
+              <Typography variant="h6" align="center">
                 {contact.contactType}:
               </Typography>
             </Grid>
-            <Grid item style={{ alignSelf: "center", marginLeft: 12 }} xs={6}>
-              <Typography variant="p">{contact.contactValue}</Typography>
-            </Grid>
-            <Grid xs={2}>
-              <IconButton>
-                <div
-                  style={{
-                    alignSelf: "center",
-                    margin: "4px",
-                    height: 15,
-                    width: 15,
-                    display: "flex",
-                    alignItems: "center",
-                    justifyContent: "center",
-                    border: "1px solid",
-                    borderRadius: "50px",
-                  }}
-                  onClick={() => handleDeleteContact(contact)}
-                >
-                  X
-                </div>
-              </IconButton>
+            <Grid item xs={8} style={{ display: "flex", alignItems: "center" }}>
+              <Typography variant="p" noWrap>
+                {contact.contactValue}
+              </Typography>
             </Grid>
           </Grid>
         </>
@@ -84,16 +79,17 @@ export default function ContactInputs({ advert, setAdvert }) {
         handleChange={handleChange}
         placeholder={placeholder}
       />
-
-      <MyButton
-        disabled={!newContact.contactType || !newContact.contactValue}
-        onClick={() => {
-          addContact();
-          setNewContact({ contactType: "", contactValue: "" });
-        }}
-      >
-        Agregar contacto <AddCircleOutlineIcon />
-      </MyButton>
+      <Box m={3}>
+        <MyButton
+          disabled={!newContact.contactType || !newContact.contactValue}
+          onClick={() => {
+            addContact();
+            setNewContact({ contactType: "", contactValue: "" });
+          }}
+        >
+          Agregar contacto <AddCircleOutlineIcon />
+        </MyButton>
+      </Box>
     </div>
   );
 }
