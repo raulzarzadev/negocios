@@ -17,6 +17,7 @@ export default function SelectLabels({ advert, setAdvert }) {
   //console.log(labelsSelected);
   useEffect(() => {
     setAdvert({ ...advert, labels: labelsSelected });
+  // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [labelsSelected]);
 
   return (

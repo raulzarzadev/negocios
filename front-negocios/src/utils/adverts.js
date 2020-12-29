@@ -4,6 +4,7 @@ import { getToken } from "./user";
 const token = getToken();
 
 axios.defaults.headers = {
+  Accept: "application/json",
   "Content-Type": "application/json",
   "access-token": token,
 };

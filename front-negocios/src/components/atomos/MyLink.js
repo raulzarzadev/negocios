@@ -8,8 +8,11 @@ const useStyles = makeStyles((theme) => ({
     color: "inherit",
   },
   decoratedLink: {
-
-  }
+    border: "1px solid",
+    padding:theme.spacing(1),
+    borderRadius:theme.spacing(1)
+    
+  },
 }));
 
 export default function MyLink({ to, children, component, decorated }) {

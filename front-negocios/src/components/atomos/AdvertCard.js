@@ -15,6 +15,7 @@ import MoreVertIcon from "@material-ui/icons/MoreVert";
 import LocationOnIcon from "@material-ui/icons/LocationOn";
 import {
   Box,
+  Button,
   IconButton,
   Menu,
   MenuItem,
@@ -77,6 +78,7 @@ export default function AdvertCart({
   const classes = useStyles();
   const history = useHistory();
   const [openModal, setOpenModal] = useState(false);
+  const [deleteModal, setDeleteModal] = useState(false);
   const handleOpenModal = () => {
     setOpenModal(!openModal);
   };
@@ -88,6 +90,9 @@ export default function AdvertCart({
   };
   const handleEdit = (advertId) => {
     history.push(`/editar/${advertId}`);
+  };
+  const handleOpenDeleteModal = () => {
+    setDeleteModal(!deleteModal);
   };
 
   const handleClose = () => {
@@ -115,17 +120,20 @@ export default function AdvertCart({
                 open={Boolean(anchorEl)}
                 onClose={handleClose}
               >
-                <MenuItem onClick={handleClose}>Ver Menú</MenuItem>
-                <MenuItem onClick={handleClose}>Guardar</MenuItem>
+                <MenuItem onClick={handleClose}>Detalles</MenuItem>
+                <MenuItem onClick={handleClose}>Publicar</MenuItem>
+                <MenuItem onClick={() => handleEdit(_id)}>Editar</MenuItem>
                 <MenuItem
                   onClick={() => {
-                    handleDelete(_id);
+                    handleOpenDeleteModal();
+                    //handleDelete(_id);
                     handleClose();
                   }}
                 >
-                  Eliminar
+                  <div style={{ border: "solid 3px red", padding: "4px" }}>
+                    Eliminar
+                  </div>
                 </MenuItem>
-                <MenuItem onClick={() => handleEdit(_id)}>Editar</MenuItem>
               </Menu>
             </>
           ) : (
@@ -196,6 +204,33 @@ export default function AdvertCart({
           ))}
         </Box>
       </CardActions>
+      <MyModal
+        title="Eliminar anuncio"
+        open={deleteModal}
+        handleOpenModal={handleOpenDeleteModal}
+      >
+        <Typography variant="p" align="center">
+          Para eliminar el siguiente anuncio, da click en{" "}
+          <strong>'eliminar anuncio'</strong>
+        </Typography>
+        <Box my={2}>
+          <AdvertCart advert={advert} />
+        </Box>
+        <Box marginTop={2}>
+          <Typography>
+            <em>Esta accion no se puede deshacer!</em>
+          </Typography>
+          <Box display="flex" justifyContent="center" m={1}>
+            <Button
+              variant="outlined"
+              style={{ color: "red" }}
+              onClick={() => handleDelete(_id)}
+            >
+              Eliminar anuncio
+            </Button>
+          </Box>
+        </Box>
+      </MyModal>
       <MyModal open={openModal} handleOpenModal={handleOpenModal}>
         <div> Aca iria el menu</div>
       </MyModal>

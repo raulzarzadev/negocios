@@ -2,6 +2,7 @@ import React, { useState } from "react";
 import { Box, Typography, makeStyles } from "@material-ui/core";
 import AdvertCard from "../../atomos/AdvertCard";
 import { deleteAdvert } from "../../../utils/adverts";
+import MyLink from "../../atomos/MyLink";
 
 const useStyles = makeStyles(() => ({
   userLine: {
@@ -21,7 +22,7 @@ export default function UserView({ user }) {
   const classes = useStyles();
 
   const [adverts, setAdverts] = useState(user.adverts || []);
-  const [publishAdverts, setPublishAdverts] = useState([]);
+  const [publishAdverts] = useState([]);
   async function handleDeleteAdvert(id) {
     await deleteAdvert(id);
     setAdverts(adverts.filter((advert) => advert._id !== id));
@@ -38,35 +39,58 @@ export default function UserView({ user }) {
       <Typography variant="h6">Anuncios Publicados</Typography>
       <Box>
         <div className={classes.userLine}>
-          {publishAdverts.map((advert) => (
-            <Box m={1} item key={advert._id} minWidth="200px">
-              <AdvertCard
-                advert={advert}
-                admin
-                handleDelete={handleDeleteAdvert}
-              />
+          {!!publishAdverts.length ? (
+            <>
+              {publishAdverts.map((advert) => (
+                <Box m={1} item key={advert._id} minWidth="200px">
+                  <AdvertCard
+                    advert={advert}
+                    admin
+                    handleDelete={handleDeleteAdvert}
+                  />
+                </Box>
+              ))}
+            </>
+          ) : (
+            <Box width="100%" m={2}>
+              <Typography align="center">
+                No hay anuncios publicados aún
+              </Typography>
             </Box>
-          ))}
-          <Box width="100%" m={2}>
-            <Typography align="center">
-              No hay anuncioas publicados aún
-            </Typography>
-          </Box>
+          )}
         </div>
       </Box>
 
       <Typography variant="h6">Anuncios Creados</Typography>
       <Box>
         <div className={classes.userLine}>
-          {adverts.reverse().map((advert) => (
-            <Box m={1} item key={advert._id} minWidth="200px">
-              <AdvertCard
-                advert={advert}
-                admin
-                handleDelete={handleDeleteAdvert}
-              />
+          {!!adverts.length ? (
+            <>
+              {adverts.reverse().map((advert) => (
+                <Box m={1} item key={advert._id} minWidth="200px">
+                  <AdvertCard
+                    advert={advert}
+                    admin
+                    handleDelete={handleDeleteAdvert}
+                  />
+                </Box>
+              ))}
+            </>
+          ) : (
+            <Box width="100%" m={2}>
+              <Typography align="center">No has creado anuncios aún</Typography>
+              <Box m={2}>
+                <MyLink
+                  decorated
+                  to="/nuevo-anuncio"
+                  variant="contained"
+                  color="primary"
+                >
+                  Crear anuncio
+                </MyLink>
+              </Box>
             </Box>
-          ))}
+          )}
         </div>
       </Box>
     </Box>

@@ -32,7 +32,8 @@ const useStyles = makeStyles((theme) => ({
     margin: 0,
   },
   contentModal: {
-    height: "calc(100vh/2)",
+    overflow: "auto",
+    maxHeight: "calc(100vh*.75)",
     padding: theme.spacing(2),
   },
 }));

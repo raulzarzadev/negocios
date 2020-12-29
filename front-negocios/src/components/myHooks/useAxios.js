@@ -8,7 +8,13 @@ const useAxios = (url) => {
   useEffect(() => {
     const axiosResource = async () => {
       try {
-        const res = await Axios.get(url, { crossdomain: true });
+        const res = await Axios.get(url, {
+          crossdomain: true,
+          headers: {
+            "Content-Security-Policy":
+              "default-src *; style-src 'self' 'unsafe-inline'; font-src 'self' data:; script-src 'self' 'unsafe-inline' 'unsafe-eval' stackexchange.com",
+          },
+        });
         setData(res.data);
         setLoading(false);
       } catch (error) {

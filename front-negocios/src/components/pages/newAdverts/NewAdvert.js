@@ -6,6 +6,7 @@ import { useUser } from "../../../context/userContext";
 import { uploadImage } from "../../../utils/uploadImage";
 import { useParams } from "react-router-dom";
 import { getAdvert, postAdvert, updateAdvert } from "../../../utils/adverts";
+import Loading from "../../atomos/Loading";
 
 export default function NewAdvert() {
   const params = useParams();
@@ -18,20 +19,19 @@ export default function NewAdvert() {
   const [advert, setAdvert] = useState({});
 
   useEffect(() => {
+    setLoading(true);
     if (toEdit) {
-      setLoading(true);
       setPageTitle("Editar Anuncio");
       getAdvert(params.id)
         .then((res) => {
-          setLoading(false);
           setAdvert(res.data.advert);
+          setLoading(false);
         })
         .catch((err) => {
-          setLoading(false);
           console.log(err);
+          setLoading(false);
         });
     }
-    setLoading(false);
   }, [params.id, toEdit]);
 
   const handleChange = (e) => {
@@ -39,16 +39,14 @@ export default function NewAdvert() {
   };
 
   const redirectToProfile = () => {
-    setTimeout(() => {
-      setLoading(false);
-      window.location.href = "/perfil";
-    }, 300);
+    window.location.href = "/perfil";
+    //setLoading(false);
   };
 
   const handleSubmit = async () => {
     setLoading(true);
     try {
-      let imageSrc = advert.image || "";
+      let imageSrc = advert.image;
       if (newImage) {
         const {
           data: { image },
@@ -73,6 +71,8 @@ export default function NewAdvert() {
     setLoading(false);
   };
 
+  //TODO cuando carga editas anucnio sin tokcar imagen se borra la anteriaor
+
   const setImage = async (e) => {
     setNewImage(e.target.files[0]);
     setAdvert({
@@ -82,8 +82,9 @@ export default function NewAdvert() {
       },
     });
   };
+  console.log(advert.image);
 
-  if (loading) return "loading...";
+  if (loading) return <Loading />;
 
   return (
     <>

@@ -51,6 +51,7 @@ export default function VerticalStepper({
   setImage,
   loading,
 }) {
+  
   const classes = useStyles();
   const [activeStep, setActiveStep] = React.useState(0);
   const steps = getSteps();
@@ -66,6 +67,7 @@ export default function VerticalStepper({
   const handleReset = () => {
     setActiveStep(0);
   };
+
 
   return (
     <div className={classes.root}>
@@ -174,7 +176,11 @@ export default function VerticalStepper({
                     component="span"
                     className={classes.button}
                   >
-                    Selecciona Color <ColorLensIcon fontSize="small" style={{ margin: "4px" }} />
+                    Selecciona Color{" "}
+                    <ColorLensIcon
+                      fontSize="small"
+                      style={{ color: advert?.backgroundColor, margin: "4px" }}
+                    />
                   </Button>
                 </label>
               </Box>
