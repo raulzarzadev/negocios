@@ -27,6 +27,7 @@ const advertSquema = new Schema(
     classification: String,
     backgroundColor: String,
     delivery: Boolean,
+
     styles: {
       backgroundColor: String,
     },
@@ -60,6 +61,8 @@ const advertSquema = new Schema(
       googleLocation: String,
       postalCode: String,
     },
+    isPublished: Boolean,
+    publishedOn: Array,
   },
   {
     timestamps: true,

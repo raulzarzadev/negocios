@@ -14,7 +14,8 @@ import {
   Box,
 } from "@material-ui/core";
 import TextField from "@material-ui/core/TextField";
-import { ESTADOS_MX } from "../../../HardData/estadosMX";
+import { ESTADOS_LABEL_MX } from "../../../HardData/estadosMX";
+import MySelectInput from "../../atomos/MySelectInput";
 
 const useStyles = makeStyles((theme) => ({
   newBarrioContent: {},
@@ -27,9 +28,9 @@ const useStyles = makeStyles((theme) => ({
 }));
 
 export default function NewBarrioForm({ onSubmit }) {
+  const [statesList] = React.useState(ESTADOS_LABEL_MX);
   const [activeStep, setActiveStep] = React.useState(0);
   const steps = getSteps();
-
   const handleNext = () => {
     setActiveStep((prevActiveStep) => prevActiveStep + 1);
   };
@@ -43,10 +44,22 @@ export default function NewBarrioForm({ onSubmit }) {
   };
   //console.log(watch("name"));
   const [form, setForm] = React.useState({});
-  const handleChange = (e) => {
-    setForm({ ...form, [e.target.name]: e.target.value });
+  const [stateSelected, setStateSelected] = React.useState("");
+
+  const handleSelectState = (e) => {
+    setForm({
+      ...form,
+      state: e.target.value,
+      stateData: statesList.find((state) => state.value === e.target.value),
+    });
   };
   console.log(form);
+  const handleChange = (e) => {
+    setForm({
+      ...form,
+      [e.target.name]: e.target.value,
+    });
+  };
   const classes = useStyles();
   return (
     <div className={classes.newBarrioContent}>
@@ -113,7 +126,17 @@ export default function NewBarrioForm({ onSubmit }) {
                     </Grid>
                   )}
                   {activeStep === 2 && (
-                    <Grid item xs={12} className={classes.input}>
+                    <Box m={2} width="100%">
+                      <MySelectInput
+                        label="Estado"
+                        name="stateLabel"
+                        placeholder="Selecciona un Estado"
+                        options={statesList}
+                        value={form?.stateData?.value}
+                        onChange={handleSelectState}
+                      />
+                    </Box>
+                    /*  <Grid item xs={12} className={classes.input}>
                       <FormControl variant="outlined">
                         <Select name="state" native onChange={handleChange}>
                           <option aria-label="" value="">
@@ -126,7 +149,7 @@ export default function NewBarrioForm({ onSubmit }) {
                           ))}
                         </Select>
                       </FormControl>
-                    </Grid>
+                    </Grid> */
                   )}
                 </Grid>
               </Paper>

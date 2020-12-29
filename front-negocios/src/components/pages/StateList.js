@@ -4,8 +4,11 @@ import { Link } from 'react-router-dom'
 
 
 export default function State(props) {
+    console.log(props)
+    
     const { nameState, barrios } = props
     let { count } = props
+
 
     const barriosList = []
     barrios.map(barrio => {
@@ -15,6 +18,7 @@ export default function State(props) {
         }
         return count
     })
+
     return (
 
         <li style={styles.listStates}>

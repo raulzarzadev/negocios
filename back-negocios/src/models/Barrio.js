@@ -14,7 +14,10 @@ const barrioSquema = new Schema(
     },
     owner: {
       type: String,
-      required: true,
+      //required: true,
+    },
+    stateData: {
+      type: Object,
     },
     state: {
       type: String,

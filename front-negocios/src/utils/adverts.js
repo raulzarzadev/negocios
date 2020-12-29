@@ -26,6 +26,10 @@ export function deleteAdvert(id) {
   return axios.delete(`${url}/adverts/${id}`);
 }
 
+export function getPublishedAdverts() {
+  return axios.get(`${url}/adverts`);
+}
+
 export function getAllBarrios() {
   return axios.get(`${url}/barrios`);
 }

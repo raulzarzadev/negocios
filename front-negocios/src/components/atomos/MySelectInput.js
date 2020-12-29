@@ -1,8 +1,10 @@
 import {
+  Box,
   FormControl,
   FormHelperText,
   MenuItem,
   Select,
+  Typography,
 } from "@material-ui/core";
 import React from "react";
 
@@ -21,6 +23,13 @@ export default function MySelectInput({
 }) {
   return (
     <FormControl error={error} size="small" fullWidth focused>
+      {label && (
+        <Box>
+          <Typography align="left" variant="body2">
+            {label}:
+          </Typography>
+        </Box>
+      )}
       <Select
         name={name}
         autoFocus

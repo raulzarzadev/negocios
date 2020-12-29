@@ -25,7 +25,7 @@ import {
 import MyModal from "./MyModal";
 import { CHIP_LABELS } from "../../HardData/CHIPS_LABELS";
 import ContactLink from "./ContactLink";
-
+import ToPublishAdvert from "../moleculas/ToPublishAdvert";
 const useStyles = makeStyles((theme) => ({
   root: {
     width: "100%",
@@ -79,6 +79,7 @@ export default function AdvertCart({
   const history = useHistory();
   const [openModal, setOpenModal] = useState(false);
   const [deleteModal, setDeleteModal] = useState(false);
+  const [publishModal, setPublishModal] = useState(false);
   const handleOpenModal = () => {
     setOpenModal(!openModal);
   };
@@ -93,6 +94,11 @@ export default function AdvertCart({
   };
   const handleOpenDeleteModal = () => {
     setDeleteModal(!deleteModal);
+  };
+
+  const handleOpenPublishModal = () => {
+    setPublishModal(!publishModal);
+    handleClose();
   };
 
   const handleClose = () => {
@@ -121,7 +127,9 @@ export default function AdvertCart({
                 onClose={handleClose}
               >
                 <MenuItem onClick={handleClose}>Detalles</MenuItem>
-                <MenuItem onClick={handleClose}>Publicar</MenuItem>
+                <MenuItem onClick={() => handleOpenPublishModal()}>
+                  Publicar
+                </MenuItem>
                 <MenuItem onClick={() => handleEdit(_id)}>Editar</MenuItem>
                 <MenuItem
                   onClick={() => {
@@ -204,13 +212,23 @@ export default function AdvertCart({
           ))}
         </Box>
       </CardActions>
+
+      {/* MODALES  */}
+
+      <MyModal
+        title="Publicar anuncio"
+        open={publishModal}
+        handleOpenModal={handleOpenPublishModal}
+      >
+        <ToPublishAdvert />
+      </MyModal>
       <MyModal
         title="Eliminar anuncio"
         open={deleteModal}
         handleOpenModal={handleOpenDeleteModal}
       >
         <Typography variant="p" align="center">
-          Para eliminar el siguiente anuncio, da click en{" "}
+          Para eliminar el siguiente anuncio, da click en
           <strong>'eliminar anuncio'</strong>
         </Typography>
         <Box my={2}>

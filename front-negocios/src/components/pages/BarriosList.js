@@ -1,10 +1,11 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
 import StateList from "../pages/StateList";
 import useAxios from "../myHooks/useAxios";
 import FatalError from "../pages/errors/500";
 import url from "../../url/url";
 import { makeStyles, Typography } from "@material-ui/core";
 import Loading from "../atomos/Loading";
+import { getAllBarrios, getPublishedAdverts } from "../../utils/adverts";
 
 const useStyles = makeStyles((theme) => ({
   barriosList: {
@@ -14,25 +15,41 @@ const useStyles = makeStyles((theme) => ({
 }));
 
 export default function BarriosList() {
-  const classes = useStyles();
+  const [loading, setLoading] = useState(true);
+  const [adverts, setAdverts] = useState([]);
+  const [barrios, setBarrios] = useState([]);
+
+  useEffect(() => {
+    getAllBarrios().then((res) => {
+      setBarrios(res.data.barrios);
+    });
+    getPublishedAdverts().then((res) => {
+      setAdverts(res.data.adverts);
+      setLoading(false);
+    });
+  }, []);
+  
+  /* const classes = useStyles();
   const { data, loading, error } = useAxios(url + "/barrios");
   console.log("get barrios");
-  if (loading) return <Loading />;
   if (error) return <FatalError />;
-
+  
   let statesList = [];
   let count = 0;
-
+  
   data?.barrios?.map((barrio) => {
     if (!statesList.includes(barrio.state)) {
       statesList.push(barrio.state);
     }
     return statesList;
   });
+  
+  console.log(data); */
+  if (loading) return <Loading />;
 
   return (
-    <div className={classes.barriosList}>
-      <Typography variant="h4" paragraph>
+    <div>
+      {/*  <Typography variant="h4" paragraph>
         Barrios en México
       </Typography>
       {statesList.map((nameState) => (
@@ -42,7 +59,7 @@ export default function BarriosList() {
           barrios={data.barrios}
           count={count}
         />
-      ))}
+      ))} */}
     </div>
   );
 }

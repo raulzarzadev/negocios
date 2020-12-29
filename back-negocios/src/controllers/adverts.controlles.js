@@ -4,7 +4,7 @@ const User = require("../models/User");
 const advertsCtrl = {};
 
 advertsCtrl.getAdverts = async (req, res) => {
-  const adverts = await Advert.find();
+  const adverts = await Advert.find({ isPublished: true });
   res.json({ ok: true, adverts });
 };
 
