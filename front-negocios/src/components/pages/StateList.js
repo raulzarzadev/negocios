@@ -1,54 +1,40 @@
-import {  Typography } from '@material-ui/core'
-import React from 'react'
-import { Link } from 'react-router-dom'
+import { Box, makeStyles, Typography } from "@material-ui/core";
+import React from "react";
+import { Link } from "react-router-dom";
 
+const useStyles = makeStyles((theme) => ({
+  list: {
+    listStyle: "none",
+    margin: 0,
+    padding: 0,
+  },
+  listItem: {
+    textDecoration: "none",
+    padding: 0,
+  },
+}));
 
-export default function State(props) {
-    console.log(props)
-    
-    const { nameState, barrios } = props
-    let { count } = props
-
-
-    const barriosList = []
-    barrios.map(barrio => {
-        if (barrio.state === nameState) {
-            barriosList.push(barrio)
-            count = count + 1
-        }
-        return count
-    })
-
-    return (
-
-        <li style={styles.listStates}>
-            <Typography variant="h6">
-                {nameState} ({count})
-                </Typography>
-            <ul style={styles.listStates}>
-                {barriosList.map((barrio) => (
-                    <li key={barrio._id} >
-                        <Link to={`/${barrio.shortName}`} > {barrio.name} </Link>
-                    </li>
-                ))}
+export default function StateList({ barrios }) {
+  const classes = useStyles();
+  return (
+    <div>
+      <Typography variant="h5">Barrios</Typography>
+      {barrios.map((state) => (
+        <Box m={4}>
+          <Box m={2}>
+            <Typography variant="h5">
+              {state.label} ({state?.barrios?.length})
+            </Typography>
+          </Box>
+          {state?.barrios?.map((barrio) => (
+            <ul className={classes.list}>
+              <li key={barrio._id} className={classes.listItem}>
+                <Link to={`/${barrio.shortName}`}> {barrio.name} </Link>
+              </li>
             </ul>
-        </li>
-    )
+          ))}
+        </Box>
+      ))}
+    </div>
+  );
 }
-
-const styles = {
-
-    listContainer: {
-        textAlign: 'center',
-
-    },
-    listStates: {
-        listStyle: 'none',
-        padding: '0',
-    },
-    listItem: {
-        cursor: 'pointer'
-    }
-
-}
-

@@ -14,7 +14,7 @@ import {
   Box,
 } from "@material-ui/core";
 import TextField from "@material-ui/core/TextField";
-import { ESTADOS_LABEL_MX } from "../../../HardData/estadosMX";
+import { ESTADOS_LABEL_MX } from "../../../HardData/ESTADOS_MX";
 import MySelectInput from "../../atomos/MySelectInput";
 
 const useStyles = makeStyles((theme) => ({

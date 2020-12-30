@@ -1,4 +1,4 @@
-export const ESTADOS_MX = [
+/* export const ESTADOS_MX = [
   "Aguascalientes",
   "Baja California",
   "Baja California Sur",
@@ -31,7 +31,7 @@ export const ESTADOS_MX = [
   "Veracruz ",
   "Yucatán",
   "Zacatecas",
-];
+]; */
 
 export const ESTADOS_LABEL_MX = [
   { label: "Aguascalientes", value: "AGU" },

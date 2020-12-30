@@ -1,10 +1,11 @@
 import { Box, Typography } from "@material-ui/core";
 import React, { useEffect, useState } from "react";
 import MySelectInput from "../atomos/MySelectInput";
-import { ESTADOS_LABEL_MX } from "../../HardData/estadosMX";
+import { ESTADOS_LABEL_MX } from "../../HardData/ESTADOS_MX";
 import { getAllBarrios } from "../../utils/adverts";
 
 export default function ToPublishAdvert() {
+  const [states] = useState(ESTADOS_LABEL_MX || []);
   const [state, setState] = useState("");
   const [barrios, setBarrios] = useState([]);
   const [loading, setLoading] = useState(true);
@@ -39,9 +40,8 @@ export default function ToPublishAdvert() {
         <MySelectInput
           name="state"
           label="Estado"
-          
           placeholder="Selecciona un Estado"
-          options={ESTADOS_LABEL_MX}
+          options={states}
           onChange={handleChange}
         />
       </Box>
