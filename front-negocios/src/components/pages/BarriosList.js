@@ -29,6 +29,7 @@ export default function BarriosList() {
       !includes(statesList, barrio.stateData) &&
       statesList.push(barrio.stateData)
   );
+  console.log(statesList);
 
   const barriosByState = statesList.map((state) => {
     let barriosByState = [];
@@ -37,8 +38,6 @@ export default function BarriosList() {
     );
     return { ...state, barrios: barriosByState };
   });
-
-  console.log(barriosByState);
 
   if (loading) return <Loading />;
 

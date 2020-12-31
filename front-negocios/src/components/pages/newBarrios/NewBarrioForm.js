@@ -18,7 +18,11 @@ import { ESTADOS_LABEL_MX } from "../../../HardData/ESTADOS_MX";
 import MySelectInput from "../../atomos/MySelectInput";
 
 const useStyles = makeStyles((theme) => ({
-  newBarrioContent: {},
+  newBarrioCard: {
+    border: "1px solid ",
+    margin: theme.spacing(2),
+    padding: theme.spacing(2),
+  },
   input: {
     padding: theme.spacing(2),
   },
@@ -28,6 +32,7 @@ const useStyles = makeStyles((theme) => ({
 }));
 
 export default function NewBarrioForm({ onSubmit }) {
+  const classes = useStyles();
   const [statesList] = React.useState(ESTADOS_LABEL_MX);
   const [activeStep, setActiveStep] = React.useState(0);
   const steps = getSteps();
@@ -44,7 +49,6 @@ export default function NewBarrioForm({ onSubmit }) {
   };
   //console.log(watch("name"));
   const [form, setForm] = React.useState({});
-  const [stateSelected, setStateSelected] = React.useState("");
 
   const handleSelectState = (e) => {
     setForm({
@@ -60,7 +64,25 @@ export default function NewBarrioForm({ onSubmit }) {
       [e.target.name]: e.target.value,
     });
   };
-  const classes = useStyles();
+
+  function getSteps() {
+    return ["¿Dónde?", "Nombre Completo", "Nombre corto"];
+  }
+
+  function getStepContent(stepIndex) {
+    switch (stepIndex) {
+      case 0:
+        /* Entre mas info mejor para ti y tus clientes */
+        return "Selecciona el lugar donde está este barrio";
+      case 1:
+        return "Escribe el nombre completo del barrio";
+      case 2:
+        return "Escribe un nombre corto. Este debe ser único";
+      default:
+        return "Unknown stepIndex";
+    }
+  }
+
   return (
     <div className={classes.newBarrioContent}>
       <Box m={3}>
@@ -82,20 +104,51 @@ export default function NewBarrioForm({ onSubmit }) {
           autoComplete="on"
         >
           {activeStep === steps.length ? (
-            <div>
-              <Typography className={classes.instructions}>
-                ¡Listo! Da click en crear para terminar terminar el proceso.
-              </Typography>
-              <Button onClick={handleReset}>Cancelar</Button>
-              <Button type="submit" color="primary" variant="contained">
-                Crear
-              </Button>
-            </div>
+            <Paper>
+              <Box p={2}>
+                <Typography className={classes.instructions}>
+                  Verifica sí la información es correcta.
+                </Typography>
+                <Box className={classes.newBarrioCard}>
+                  <Typography>
+                    <em>Lugar:</em>
+                  </Typography>
+                  <Typography variant="h5">{form?.stateData?.label}</Typography>
+                  <Typography>
+                    <em>Nombre:</em>
+                  </Typography>
+                  <Typography variant="h6">{form?.name}</Typography>
+                  <Typography>
+                    <em>Nombre corto:</em>
+                  </Typography>
+                  <Typography variant="h6">{form?.shortName}</Typography>
+                </Box>
+                <Button onClick={handleReset}>Cancelar</Button>
+                <Button type="submit" color="primary" variant="contained">
+                  ¿la información es correcta?
+                </Button>
+              </Box>
+            </Paper>
           ) : (
             <div>
               <Paper>
+                <Typography className={classes.instructions}>
+                  {getStepContent(activeStep)}
+                </Typography>
                 <Grid container className={classes.gridStep}>
                   {activeStep === 0 && (
+                    <Box m={2} width="100%">
+                      <MySelectInput
+                        label="Estado"
+                        name="stateLabel"
+                        placeholder="Selecciona un Estado"
+                        options={statesList}
+                        value={form?.stateData?.value}
+                        onChange={handleSelectState}
+                      />
+                    </Box>
+                  )}
+                  {activeStep === 1 && (
                     <Grid item xs={12} className={classes.input}>
                       <FormControl>
                         <TextField
@@ -110,7 +163,7 @@ export default function NewBarrioForm({ onSubmit }) {
                       </FormControl>
                     </Grid>
                   )}
-                  {activeStep === 1 && (
+                  {activeStep === 2 && (
                     <Grid item xs={12} className={classes.input}>
                       <FormControl>
                         <TextField
@@ -125,80 +178,29 @@ export default function NewBarrioForm({ onSubmit }) {
                       </FormControl>
                     </Grid>
                   )}
-                  {activeStep === 2 && (
-                    <Box m={2} width="100%">
-                      <MySelectInput
-                        label="Estado"
-                        name="stateLabel"
-                        placeholder="Selecciona un Estado"
-                        options={statesList}
-                        value={form?.stateData?.value}
-                        onChange={handleSelectState}
-                      />
-                    </Box>
-                    /*  <Grid item xs={12} className={classes.input}>
-                      <FormControl variant="outlined">
-                        <Select name="state" native onChange={handleChange}>
-                          <option aria-label="" value="">
-                            Selecciona un estado
-                          </option>
-                          {ESTADOS_MX.map((estado) => (
-                            <option key={estado} value={estado}>
-                              {estado}
-                            </option>
-                          ))}
-                        </Select>
-                      </FormControl>
-                    </Grid> */
-                  )}
                 </Grid>
+
+                <Box m={2} p={2}>
+                  <Button
+                    disabled={activeStep === 0}
+                    onClick={handleBack}
+                    className={classes.backButton}
+                  >
+                    Atras
+                  </Button>
+                  <Button
+                    variant="contained"
+                    color="primary"
+                    onClick={handleNext}
+                  >
+                    {activeStep === steps.length - 1 ? "Termina" : "Siguiente"}
+                  </Button>
+                </Box>
               </Paper>
-              <Typography className={classes.instructions}>
-                {getStepContent(activeStep)}
-              </Typography>
-              <div>
-                <Button
-                  disabled={activeStep === 0}
-                  onClick={handleBack}
-                  className={classes.backButton}
-                >
-                  Atras
-                </Button>
-                <Button
-                  variant="contained"
-                  color="primary"
-                  onClick={handleNext}
-                >
-                  {activeStep === steps.length - 1 ? "Termina" : "Siguiente"}
-                </Button>
-              </div>
             </div>
           )}
         </form>
       </div>
     </div>
   );
-}
-
-function getSteps() {
-  return [
-    "Comienza por el nombre del barrio / colonia / pueblo",
-    "Un nombre corto para identificarlo mas rapido",
-    "Selecciona la ubicación",
-  ];
-}
-
-function getStepContent(stepIndex) {
-  switch (stepIndex) {
-    case 0:
-      /* Entre mas info mejor para ti y tus clientes */
-      return "Escribe los datos de arriba";
-    case 1:
-      return "Selecciona el estado donde quieres publicar este anuncio";
-    case 2:
-      return "Agrega una foto que refleje lo que vendes";
-
-    default:
-      return "Unknown stepIndex";
-  }
 }
