@@ -18,12 +18,15 @@ const host =
 
 const usersCtrl = {};
 
-
 usersCtrl.getUser = async (req, res) => {
-  const { _id, email, rol, emailConfirmed, credit } = await User.findById(
-    req.params.id
-  );
-  
+  const {
+    _id,
+    email,
+    rol,
+    emailConfirmed,
+    credit,
+  } = await User.findById(req.params.id);
+
   if (emailConfirmed) {
     const adverts = await Advert.find({ owner: req.params.id });
     const setUser = {
@@ -55,7 +58,13 @@ usersCtrl.signIn = async (req, res) => {
 
   const user = await User.findOne(
     { email },
-    { credit: 1, email: 1, password: 1, rol: 1, emailConfirmed: 1 }
+    {
+      credit: 1,
+      email: 1,
+      password: 1,
+      rol: 1,
+      emailConfirmed: 1,
+    }
   );
   if (!user)
     return res.json({
@@ -101,8 +110,8 @@ usersCtrl.signIn = async (req, res) => {
     rol: user.rol,
   };
   const token = await jwt.sign(payload, process.env.JWT_SECRET_TEXT, {
-   // TODO complementar expiración?
-   // expiresIn: 60 * 60 * 24,
+    // TODO complementar expiración?
+    // expiresIn: 60 * 60 * 24,
   });
 
   res.json({

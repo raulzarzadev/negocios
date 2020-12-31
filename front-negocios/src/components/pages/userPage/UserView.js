@@ -1,32 +1,19 @@
-import React, { useState } from "react";
-import { Box, Typography, makeStyles } from "@material-ui/core";
-import AdvertCard from "../../atomos/AdvertCard";
-import { deleteAdvert } from "../../../utils/adverts";
+import React, { useEffect, useState } from "react";
+import { Box, Typography } from "@material-ui/core";
 import MyLink from "../../atomos/MyLink";
+import MyButton from "../../atomos/MyButton";
+import UserAdvertsDisplay from "../../moleculas/UserAdvertsDisplay";
 
-const useStyles = makeStyles(() => ({
-  userLine: {
-    display: "flex",
-    overflowX: "auto",
-    padding: `0 12px`,
-    border: "1px solid",
-    minHeight: "50px",
-    boxShadow: `
-    -moz-box-shadow:    inset 0 0 5px #000000;
-    -webkit-box-shadow: inset 0 0 5px #000000;
-    box-shadow:         inset 0 0 5px #000000;
- `,
-  },
-}));
 export default function UserView({ user }) {
-  const classes = useStyles();
-
-  const [adverts, setAdverts] = useState(user.adverts || []);
-  const [publishAdverts] = useState([]);
-  async function handleDeleteAdvert(id) {
-    await deleteAdvert(id);
-    setAdverts(adverts.filter((advert) => advert._id !== id));
-  }
+  const [adverts] = useState(user.adverts || []);
+  const [publishAdverts, setPublishedAdverts] = useState([]);
+  console.log(adverts);
+  
+  useEffect(() => {
+    setPublishedAdverts(
+      adverts.filter((advert) => advert.isPublished === true)
+    );
+  }, []);
 
   return (
     <Box my={3}>
@@ -36,63 +23,34 @@ export default function UserView({ user }) {
         Credit:<strong> ${user.credit.toFixed(2)}</strong>
       </Typography>
 
-      <Typography variant="h6">Anuncios Publicados</Typography>
-      <Box>
-        <div className={classes.userLine}>
-          {!!publishAdverts.length ? (
-            <>
-              {publishAdverts.map((advert) => (
-                <Box m={1} item key={advert._id} minWidth="200px">
-                  <AdvertCard
-                    advert={advert}
-                    admin
-                    handleDelete={handleDeleteAdvert}
-                  />
-                </Box>
-              ))}
-            </>
-          ) : (
-            <Box width="100%" m={2}>
-              <Typography align="center">
-                No hay anuncios publicados aún
-              </Typography>
-            </Box>
-          )}
-        </div>
+      <Box p={2} display="flex" justifyContent="center">
+        <Box m={2}>
+          <MyButton variant="outlined">Nuevo Barrio</MyButton>
+        </Box>
+        <Box m={2}>
+          <MyLink
+            decorated
+            to="/nuevo-anuncio"
+            variant="contained"
+            color="primary"
+          >
+            Crear anuncio
+          </MyLink>
+        </Box>
       </Box>
 
-      <Typography variant="h6">Anuncios Creados</Typography>
-      <Box>
-        <div className={classes.userLine}>
-          {!!adverts.length ? (
-            <>
-              {adverts.reverse().map((advert) => (
-                <Box m={1} item key={advert._id} minWidth="200px">
-                  <AdvertCard
-                    advert={advert}
-                    admin
-                    handleDelete={handleDeleteAdvert}
-                  />
-                </Box>
-              ))}
-            </>
-          ) : (
-            <Box width="100%" m={2}>
-              <Typography align="center">No has creado anuncios aún</Typography>
-              <Box m={2}>
-                <MyLink
-                  decorated
-                  to="/nuevo-anuncio"
-                  variant="contained"
-                  color="primary"
-                >
-                  Crear anuncio
-                </MyLink>
-              </Box>
-            </Box>
-          )}
-        </div>
-      </Box>
+      <UserAdvertsDisplay
+        title="Anuncios Publicados"
+        noAdvertsTitle="No hay anuncios publicados aún"
+        adverts={publishAdverts}
+        publishArea={true}
+      />
+
+      <UserAdvertsDisplay
+        title="Anuncios Creados"
+        noAdvertsTitle="No has creado anuncios aún"
+        adverts={adverts}
+      />
     </Box>
   );
 }

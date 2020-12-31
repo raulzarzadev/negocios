@@ -15,7 +15,7 @@ const {
 } = require("../controllers/users.controller");
 
 router.route("/:id")
-  .get(isAuthenticated,getUser);
+  .get(isAuthenticated, getUser);
 
 router.route("/signup")
   .post(createUser);

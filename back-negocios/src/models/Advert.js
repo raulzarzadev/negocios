@@ -63,6 +63,7 @@ const advertSquema = new Schema(
     },
     isPublished: Boolean,
     publishedOn: Array,
+   
   },
   {
     timestamps: true,

@@ -45,7 +45,7 @@ export default function MySelectInput({
           {placeholder}
         </MenuItem>
         {options.map((option) => (
-          <MenuItem value={option.value}>{option.label}</MenuItem>
+          <MenuItem value={option.value || option.tag}>{option.label}</MenuItem>
         ))}
       </Select>
 

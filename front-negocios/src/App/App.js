@@ -22,6 +22,7 @@ import VisulaGuide from "../components/visualGuide/VisulaGuide";
 import { MuiThemeProvider } from "@material-ui/core";
 import newTheme from "../components/theme/theme";
 import MyLayout from "../components/MyLayout";
+import Dashboard from "../components/pages/Dashboard"
 
 // eslint-disable-next-line import/no-anonymous-default-export
 export default () => (
@@ -47,6 +48,8 @@ function App() {
           <Route exact path="/ingresa" component={SignIn} />
           <Route exact path="/forgot-password" component={ForgotPassword} />
           <Route exact path="/credito" component={Credit} />
+          <Route exact path="/dashboard" component={Dashboard} />
+
           <Route
             exact
             path="/recover-password/:token"

@@ -8,7 +8,7 @@ import CardMedia from "@material-ui/core/CardMedia";
 import Typography from "@material-ui/core/Typography";
 import defaultImage from "../../assets/negdelbar_logo.png";
 import { useHistory } from "react-router-dom";
-
+import Loading from "../atomos/Loading";
 import BookmarkBorderIcon from "@material-ui/icons/BookmarkBorder";
 
 import MoreVertIcon from "@material-ui/icons/MoreVert";
@@ -26,6 +26,7 @@ import MyModal from "./MyModal";
 import { CHIP_LABELS } from "../../HardData/CHIPS_LABELS";
 import ContactLink from "./ContactLink";
 import ToPublishAdvert from "../moleculas/ToPublishAdvert";
+import { deleteAdvert, updateAdvert } from "../../utils/adverts";
 const useStyles = makeStyles((theme) => ({
   root: {
     width: "100%",
@@ -60,7 +61,7 @@ const useStyles = makeStyles((theme) => ({
 export default function AdvertCart({
   advert = {},
   admin = false,
-  handleDelete,
+  publishArea = false,
 }) {
   const {
     title,
@@ -71,6 +72,7 @@ export default function AdvertCart({
     labels = [],
     backgroundColor,
     location,
+    isPublished,
     _id,
     contacts,
   } = advert;
@@ -80,6 +82,8 @@ export default function AdvertCart({
   const [openModal, setOpenModal] = useState(false);
   const [deleteModal, setDeleteModal] = useState(false);
   const [publishModal, setPublishModal] = useState(false);
+  const [loading, setLoading] = useState(false);
+
   const handleOpenModal = () => {
     setOpenModal(!openModal);
   };
@@ -92,6 +96,17 @@ export default function AdvertCart({
   const handleEdit = (advertId) => {
     history.push(`/editar/${advertId}`);
   };
+  const handleDeleteAdvert = (id) => {
+    setLoading(true);
+    deleteAdvert(id)
+      .then((res) => {
+        window.location.replace("");
+      })
+      .catch((err) => {
+        setLoading(false);
+        console.log(err);
+      });
+  };
   const handleOpenDeleteModal = () => {
     setDeleteModal(!deleteModal);
   };
@@ -100,10 +115,22 @@ export default function AdvertCart({
     setPublishModal(!publishModal);
     handleClose();
   };
+  const handleUnpublish = () => {
+    updateAdvert(advert._id, {
+      ...advert,
+      isPublished: false,
+      publishedOn: [],
+    })
+      .then((res) => {
+        window.location.replace("");
+      })
+      .catch((err) => console.log(err));
+  };
 
   const handleClose = () => {
     setAnchorEl(null);
   };
+
   return (
     <Card className={classes.root}>
       <Box className={classes.labelsBox} style={styles || { backgroundColor }}>
@@ -127,21 +154,32 @@ export default function AdvertCart({
                 onClose={handleClose}
               >
                 <MenuItem onClick={handleClose}>Detalles</MenuItem>
-                <MenuItem onClick={() => handleOpenPublishModal()}>
-                  Publicar
-                </MenuItem>
-                <MenuItem onClick={() => handleEdit(_id)}>Editar</MenuItem>
-                <MenuItem
-                  onClick={() => {
-                    handleOpenDeleteModal();
-                    //handleDelete(_id);
-                    handleClose();
-                  }}
-                >
-                  <div style={{ border: "solid 3px red", padding: "4px" }}>
-                    Eliminar
-                  </div>
-                </MenuItem>
+
+                {isPublished ? (
+                  <MenuItem onClick={() => handleUnpublish()}>
+                    Despublicar
+                  </MenuItem>
+                ) : (
+                  <MenuItem onClick={() => handleOpenPublishModal()}>
+                    Publicar
+                  </MenuItem>
+                )}
+
+                {!publishArea && (
+                  <>
+                    <MenuItem onClick={() => handleEdit(_id)}>Editar</MenuItem>
+                    <MenuItem
+                      onClick={() => {
+                        handleOpenDeleteModal();
+                        handleClose();
+                      }}
+                    >
+                      <div style={{ border: "solid 3px red", padding: "4px" }}>
+                        Eliminar
+                      </div>
+                    </MenuItem>
+                  </>
+                )}
               </Menu>
             </>
           ) : (
@@ -220,7 +258,7 @@ export default function AdvertCart({
         open={publishModal}
         handleOpenModal={handleOpenPublishModal}
       >
-        <ToPublishAdvert />
+        <ToPublishAdvert advert={advert} closeModal={handleOpenPublishModal} />
       </MyModal>
       <MyModal
         title="Eliminar anuncio"
@@ -239,13 +277,17 @@ export default function AdvertCart({
             <em>Esta accion no se puede deshacer!</em>
           </Typography>
           <Box display="flex" justifyContent="center" m={1}>
-            <Button
-              variant="outlined"
-              style={{ color: "red" }}
-              onClick={() => handleDelete(_id)}
-            >
-              Eliminar anuncio
-            </Button>
+            {loading ? (
+              <Loading />
+            ) : (
+              <Button
+                variant="outlined"
+                style={{ color: "red" }}
+                onClick={() => handleDeleteAdvert(_id)}
+              >
+                Eliminar anuncio
+              </Button>
+            )}
           </Box>
         </Box>
       </MyModal>

@@ -44,6 +44,8 @@ advertsCtrl.createAdvert = async (req, res) => {
     delivery,
     barrio,
     address,
+    isPublished,
+    publishedOn,
     price,
     state,
     schedule,
@@ -81,6 +83,8 @@ advertsCtrl.createAdvert = async (req, res) => {
     backgroundColor,
     delivery,
     address,
+    isPublished,
+    publishedOn,
   });
   await newAdvert.save();
   res.json({ ok: true, message: "Anuncio creado con éxito", newAdvert });
@@ -107,6 +111,8 @@ advertsCtrl.updateAdvert = async (req, res) => {
     delivery,
     barrio,
     address,
+    isPublished,
+    publishedOn
   } = req.body.advert;
 
   await Advert.findByIdAndUpdate(req.params.id, {
@@ -130,6 +136,9 @@ advertsCtrl.updateAdvert = async (req, res) => {
     backgroundColor,
     delivery,
     address,
+    isPublished,
+    publishedOn
+   
   });
 
   res.json({ ok: true, message: "Actualizando Anuncio" });

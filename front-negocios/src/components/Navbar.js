@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import { makeStyles } from "@material-ui/core/styles";
 import AppBar from "@material-ui/core/AppBar";
 import Toolbar from "@material-ui/core/Toolbar";
@@ -46,10 +46,13 @@ const useStyles = makeStyles((theme) => ({
 
 export default function Navbar() {
   const { signout: handleSignOut, data } = useUser();
-  const classes = useStyles();
-  const [anchorEl, setAnchorEl] = React.useState(null);
-  const open = Boolean(anchorEl);
   const location = useLocation();
+  const classes = useStyles();
+
+  const [anchorEl, setAnchorEl] = useState(null);
+  //No reconoce rol === manager
+  const [isManager, setIsManager] = useState(false);
+  const open = Boolean(anchorEl);
 
   const handleMenu = (event) => {
     setAnchorEl(event.currentTarget);
@@ -63,6 +66,12 @@ export default function Navbar() {
   const handleOpenMenu = (isOpen) => {
     setOpenMenu(isOpen);
   };
+  const [user, setUser] = useState(null);
+  useEffect(() => {
+    setUser(data?.user);
+    setIsManager(data?.user?.rol === "manager");
+  }, [data?.user]);
+  console.log(isManager);
 
   return (
     <div className={classes.root}>
@@ -118,7 +127,7 @@ export default function Navbar() {
               />
             </MyLink>
           </Box>
-          {data?.user ? (
+          {user ? (
             <div>
               <IconButton
                 aria-label="account of current user"
@@ -145,6 +154,11 @@ export default function Navbar() {
                 open={open}
                 onClose={handleClose}
               >
+                {isManager && (
+                  <MenuItem onClick={handleClose}>
+                    <MyLink to="/dashboard">Panel de control</MyLink>
+                  </MenuItem>
+                )}
                 <MenuItem onClick={handleClose}>
                   <MyLink to="/perfil">Mi Perfil</MyLink>
                 </MenuItem>

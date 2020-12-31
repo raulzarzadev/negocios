@@ -13,13 +13,12 @@ export default function NewAdvert() {
   const [toEdit] = useState(!!params.id);
   const { isLogged } = useUser();
   const [pageTitle, setPageTitle] = useState("Nuevo Anucnio");
-  const [loading, setLoading] = useState(true);
   const [newImage, setNewImage] = useState(null);
+  const [loading, setLoading] = useState(true);
 
   const [advert, setAdvert] = useState({});
 
   useEffect(() => {
-    setLoading(true);
     if (toEdit) {
       setPageTitle("Editar Anuncio");
       getAdvert(params.id)
@@ -31,6 +30,8 @@ export default function NewAdvert() {
           console.log(err);
           setLoading(false);
         });
+    } else {
+      setLoading(false);
     }
   }, [params.id, toEdit]);
 
@@ -82,7 +83,6 @@ export default function NewAdvert() {
       },
     });
   };
-  console.log(advert.image);
 
   if (loading) return <Loading />;
 
