@@ -132,125 +132,133 @@ export default function AdvertCart({
   };
 
   return (
-    <Card className={classes.root}>
-      <Box className={classes.labelsBox} style={styles || { backgroundColor }}>
-        <Box className={classes.actionsAdvert}>
-          {admin ? (
-            <>
-              <Tooltip title="Opciones">
-                <IconButton
-                  aria-controls="simple-menu"
-                  aria-haspopup="true"
-                  onClick={handleClickMenu}
+    <>
+      <Card className={classes.root}>
+        <Box
+          className={classes.labelsBox}
+          style={styles || { backgroundColor }}
+        >
+          <Box className={classes.actionsAdvert}>
+            {admin ? (
+              <>
+                <Tooltip title="Opciones">
+                  <IconButton
+                    aria-controls="simple-menu"
+                    aria-haspopup="true"
+                    onClick={handleClickMenu}
+                  >
+                    <MoreVertIcon />
+                  </IconButton>
+                </Tooltip>
+                <Menu
+                  id="simple-menu"
+                  anchorEl={anchorEl}
+                  keepMounted
+                  open={Boolean(anchorEl)}
+                  onClose={handleClose}
                 >
-                  <MoreVertIcon />
+                  <MenuItem onClick={handleClose}>Detalles</MenuItem>
+
+                  {isPublished ? (
+                    <MenuItem onClick={() => handleUnpublish()}>
+                      Despublicar
+                    </MenuItem>
+                  ) : (
+                    <MenuItem onClick={() => handleOpenPublishModal()}>
+                      Publicar
+                    </MenuItem>
+                  )}
+
+                  {!publishArea && (
+                    <>
+                      <MenuItem onClick={() => handleEdit(_id)}>
+                        Editar
+                      </MenuItem>
+                      <MenuItem
+                        onClick={() => {
+                          handleOpenDeleteModal();
+                          handleClose();
+                        }}
+                      >
+                        <div
+                          style={{ border: "solid 3px red", padding: "4px" }}
+                        >
+                          Eliminar
+                        </div>
+                      </MenuItem>
+                    </>
+                  )}
+                </Menu>
+              </>
+            ) : (
+              <Tooltip title="Guardar">
+                <IconButton>
+                  <BookmarkBorderIcon />
                 </IconButton>
               </Tooltip>
-              <Menu
-                id="simple-menu"
-                anchorEl={anchorEl}
-                keepMounted
-                open={Boolean(anchorEl)}
-                onClose={handleClose}
+            )}
+          </Box>
+          <Box>
+            {labels?.map((label, i) => (
+              <Tooltip
+                key={i}
+                title={label.label}
+                style={{ fontSize: 18, margin: "0 2px" }}
               >
-                <MenuItem onClick={handleClose}>Detalles</MenuItem>
-
-                {isPublished ? (
-                  <MenuItem onClick={() => handleUnpublish()}>
-                    Despublicar
-                  </MenuItem>
-                ) : (
-                  <MenuItem onClick={() => handleOpenPublishModal()}>
-                    Publicar
-                  </MenuItem>
-                )}
-
-                {!publishArea && (
-                  <>
-                    <MenuItem onClick={() => handleEdit(_id)}>Editar</MenuItem>
-                    <MenuItem
-                      onClick={() => {
-                        handleOpenDeleteModal();
-                        handleClose();
-                      }}
-                    >
-                      <div style={{ border: "solid 3px red", padding: "4px" }}>
-                        Eliminar
-                      </div>
-                    </MenuItem>
-                  </>
-                )}
-              </Menu>
-            </>
-          ) : (
-            <Tooltip title="Guardar">
-              <IconButton>
-                <BookmarkBorderIcon />
-              </IconButton>
-            </Tooltip>
-          )}
+                <SvgIcon>
+                  {CHIP_LABELS.map(
+                    (chip) => chip.value === label.value && chip.icon
+                  )}
+                </SvgIcon>
+              </Tooltip>
+            ))}
+          </Box>
         </Box>
-        <Box>
-          {labels?.map((label, i) => (
-            <Tooltip
-              key={i}
-              title={label.label}
-              style={{ fontSize: 18, margin: "0 2px" }}
+        <CardActionArea onClick={handleOpenModal}>
+          <CardMedia
+            component="img"
+            alt={title}
+            className={classes.cardMedia}
+            src={image?.src || defaultImage}
+            title={title}
+          />
+          <CardContent className={classes.cardContent}>
+            <Typography
+              gutterBottom
+              variant="h5"
+              component="h2"
+              className={classes.advertTitle}
             >
-              <SvgIcon>
-                {CHIP_LABELS.map(
-                  (chip) => chip.value === label.value && chip.icon
-                )}
-              </SvgIcon>
-            </Tooltip>
-          ))}
-        </Box>
-      </Box>
-      <CardActionArea onClick={handleOpenModal}>
-        <CardMedia
-          component="img"
-          alt={title}
-          className={classes.cardMedia}
-          src={image?.src || defaultImage}
-          title={title}
-        />
-        <CardContent className={classes.cardContent}>
-          <Typography
-            gutterBottom
-            variant="h5"
-            component="h2"
-            className={classes.advertTitle}
-          >
-            {title}
-          </Typography>
-          <Typography
-            variant="body2"
-            color="textSecondary"
-            component="p"
-            classes={classes.advertDescription}
-          >
-            {description?.length > 80
-              ? description.slice(0, 80) + "..."
-              : description}
-          </Typography>
-        </CardContent>
-      </CardActionArea>
+              {title}
+            </Typography>
+            <Typography
+              variant="body2"
+              color="textSecondary"
+              component="p"
+              classes={classes.advertDescription}
+            >
+              {description?.length > 80
+                ? description.slice(0, 80) + "..."
+                : description}
+            </Typography>
+          </CardContent>
+        </CardActionArea>
 
-      <CardActions style={styles || { backgroundColor }}>
-        <Box className={classes.contactsBox}>
-          {location && (
-            <Tooltip title=" Ubicación">
-              <IconButton href={googleLocation}>
-                <LocationOnIcon />
-              </IconButton>
-            </Tooltip>
-          )}
-          {contacts?.map((contact) => (
-            <ContactLink contact={contact} />
-          ))}
-        </Box>
-      </CardActions>
-
+        <CardActions style={styles || { backgroundColor }}>
+          <Box className={classes.contactsBox}>
+            {location && (
+              <Tooltip title=" Ubicación">
+                <IconButton href={googleLocation}>
+                  <LocationOnIcon />
+                </IconButton>
+              </Tooltip>
+            )}
+            {contacts?.map((contact) => (
+              <ContactLink contact={contact} />
+            ))}
+          </Box>
+        </CardActions>
+      </Card>
       {/* MODALES  */}
 
       <MyModal
@@ -294,6 +302,6 @@ export default function AdvertCart({
       <MyModal open={openModal} handleOpenModal={handleOpenModal}>
         <div> Aca iria el menu</div>
       </MyModal>
-    </Card>
+    </>
   );
 }

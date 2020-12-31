@@ -3,8 +3,13 @@ const User = require("../models/User");
 
 const advertsCtrl = {};
 
-advertsCtrl.getAdverts = async (req, res) => {
+advertsCtrl.getPublishedAdverts = async (req, res) => {
   const adverts = await Advert.find({ isPublished: true }, { publishedOn: 1 });
+  res.json({ ok: true, adverts });
+};
+
+advertsCtrl.getManagerAdverts = async (req, res) => {
+  const adverts = await Advert.find();
   res.json({ ok: true, adverts });
 };
 
@@ -112,7 +117,7 @@ advertsCtrl.updateAdvert = async (req, res) => {
     barrio,
     address,
     isPublished,
-    publishedOn
+    publishedOn,
   } = req.body.advert;
 
   await Advert.findByIdAndUpdate(req.params.id, {
@@ -137,8 +142,7 @@ advertsCtrl.updateAdvert = async (req, res) => {
     delivery,
     address,
     isPublished,
-    publishedOn
-   
+    publishedOn,
   });
 
   res.json({ ok: true, message: "Actualizando Anuncio" });

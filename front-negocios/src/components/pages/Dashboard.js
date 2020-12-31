@@ -1,32 +1,28 @@
-import { Box, Typography } from "@material-ui/core";
+import { Box, Grid, IconButton, Typography } from "@material-ui/core";
 import React, { useEffect, useState } from "react";
 import { useUser } from "../../context/userContext";
+import { getAllAdverts } from "../../utils/adverts";
+import Loading from "../atomos/Loading";
 import MyButton from "../atomos/MyButton";
 import MyLink from "../atomos/MyLink";
-import UserAdvertsDisplay from "../moleculas/UserAdvertsDisplay";
+import AdvertManage from "../moleculas/AdverManage";
 
 export default function Dashboard() {
   const {
     data: { user },
   } = useUser();
 
-  const [publishAdverts, setPublishedAdverts] = useState([]);
   const [adverts, setAdverts] = useState([]);
+  const [loading, setLoadign] = useState(true);
 
   useEffect(() => {
-      getAllAdverts()
-      return () => {
-          cleanup
-      }
-  }, [input])
-
-  console.log(adverts);
-
-  useEffect(() => {
-    setPublishedAdverts(
-      adverts.filter((advert) => advert.isPublished === true)
-    );
+    getAllAdverts().then((res) => {
+      setAdverts(res?.data?.adverts);
+      setLoadign(false);
+    });
   }, []);
+
+  if (loading) return <Loading />;
 
   return (
     <Box my={3}>
@@ -40,6 +36,42 @@ export default function Dashboard() {
         <Box m={2}>
           <MyButton variant="outlined">Nuevo Barrio</MyButton>
         </Box>
+      </Box>
+
+      <Box>
+        <Typography variant="h6">Lista de anuncios creados</Typography>
+        <Grid container>
+          <Grid item xs={12} container>
+            <Grid item xs={3}>
+              <Typography variant="h6" noWrap>
+                Titulo
+              </Typography>
+            </Grid>
+            <Grid item xs={3}>
+              <Typography variant="h6" noWrap>
+                Descripción
+              </Typography>
+            </Grid>
+            <Grid item xs={1}>
+              <Typography variant="p" noWrap>
+                Clas
+              </Typography>
+            </Grid>
+            <Grid item xs={1}>
+              <Typography variant="p" noWrap>
+                Pub
+              </Typography>
+            </Grid>
+            <Grid item xs={4}>
+              <Typography variant="h6" noWrap>
+                Acciones
+              </Typography>
+            </Grid>
+          </Grid>
+          {adverts?.map((advert) => (
+            <AdvertManage advert={advert} />
+          ))}
+        </Grid>
       </Box>
     </Box>
   );
