@@ -1,33 +1,46 @@
-import React from "react";
-import { Grid } from "@material-ui/core";
+import React, { useEffect, useState } from "react";
+import { useParams } from "react-router-dom";
 
 import Navigation from "../Navigation";
 import AdvertCard from "../atomos/AdvertCard";
-import Button from "@material-ui/core/Button";
-import useAxios from "../myHooks/useAxios";
-import FatalError from "../pages/errors/500";
-import url from "../../url/url";
 import Loading from "../atomos/Loading";
+import { getAdvertsByBarrio } from "../../utils/adverts";
 
-export default function AdvertsList(props) {
-  const { data, loading, error } = useAxios(
-    `${url}/barrios/${props.match.params.shortName}`
-  );
-  console.log(data);
+import Button from "@material-ui/core/Button";
+import { Grid } from "@material-ui/core";
+
+export default function AdvertsList() {
+  const { shortName } = useParams();
+
+  const [loading, setLoading] = useState(true);
+  const [adverts, setAdverts] = useState([]);
+  const [barrio, setBarrio] = useState({});
+
+  useEffect(() => {
+    getAdvertsByBarrio(shortName)
+      .then((res) => {
+        setBarrio(res.data.barrio);
+        setAdverts(res.data.adverts);
+        setLoading(false);
+      })
+      .catch((err) => {
+        setLoading(false);
+        console.log(err);
+      });
+  }, []);
+
+  console.log(adverts)
 
   if (loading) return <Loading />;
-  if (error) return <FatalError />;
+
   return (
     <>
-      <Navigation  />
-      <h3>{data.barrio?.name}</h3>
-      <p>{data.barrio?.state}</p>
-      {data.adverts.length > 0 ? (
-        <Grid
-          container
-          spacing={1}
-        >
-          {data.adverts.map((advert) => (
+      <Navigation />
+      <h3>{barrio.name}</h3>
+      <p>{barrio.state}</p>
+      {adverts.length > 0 ? (
+        <Grid container spacing={1}>
+          {adverts.map((advert) => (
             <Grid item xs={6} sm={4} md={3} key={advert._id}>
               <AdvertCard advert={advert} />
             </Grid>

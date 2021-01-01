@@ -52,16 +52,12 @@ export default function Dashboard() {
                 Descripción
               </Typography>
             </Grid>
-            <Grid item xs={1}>
-              <Typography variant="p" noWrap>
-                Clas
+            <Grid item xs={2}>
+              <Typography variant="p" noWrap style={{ fontSize: "14px" }}>
+                ¿Publicado?
               </Typography>
             </Grid>
-            <Grid item xs={1}>
-              <Typography variant="p" noWrap>
-                Pub
-              </Typography>
-            </Grid>
+
             <Grid item xs={4}>
               <Typography variant="h6" noWrap>
                 Acciones

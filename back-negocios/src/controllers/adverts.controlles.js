@@ -9,6 +9,7 @@ advertsCtrl.getPublishedAdverts = async (req, res) => {
 };
 
 advertsCtrl.getManagerAdverts = async (req, res) => {
+  
   const adverts = await Advert.find();
   res.json({ ok: true, adverts });
 };

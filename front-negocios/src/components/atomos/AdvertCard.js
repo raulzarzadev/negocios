@@ -134,10 +134,7 @@ export default function AdvertCart({
   return (
     <>
       <Card className={classes.root}>
-        <Box
-          className={classes.labelsBox}
-          style={styles || { backgroundColor }}
-        >
+        <Box className={classes.labelsBox} style={{ backgroundColor }}>
           <Box className={classes.actionsAdvert}>
             {admin ? (
               <>
@@ -244,7 +241,7 @@ export default function AdvertCart({
           </CardContent>
         </CardActionArea>
 
-        <CardActions style={styles || { backgroundColor }}>
+        <CardActions style={{ backgroundColor }}>
           <Box className={classes.contactsBox}>
             {location && (
               <Tooltip title=" Ubicación">

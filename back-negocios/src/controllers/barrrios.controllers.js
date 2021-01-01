@@ -19,8 +19,15 @@ barriosCtrl.getAdvertsByBarrioShortName = async (req, res) => {
   const barrio = await Barrio.findOne({
     shortName: req.params.shortName,
   });
+
+  //const id = "5fea9b9c6f61cb00ef8b553a";
+  const id = barrio._id.toString();
+
   const adverts = await Advert.find({
-    "barrio.shortName": req.params.shortName,
+    publishedOn: {
+      $all: [id],
+    },
+    isPublished: true,
   });
   res.json({ barrio, adverts });
 };

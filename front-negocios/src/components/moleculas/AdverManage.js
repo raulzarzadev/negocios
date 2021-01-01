@@ -4,7 +4,14 @@ import Typography from "@material-ui/core/Typography";
 import { useHistory } from "react-router-dom";
 import Loading from "../atomos/Loading";
 
-import { Box, Button, Grid, IconButton, Tooltip } from "@material-ui/core";
+import {
+  Box,
+  Button,
+  FormLabel,
+  Grid,
+  IconButton,
+  Tooltip,
+} from "@material-ui/core";
 import { CHIP_LABELS } from "../../HardData/CHIPS_LABELS";
 import ToPublishAdvert from "../moleculas/ToPublishAdvert";
 import { deleteAdvert, updateAdvert } from "../../utils/adverts";
@@ -18,6 +25,7 @@ import DeleteForeverIcon from "@material-ui/icons/DeleteForever";
 
 import CheckCircleIcon from "@material-ui/icons/CheckCircle";
 import CancelIcon from "@material-ui/icons/Cancel";
+import DetailsIcon from "@material-ui/icons/Details";
 
 const useStyles = makeStyles((theme) => ({
   root: {
@@ -106,6 +114,12 @@ export default function AdvertManage({ advert = {} }) {
       })
       .catch((err) => console.log(err));
   };
+  const [detailsModal, setDetailsModal] = useState(false);
+
+  const handleOpenDetailsModal = () => {
+    setDetailsModal(!detailsModal);
+  };
+
   const handleClickMenu = (event) => {
     setAnchorEl(event.currentTarget);
   };
@@ -115,19 +129,15 @@ export default function AdvertManage({ advert = {} }) {
 
   return (
     <>
-      <Grid item xs={12} container>
+      <Grid item xs={12} container style={{ margin: '8px 0'}}>
         <Grid item xs={3}>
           <Typography noWrap>{title}</Typography>
         </Grid>
         <Grid item xs={3}>
           <Typography noWrap>{description}</Typography>
         </Grid>
-        <Grid item xs={1}>
-          {labels.map((label) => (
-            <Box>[X]</Box>
-          ))}
-        </Grid>
-        <Grid item xs={1}>
+
+        <Grid item xs={2}>
           {isPublished ? (
             <CheckCircleIcon fontSize="small" style={{ color: "green" }} />
           ) : (
@@ -148,11 +158,7 @@ export default function AdvertManage({ advert = {} }) {
               </Tooltip>
             ) : (
               <Tooltip title="Publicar">
-                <IconButton
-                  size="small"
-                  onClick={handleOpenPublishModal}
-                  color="primary"
-                >
+                <IconButton size="small" onClick={handleOpenPublishModal}>
                   <PublishIcon />
                 </IconButton>
               </Tooltip>
@@ -160,6 +166,14 @@ export default function AdvertManage({ advert = {} }) {
             <Tooltip title="Editar">
               <IconButton size="small" onClick={() => handleEdit(_id)}>
                 <EditIcon />
+              </IconButton>
+            </Tooltip>
+            <Tooltip title="Detalles">
+              <IconButton
+                size="small"
+                onClick={() => handleOpenDetailsModal(_id)}
+              >
+                <DetailsIcon />
               </IconButton>
             </Tooltip>
             <Tooltip title="Eliminar">
@@ -208,8 +222,73 @@ export default function AdvertManage({ advert = {} }) {
           </Box>
         </Box>
       </MyModal>
-      <MyModal open={openModal} handleOpenModal={handleOpenModal}>
-        <div> Aca iria el menu</div>
+      <MyModal
+        title="Detalles de anuncio"
+        open={detailsModal}
+        handleOpenModal={handleOpenDetailsModal}
+      >
+        <Box display="flex" justifyContent="center">
+          <Box width={240}>
+            <AdvertCart advert={advert} />
+          </Box>
+          <Box
+            display="flex"
+            flexDirection="column"
+            justifyContent="space-evenly"
+          >
+            <Box p={1} textAlign="center">
+              {isPublished ? (
+                <>
+                  <CheckCircleIcon
+                    fontSize="small"
+                    style={{ color: "green" }}
+                  />
+                  <FormLabel component="legend">publicado</FormLabel>
+                </>
+              ) : (
+                <>
+                  <CancelIcon fontSize="small" style={{ color: "red" }} />
+                  <FormLabel component="legend">No publicado</FormLabel>
+                </>
+              )}
+            </Box>
+
+            {isPublished ? (
+              <Tooltip title="Despublicar">
+                <IconButton
+                  size="small"
+                  onClick={handleUnpublish}
+                  style={{ color: "red" }}
+                >
+                  <GetAppIcon />
+                  <FormLabel component="legend">despublicar</FormLabel>
+                </IconButton>
+              </Tooltip>
+            ) : (
+              <Tooltip title="Publicar">
+                <IconButton
+                  size="small"
+                  onClick={handleOpenPublishModal}
+                  //color="primary"
+                >
+                  <PublishIcon />{" "}
+                  <FormLabel component="legend">publicar</FormLabel>
+                </IconButton>
+              </Tooltip>
+            )}
+            <Tooltip title="Editar">
+              <IconButton size="small" onClick={() => handleEdit(_id)}>
+                <EditIcon /> <FormLabel component="legend">editar</FormLabel>
+              </IconButton>
+            </Tooltip>
+            <Tooltip title="Eliminar">
+              <IconButton size="small" onClick={handleOpenDeleteModal}>
+                <DeleteForeverIcon style={{ color: "red" }} />{" "}
+                <FormLabel component="legend">eliminar</FormLabel>
+              </IconButton>
+            </Tooltip>
+          </Box>
+        </Box>
       </MyModal>
     </>
   );

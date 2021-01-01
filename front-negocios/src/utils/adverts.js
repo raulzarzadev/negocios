@@ -33,6 +33,10 @@ export function getAllAdverts() {
   return axios.get(`${url}/adverts/allAdverts`);
 }
 
+export function getAdvertsByBarrio(barrio) {
+  return axios.get(`${url}/barrios/${barrio}`);
+}
+
 export function getAllBarrios() {
   return axios.get(`${url}/barrios`);
 }
