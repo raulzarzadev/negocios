@@ -8,6 +8,7 @@ import { getAdvertsByBarrio } from "../../utils/adverts";
 
 import Button from "@material-ui/core/Button";
 import { Grid } from "@material-ui/core";
+import NotFound from "./errors/NotFound";
 
 export default function AdvertsList() {
   const { shortName } = useParams();
@@ -15,12 +16,17 @@ export default function AdvertsList() {
   const [loading, setLoading] = useState(true);
   const [adverts, setAdverts] = useState([]);
   const [barrio, setBarrio] = useState({});
+  const [failBarrio, setFailBarrio] = useState(false);
 
   useEffect(() => {
     getAdvertsByBarrio(shortName)
       .then((res) => {
-        setBarrio(res.data.barrio);
-        setAdverts(res.data.adverts);
+        if (res.data.ok) {
+          setBarrio(res.data.barrio);
+          setAdverts(res.data.adverts);
+        } else {
+          setFailBarrio(true);
+        }
         setLoading(false);
       })
       .catch((err) => {
@@ -29,8 +35,9 @@ export default function AdvertsList() {
       });
   }, []);
 
-  console.log(adverts)
+  console.log(adverts);
 
+  if (failBarrio) return <NotFound errorMessage="Este lugar aun no existe" />;
   if (loading) return <Loading />;
 
   return (

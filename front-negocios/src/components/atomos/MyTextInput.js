@@ -33,7 +33,7 @@ export default function MyTextInput({
         variant="outlined"
         multiline={multiline}
         rows={rows}
-        value={value}
+        value={value || defaultValue}
         //label={label}
         defaultValue={defaultValue}
         id={id}

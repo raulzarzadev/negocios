@@ -26,7 +26,7 @@ export const CONTACT_TYPES = [
   {
     name: "webpage",
     value: "web",
-    label: "Pagina Web",
+    label: "Web",
     icon: <LanguageIcon fontSize="default" />,
   },
   {

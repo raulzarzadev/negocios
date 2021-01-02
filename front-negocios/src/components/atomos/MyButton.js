@@ -1,4 +1,4 @@
-import { Button, CircularProgress, Fade } from "@material-ui/core";
+import { Button, CircularProgress, Fade, Link } from "@material-ui/core";
 import React from "react";
 
 export default function MyButton({
@@ -12,7 +12,7 @@ export default function MyButton({
   fullWidth,
   href,
   size,
-  type
+  type,
 }) {
   return (
     <Button
@@ -28,6 +28,7 @@ export default function MyButton({
     >
       {label}
       {children}
+
       <Fade
         in={loading}
         style={{

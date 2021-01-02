@@ -22,7 +22,8 @@ import VisulaGuide from "../components/visualGuide/VisulaGuide";
 import { MuiThemeProvider } from "@material-ui/core";
 import newTheme from "../components/theme/theme";
 import MyLayout from "../components/MyLayout";
-import Dashboard from "../components/pages/Dashboard"
+import Dashboard from "../components/pages/Dashboard";
+import PrivateRoute from "../components/PrivateRoute";
 
 // eslint-disable-next-line import/no-anonymous-default-export
 export default () => (
@@ -42,27 +43,25 @@ function App() {
     <Router>
       <MyLayout isLoading={loadingUser}>
         <Switch>
-          {/* *** user */}
-          <Route exact path="/perfil" component={Profile} />
+          <PrivateRoute exact path="/perfil" component={Profile} />
+          <PrivateRoute exact path="/dashboard" component={Dashboard} />
+          <PrivateRoute exact path="/credito" component={Credit} />
+          <PrivateRoute exact path="/nuevo-anuncio" component={NewAdvert} />
+          <PrivateRoute exact path="/editar/:id" component={NewAdvert} />
+          <PrivateRoute exact path="/nuevo-barrio" component={NewBarrio} />
+          <PrivateRoute exact path="/guia-visual" component={VisulaGuide} />
+          
           <Route exact path="/registrate" component={SignUp} />
           <Route exact path="/ingresa" component={SignIn} />
           <Route exact path="/forgot-password" component={ForgotPassword} />
-          <Route exact path="/credito" component={Credit} />
-          <Route exact path="/dashboard" component={Dashboard} />
+          <Route exact path="/signup/:token" component={Profile} />
 
           <Route
             exact
             path="/recover-password/:token"
             component={RecoverPassword}
           />
-          <Route exact path="/signup/:token" component={Profile} />
-          {/* *** autentication required */}
-          <Route exact path="/nuevo-anuncio" component={NewAdvert} />
-          <Route exact path="/editar/:id" component={NewAdvert} />
-          <Route exact path="/nuevo-barrio" component={NewBarrio} />
-          {/* *** always accessible */}
           <Route exact path="/" component={Home} />
-          <Route exact path="/guia-visual" component={VisulaGuide} />
           <Route exact path="/nosotros" component={About} />
           <Route exact path="/contacto" component={Contact} />
           <Route exact path="/como-funciona" component={HowItWorks} />

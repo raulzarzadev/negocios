@@ -9,7 +9,6 @@ advertsCtrl.getPublishedAdverts = async (req, res) => {
 };
 
 advertsCtrl.getManagerAdverts = async (req, res) => {
-  
   const adverts = await Advert.find();
   res.json({ ok: true, adverts });
 };
@@ -102,19 +101,11 @@ advertsCtrl.updateAdvert = async (req, res) => {
     contacts,
     postalCode,
     description,
-    tel,
-    whatsApp,
-    faceUrl,
-    instaUrl,
-    siteUrl,
     location,
     labels,
     image,
     classification,
-    businessMail,
-    styles,
     backgroundColor,
-    delivery,
     barrio,
     address,
     isPublished,
@@ -122,28 +113,20 @@ advertsCtrl.updateAdvert = async (req, res) => {
   } = req.body.advert;
 
   await Advert.findByIdAndUpdate(req.params.id, {
-    contacts,
-    barrio,
     title,
-    postalCode,
     description,
-    tel,
-    image,
-    whatsApp,
-    faceUrl,
-    instaUrl,
-    siteUrl,
-    businessMail,
-    location,
-    postalCode,
+    contacts,
     labels,
-    styles,
+    image,
     classification,
     backgroundColor,
-    delivery,
     address,
     isPublished,
     publishedOn,
+    barrio,
+    postalCode,
+    location,
+    postalCode,
   });
 
   res.json({ ok: true, message: "Actualizando Anuncio" });

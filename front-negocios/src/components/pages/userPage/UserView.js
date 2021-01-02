@@ -8,7 +8,7 @@ export default function UserView({ user }) {
   const [adverts] = useState(user.adverts || []);
   const [publishAdverts, setPublishedAdverts] = useState([]);
   console.log(adverts);
-  
+
   useEffect(() => {
     setPublishedAdverts(
       adverts.filter((advert) => advert.isPublished === true)

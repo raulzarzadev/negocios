@@ -73,7 +73,7 @@ usersCtrl.signIn = async (req, res) => {
       type: "faildSignIn",
     });
   if (!user.emailConfirmed)
-    res.json({
+    return res.json({
       ok: false,
       message: "incio de sesion fallo",
       type: "notEmailConfirmed",
@@ -170,7 +170,7 @@ usersCtrl.createUser = async (req, res) => {
     newUser.password = await newUser.encryptPassword(password);
 
     //  ***  credito de bienvenida
-    newUser.credit = 50;
+    //newUser.credit = 50;
 
     // *** respondiendo usuario y token
     const payload = {

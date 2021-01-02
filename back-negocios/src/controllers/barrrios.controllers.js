@@ -20,6 +20,13 @@ barriosCtrl.getAdvertsByBarrioShortName = async (req, res) => {
     shortName: req.params.shortName,
   });
 
+  if (!barrio)
+    return res.json({
+      ok: false,
+      message: "Este barrrio no existe",
+      type: "noExist",
+    });
+
   //const id = "5fea9b9c6f61cb00ef8b553a";
   const id = barrio._id.toString();
 
@@ -29,7 +36,7 @@ barriosCtrl.getAdvertsByBarrioShortName = async (req, res) => {
     },
     isPublished: true,
   });
-  res.json({ barrio, adverts });
+  res.json({ ok: true, barrio, adverts });
 };
 
 barriosCtrl.createBarrio = async (req, res) => {

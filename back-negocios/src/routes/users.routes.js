@@ -1,6 +1,7 @@
 const { Router } = require("express");
 const isAuthenticated = require("../authenticatons/jwt.authentication");
 const router = Router();
+
 const {
   getUser,
   deleteUser,
@@ -13,6 +14,7 @@ const {
   forgotPassword,
   recoverPassword
 } = require("../controllers/users.controller");
+
 
 router.route("/:id")
   .get(isAuthenticated, getUser);

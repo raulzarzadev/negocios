@@ -9,9 +9,8 @@ const useStyles = makeStyles((theme) => ({
   },
   decoratedLink: {
     border: "1px solid",
-    padding:theme.spacing(1),
-    borderRadius:theme.spacing(1)
-    
+    padding: theme.spacing(1),
+    borderRadius: theme.spacing(1),
   },
 }));
 

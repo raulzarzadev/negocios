@@ -58,6 +58,7 @@ export function UserProvider(props) {
     removeToken();
     setData(null);
     setIsLogged(false);
+    window.location.href = "/";
   }
 
   const value = useMemo(() => {

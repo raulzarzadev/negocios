@@ -11,24 +11,37 @@ export default function ContactInputs({ advert, setAdvert }) {
   const [contacts, setContacts] = useState(advert.contacts || []);
   const [newContact, setNewContact] = useState({ contactType: "" });
   const [placeholder, setPlaceholder] = useState("");
-
+  const [defaultValue, setDefaultValue] = useState("");
   useEffect(() => {
     switch (newContact.contactType) {
       case "":
         setPlaceholder("Selecciona el tipo de contacto");
+        setDefaultValue("");
         break;
       case "ws":
         setPlaceholder("Escribe tu whats app");
+        setDefaultValue("+52");
         break;
       case "tel":
         setPlaceholder("Numero de teléfono");
+        setDefaultValue("");
+        break;
+      case "fb":
+        setDefaultValue("https://facebook.com/");
+        //setPlaceholder("Numero de teléfono");
+        break;
+      case "in":
+        setDefaultValue("https://instagram.com/");
+        break;
+      case "web":
+        setDefaultValue("https://");
         break;
       default:
         setPlaceholder("Copia el link");
         break;
     }
-  }, [newContact.contactType]);
-
+  }, [newContact.contactType, defaultValue]);
+  console.log(defaultValue);
 
   const addContact = () => {
     setContacts([...contacts, newContact]);
@@ -78,6 +91,7 @@ export default function ContactInputs({ advert, setAdvert }) {
         contactValue={newContact.contactValue}
         handleChange={handleChange}
         placeholder={placeholder}
+        defaultValue={defaultValue}
       />
       <Box m={3}>
         <MyButton
@@ -99,6 +113,7 @@ const InputContact = ({
   contactValue,
   handleChange,
   placeholder,
+  defaultValue,
 }) => (
   <>
     <Grid container>
@@ -117,6 +132,7 @@ const InputContact = ({
           name={`contactValue`}
           value={contactValue}
           onChange={handleChange}
+          defaultValue={defaultValue}
         />
       </Grid>
     </Grid>
