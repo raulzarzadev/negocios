@@ -20,7 +20,7 @@ export default function UserView({ user }) {
       <Typography variant="h4">Usuario </Typography>
       <Typography variant="p"> {user.email}</Typography>
       <Typography>
-        Credit:<strong> ${user.credit.toFixed(2)}</strong>
+        Credit:<strong> ${user?.credit?.toFixed(2) || "0.00"}</strong>
       </Typography>
 
       <Box p={2} display="flex" justifyContent="center">

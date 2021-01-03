@@ -12,6 +12,8 @@ services:
     volumes:
       - "./front-negocios:/app"
       - "/app/node_modules"
+    environment: 
+      - REACT_APP_SIGNUP_SERVICE
 
   back:
     build:
@@ -31,6 +33,7 @@ services:
       - CLOUDINARY_CLOUD_NAME
       - CLOUDINARY_API_KEY
       - CLOUDINARY_API_SECRET
+
     volumes:
       - ./back-negocios:/usr/src/app
 

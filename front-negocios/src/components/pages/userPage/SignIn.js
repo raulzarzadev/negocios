@@ -6,38 +6,38 @@ import { useUser } from "../../../context/userContext";
 import { useHistory } from "react-router-dom";
 
 export default function SignIn() {
-  const { login, data, loadingUser } = useUser();
+  const { login, response, loadingUser } = useUser();
   const history = useHistory();
-  if (data?.ok) {
+  if (response?.ok) {
     history.push("/");
   }
-  console.log(data);
+  console.log(response);
 
   return (
     <>
       <Box>
-        {data?.type === "notEmailConfirmed" && (
+        {response?.type === "notEmailConfirmed" && (
           <Alert
             severity="warning"
             message="Revisa tu e-mail para terminar tu subscripción o intentalo otra vez"
             link={{ to: "/registrate", label: "aquí" }}
           />
         )}
-        {data?.type === "faildSignIn" && (
+        {response?.type === "faildSignIn" && (
           <Alert
             severity="error"
             message="Las credenciales no son validas. Intenta nuevamente o recupera tu contraseña "
             link={{ to: "/forgot-password", label: "aquí" }}
           />
         )}
-        {data?.type === "successSignIn" && (
+        {response?.type === "successSignIn" && (
           <Alert severity="success" message="!Bienvendio!" />
         )}
       </Box>
       <Box m={5}>
         <Typography variant="h4">Ingresa</Typography>
       </Box>
-      <SignForm2 onSubmit={login} isLoading={loadingUser} />
+      <SignForm2 onSubmit={login} isLoading={loadingUser} signin />
     </>
   );
 }

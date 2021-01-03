@@ -1,6 +1,7 @@
 .env
 front-negocios/node_modules/
 front-negocios/.env
+*.env
 
 back-negocios/node_modules/
 back-negocios/.env

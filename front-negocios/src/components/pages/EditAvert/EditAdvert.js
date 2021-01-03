@@ -12,8 +12,7 @@ import { uploadImage } from "../../../utils/uploadImage";
 
 export default function EditAdvert(props) {
   const { isLogged } = useUser();
-  //console.log("isLogged", !!isLogged);
-  //const isLogged = isAuthenticated();
+  
   const { data } = useAxios(url + "/barrios");
   const [token, setToken] = useState(localStorage.getItem("access-token"));
   const [status, setStatus] = useState({

@@ -24,6 +24,7 @@ import newTheme from "../components/theme/theme";
 import MyLayout from "../components/MyLayout";
 import Dashboard from "../components/pages/Dashboard";
 import PrivateRoute from "../components/PrivateRoute";
+import WritePass from "../components/pages/WritePass";
 
 // eslint-disable-next-line import/no-anonymous-default-export
 export default () => (
@@ -37,11 +38,9 @@ export default () => (
 console.log("Enviroment: ", process.env.NODE_ENV);
 
 function App() {
-  const { loadingUser, isLogged } = useUser();
-  console.log(isLogged ? "isLogged" : "notLogged");
   return (
     <Router>
-      <MyLayout isLoading={loadingUser}>
+      <MyLayout>
         <Switch>
           <PrivateRoute exact path="/perfil" component={Profile} />
           <PrivateRoute exact path="/dashboard" component={Dashboard} />
@@ -50,11 +49,11 @@ function App() {
           <PrivateRoute exact path="/editar/:id" component={NewAdvert} />
           <PrivateRoute exact path="/nuevo-barrio" component={NewBarrio} />
           <PrivateRoute exact path="/guia-visual" component={VisulaGuide} />
-          
+
           <Route exact path="/registrate" component={SignUp} />
+          <Route exact path="/registrate/:token" component={WritePass} />
           <Route exact path="/ingresa" component={SignIn} />
           <Route exact path="/forgot-password" component={ForgotPassword} />
-          <Route exact path="/signup/:token" component={Profile} />
 
           <Route
             exact

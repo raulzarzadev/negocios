@@ -1,6 +1,6 @@
 import axios from "axios";
 import url from "../url/url";
-import { getToken } from "./user";
+import { getToken } from "./token";
 const token = getToken();
 
 axios.defaults.headers = {

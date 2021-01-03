@@ -45,7 +45,9 @@ const useStyles = makeStyles((theme) => ({
 }));
 
 export default function Navbar() {
-  const { signout: handleSignOut, data } = useUser();
+  const { signout: handleSignOut, isLogged, response, user } = useUser();
+
+  console.log(user);
   const location = useLocation();
   const classes = useStyles();
 
@@ -66,12 +68,12 @@ export default function Navbar() {
   const handleOpenMenu = (isOpen) => {
     setOpenMenu(isOpen);
   };
-  const [user, setUser] = useState(null);
+
   useEffect(() => {
-    setUser(data?.user);
-    setIsManager(data?.user?.rol === "manager");
-  }, [data?.user]);
-  console.log(isManager);
+    setIsManager(user?.rol === "manager");
+  }, [user?.rol]);
+
+  console.log("Manager?", isManager);
 
   return (
     <div className={classes.root}>
@@ -127,7 +129,7 @@ export default function Navbar() {
               />
             </MyLink>
           </Box>
-          {user ? (
+          {isLogged ? (
             <div>
               <IconButton
                 aria-label="account of current user"

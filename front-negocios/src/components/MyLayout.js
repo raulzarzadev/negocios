@@ -3,6 +3,7 @@ import { Container, makeStyles } from "@material-ui/core";
 import Footer from "./Footer";
 import Navbar from "./Navbar";
 import Loading from "./atomos/Loading";
+import { useUser } from "../context/userContext";
 
 const useStyles = makeStyles((theme) => ({
   layout: {
@@ -16,7 +17,8 @@ const useStyles = makeStyles((theme) => ({
   },
 }));
 
-export default function MyLayout({ children, isLoading }) {
+export default function MyLayout({ children }) {
+  const { isLoading } = useUser();
   const classes = useStyles();
 
   return (

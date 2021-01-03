@@ -29,7 +29,7 @@ export default function BarriosList() {
       !includes(statesList, barrio.stateData) &&
       statesList.push(barrio.stateData)
   );
-  console.log(statesList);
+  //console.log(statesList);
 
   const barriosByState = statesList.map((state) => {
     let barriosByState = [];
