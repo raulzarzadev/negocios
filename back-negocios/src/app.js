@@ -17,6 +17,5 @@ app.use(cors());
 //routes
 app.use("/api/barrios", require("./routes/barrios.routes"));
 app.use("/api/adverts", require("./routes/adverts.routes"));
-app.use("/api/users", require("./routes/users.routes"));
 
 module.exports = app;

@@ -1,5 +1,4 @@
 const Advert = require("../models/Advert");
-const User = require("../models/User");
 
 const advertsCtrl = {};
 

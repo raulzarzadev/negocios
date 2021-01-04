@@ -2,6 +2,7 @@
 front-negocios/node_modules/
 front-negocios/.env
 *.env
+.env.production
 
 back-negocios/node_modules/
 back-negocios/.env

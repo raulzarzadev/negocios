@@ -24,7 +24,7 @@ export default function BarriosList() {
       .catch((err) => console.log(err));
   }, []);
 
-  barrios.map(
+  barrios?.map(
     (barrio) =>
       !includes(statesList, barrio.stateData) &&
       statesList.push(barrio.stateData)
@@ -33,7 +33,7 @@ export default function BarriosList() {
 
   const barriosByState = statesList.map((state) => {
     let barriosByState = [];
-    barrios.map(
+    barrios?.map(
       (barrio) => barrio.state === state.tag && barriosByState.push(barrio)
     );
     return { ...state, barrios: barriosByState };

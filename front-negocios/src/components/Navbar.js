@@ -45,7 +45,8 @@ const useStyles = makeStyles((theme) => ({
 }));
 
 export default function Navbar() {
-  const { signout: handleSignOut, isLogged,  user } = useUser();
+  console.log(process.env);
+  const { signout: handleSignOut, isLogged, user } = useUser();
 
   const location = useLocation();
   const classes = useStyles();
@@ -71,7 +72,6 @@ export default function Navbar() {
   useEffect(() => {
     setIsManager(user?.rol === "manager");
   }, [user?.rol]);
-
 
   return (
     <div className={classes.root}>

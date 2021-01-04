@@ -1,8 +1,8 @@
 const Barrio = require("../models/Barrio");
 const Advert = require("../models/Advert");
-const User = require("../models/User");
 
 const barriosCtrl = {};
+
 
 barriosCtrl.getBarrios = async (req, res) => {
   const barrios = await Barrio.find();

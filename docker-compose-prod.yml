@@ -9,7 +9,12 @@ services:
     ports:
       - "4000:80"
     networks:
-      - my-net
+      - negocios-net
+    environment:
+      - REACT_APP_SIGNUP_SERVICE
+      - REACT_APP_ADVERTS
+      - REACT_APP_UPLOADIMAGE_SERVICE
+
   back:
     restart: always
     build:
@@ -18,7 +23,7 @@ services:
     ports:
       - "4001:4001"
     networks:
-      - my-net
+      - negocios-net
     environment:
       - PORT
       - MONGO_NDB
@@ -26,12 +31,13 @@ services:
       - EMAIL_PASSWORD
       - NDB_EMAIL
       - ENVIROMENT
+
   uploadimage:
     image: raulzarza/uploadimage:latest
     ports:
       - 4042:4042
     networks:
-      - my-net
+      - negocios-net
     environment:
       - ENVIROMENT
       - MONGODB_URI
@@ -39,7 +45,21 @@ services:
       - CLOUDINARY_API_KEY
       - CLOUDINARY_API_SECRET
       - UPLOAD_IMAGE_PORT
-      
+
+  signupservice:
+    image: raulzarza/signupservice
+    ports:
+      - 3015:3015
+    networks:
+      - negocios-net
+    environment:
+      - USERS_SERVICE_DB
+      - FRONT_HOST
+      - JWT_SECRET_TEXT
+      - SIGNUP_PORT
+      - EMAIL_PASSWORD
+      - EMAIL_USER
+
 networks:
-  my-net:
+  negocios-net:
     driver: bridge

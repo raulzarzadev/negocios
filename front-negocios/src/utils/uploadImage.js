@@ -1,6 +1,6 @@
 import Axios from "axios";
 const URL = process.env.REACT_APP_UPLOADIMAGE_SERVICE;
-console.log(URL);
+console.log('UpImg',URL);
 export async function uploadImage(image) {
   const formData = new FormData();
   formData.append("image", image);
