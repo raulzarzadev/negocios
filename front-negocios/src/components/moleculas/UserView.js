@@ -25,17 +25,14 @@ export default function UserView({ user }) {
 
       <Box p={2} display="flex" justifyContent="center">
         <Box m={2}>
-          <MyButton variant="outlined">Nuevo Barrio</MyButton>
+          <MyButton variant="outlined">
+            <MyLink to="/nuevo-barrio">Nuevo Barrio</MyLink>
+          </MyButton>
         </Box>
         <Box m={2}>
-          <MyLink
-            decorated
-            to="/nuevo-anuncio"
-            variant="contained"
-            color="primary"
-          >
-            Crear anuncio
-          </MyLink>
+          <MyButton variant="contained" color="primary">
+            <MyLink to="/nuevo-anuncio">Crear anuncio</MyLink>
+          </MyButton>
         </Box>
       </Box>
 

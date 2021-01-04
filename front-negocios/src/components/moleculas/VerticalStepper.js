@@ -17,6 +17,7 @@ import SelectLabels from "./SelectLabels";
 
 import BackupIcon from "@material-ui/icons/Backup";
 import ColorLensIcon from "@material-ui/icons/ColorLens";
+import MyBackButton from "../atomos/MyBackButton";
 
 const useStyles = makeStyles((theme) => ({
   root: {
@@ -51,7 +52,6 @@ export default function VerticalStepper({
   setImage,
   loading,
 }) {
-  
   const classes = useStyles();
   const [activeStep, setActiveStep] = React.useState(0);
   const steps = getSteps();
@@ -68,10 +68,12 @@ export default function VerticalStepper({
     setActiveStep(0);
   };
 
-
   return (
     <div className={classes.root}>
-      <Box m={3}>
+      <Box m={1} textAlign="start">
+        <MyBackButton />
+      </Box>
+      <Box m={1}>
         <Typography variant="h4">{PageTitle}</Typography>
       </Box>
       <form

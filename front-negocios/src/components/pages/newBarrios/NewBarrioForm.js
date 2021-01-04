@@ -15,6 +15,7 @@ import {
 import TextField from "@material-ui/core/TextField";
 import { ESTADOS_LABEL_MX } from "../../../HardData/ESTADOS_MX";
 import MySelectInput from "../../atomos/MySelectInput";
+import MyBackButton from "../../atomos/MyBackButton";
 
 const useStyles = makeStyles((theme) => ({
   newBarrioCard: {
@@ -84,7 +85,10 @@ export default function NewBarrioForm({ onSubmit }) {
 
   return (
     <div className={classes.newBarrioContent}>
-      <Box m={3}>
+      <Box m={1} textAlign="start">
+        <MyBackButton />
+      </Box>
+      <Box m={1}>
         <Typography variant="h4">Nuevo barrio</Typography>
       </Box>
       <Stepper activeStep={activeStep} alternativeLabel>
