@@ -4,11 +4,12 @@ import NoLoggedView from "../../NoLoggedView";
 import VerticalStepper from "../../moleculas/VerticalStepper";
 import { useUser } from "../../../context/userContext";
 import { uploadImage } from "../../../utils/uploadImage";
-import { useParams } from "react-router-dom";
+import { useHistory, useParams } from "react-router-dom";
 import { getAdvert, postAdvert, updateAdvert } from "../../../utils/adverts";
 import Loading from "../../atomos/Loading";
 
 export default function NewAdvert() {
+  const history = useHistory();
   const params = useParams();
   const [toEdit] = useState(!!params.id);
   const { isLogged } = useUser();
@@ -63,8 +64,7 @@ export default function NewAdvert() {
             ...advert,
             image: { src: imageSrc },
           });
-      console.log(res);
-      redirectToProfile();
+      history.push("perfil");
     } catch (error) {
       console.log(error);
     }

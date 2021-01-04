@@ -63,7 +63,7 @@ export default function ToPublishAdvert({ advert, closeModal }) {
       publishedOn: [barrio],
     })
       .then((res) => {
-        window.location.replace("");
+        window.location.href = "/perfil";
         console.log(res);
       })
       .catch((err) => console.log(err));
