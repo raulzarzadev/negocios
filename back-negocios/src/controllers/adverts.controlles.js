@@ -13,8 +13,9 @@ advertsCtrl.getManagerAdverts = async (req, res) => {
   res.json({ ok: true, adverts });
 };
 
-advertsCtrl.getAdvertsByUser = async (req, res) => {
-  const adverts = await Advert.find({ owner: req.params.user });
+advertsCtrl.getAdvertsByOwner = async (req, res) => {
+  const { id } = req.params;
+  const adverts = await Advert.find({ owner: id });
   res.json({ ok: true, adverts });
 };
 

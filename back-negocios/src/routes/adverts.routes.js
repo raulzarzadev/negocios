@@ -3,13 +3,13 @@ const router = Router();
 const isAuthenticated = require("../authenticatons/jwt.authentication");
 
 const {
+  getManagerAdverts,
   getPublishedAdverts,
+  getAdvertsByOwner,
+  getAdvert,
   createAdvert,
   deleteAdvert,
-  getAdvert,
   updateAdvert,
-  getAdvertsByUser,
-  getManagerAdverts
 } = require("../controllers/adverts.controlles");
 
 router.route("/")
@@ -17,7 +17,7 @@ router.route("/")
     .post(isAuthenticated, createAdvert);
 
 router.route("/:id")
-  .get(getAdvertsByUser)
+  .get(isAuthenticated, getAdvertsByOwner)
   .delete(isAuthenticated, deleteAdvert);
 
 router.route("/editar/:id") 

@@ -22,7 +22,7 @@ export default function StateList({ barrios }) {
       {barrios.map((state) => (
         <Box m={4}>
           <Box m={2}>
-            <Typography variant="h5">
+            <Typography variant="h6">
               {state.label} ({state?.barrios?.length})
             </Typography>
           </Box>

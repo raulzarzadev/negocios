@@ -2,6 +2,7 @@ import Axios from "axios";
 import React, { useState, useEffect, useMemo } from "react";
 import { getToken, setToken, removeToken } from "../utils/token";
 import { decode } from "jsonwebtoken";
+import { getAdvertsByOwner } from "../utils/adverts";
 
 const UserContext = React.createContext();
 const url = process.env.REACT_APP_SIGNUP_SERVICE;
@@ -10,7 +11,7 @@ export function UserProvider(props) {
   const [token] = useState(getToken());
   const [isLogged, setIsLogged] = useState();
   const [loading, setLoading] = useState(true);
-  const [userAdverts] = useState([]);
+  const [userAdverts, setUserAdverts] = useState([]);
   const [response, setResponse] = useState([]);
   const [user, setUser] = useState({});
 
@@ -33,6 +34,13 @@ export function UserProvider(props) {
           setIsLogged(true);
           setLoading(false);
           setResponse(res.data);
+        })
+        .then((res) => {
+          getAdvertsByOwner(id)
+            .then(({ data }) => {
+              setUser({ ...user, adverts: data.adverts });
+            })
+            .catch((err) => console.log(err));
         })
         .catch((err) => {
           console.log(err);
