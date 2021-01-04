@@ -2,7 +2,7 @@ import { Box, Button, CircularProgress, TextField } from "@material-ui/core";
 import React from "react";
 import { useForm } from "react-hook-form";
 
-export default function SignForm2({ onSubmit, isLoading, signin }) {
+export default function SignForm({ onSubmit, isLoading, signin }) {
   const { register, handleSubmit, errors } = useForm();
 
   return (

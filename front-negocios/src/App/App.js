@@ -8,24 +8,22 @@ import AdvertsList from "../components/pages/AdvertsList";
 import Home from "../components/pages/Home";
 import NewAdvert from "../components/pages/newAdverts/NewAdvert";
 import NewBarrio from "../components/pages/newBarrios/NewBarrio";
-import Profile from "../components/pages/userPage/Profile";
-import Credit from "../components/pages/userPage/Credit";
 import About from "../components/pages/About";
 import HowItWorks from "../components/pages/HowItWorks";
-import ForgotPassword from "../components/pages/userPage/ForgotPassword.js";
-import RecoverPassword from "../components/pages/userPage/RecoverPassword.js";
-import Contact from "../components/pages/userPage/Contact";
-import SignUp from "../components/pages/userPage/SignUp";
-import SignIn from "../components/pages/userPage/SignIn";
-import { UserProvider, useUser } from "../context/userContext";
+import { UserProvider } from "../context/userContext";
 import VisulaGuide from "../components/visualGuide/VisulaGuide";
 import { MuiThemeProvider } from "@material-ui/core";
 import newTheme from "../components/theme/theme";
 import MyLayout from "../components/MyLayout";
 import Dashboard from "../components/pages/Dashboard";
 import PrivateRoute from "../components/PrivateRoute";
-import WritePass from "../components/pages/WritePass";
-
+import Contact from "../components/pages/userPages/Contact";
+import ForgotPassword from "../components/pages/userPages/ForgotPassword";
+import RecoverPassword from "../components/pages/userPages/RecoverPassword";
+import SignIn from "../components/pages/userPages/SignIn";
+import SignUp from "../components/pages/userPages/SignUp";
+import FinishSignup from "../components/pages/userPages/FinishSignup";
+import Profile from '../components/pages/userPages/Profile'
 // eslint-disable-next-line import/no-anonymous-default-export
 export default () => (
   <MuiThemeProvider theme={newTheme}>
@@ -44,22 +42,22 @@ function App() {
         <Switch>
           <PrivateRoute exact path="/perfil" component={Profile} />
           <PrivateRoute exact path="/dashboard" component={Dashboard} />
-          <PrivateRoute exact path="/credito" component={Credit} />
           <PrivateRoute exact path="/nuevo-anuncio" component={NewAdvert} />
           <PrivateRoute exact path="/editar/:id" component={NewAdvert} />
           <PrivateRoute exact path="/nuevo-barrio" component={NewBarrio} />
           <PrivateRoute exact path="/guia-visual" component={VisulaGuide} />
 
           <Route exact path="/registrate" component={SignUp} />
-          <Route exact path="/registrate/:token" component={WritePass} />
+          <Route exact path="/registrate/:token" component={FinishSignup} />
           <Route exact path="/ingresa" component={SignIn} />
-          <Route exact path="/forgot-password" component={ForgotPassword} />
 
+          <Route exact path="/forgot-password" component={ForgotPassword} />
           <Route
             exact
-            path="/recover-password/:token"
+            path="/forgot-password/:token"
             component={RecoverPassword}
           />
+
           <Route exact path="/" component={Home} />
           <Route exact path="/nosotros" component={About} />
           <Route exact path="/contacto" component={Contact} />

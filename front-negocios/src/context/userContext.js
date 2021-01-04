@@ -1,7 +1,7 @@
 import Axios from "axios";
-import { decode } from "jsonwebtoken";
 import React, { useState, useEffect, useMemo } from "react";
 import { getToken, setToken, removeToken } from "../utils/token";
+import { decode } from "jsonwebtoken";
 
 const UserContext = React.createContext();
 const url = process.env.REACT_APP_SIGNUP_SERVICE;
@@ -10,7 +10,7 @@ export function UserProvider(props) {
   const [token] = useState(getToken());
   const [isLogged, setIsLogged] = useState();
   const [loading, setLoading] = useState(true);
-  const [userAdverts, setUserAdverts] = useState([]);
+  const [userAdverts] = useState([]);
   const [response, setResponse] = useState([]);
   const [user, setUser] = useState({});
 
@@ -21,36 +21,25 @@ export function UserProvider(props) {
 
   useEffect(() => {
     if (token === "undefined") {
+      console.log("no token");
       setLoading(false);
       setIsLogged(false);
       return;
     } else {
-      setLoading(false);
+      const { id } = decode(token);
+      Axios.get(`${url}/${id}`)
+        .then((res) => {
+          setUser(res.data.user);
+          setIsLogged(true);
+          setLoading(false);
+        })
+        .catch((err) => {
+          console.log(err);
+          setLoading(false);
+        });
     }
-  }, []);
-
-  /* useEffect(() => {
-    if (!token) {
-      setLoadingUser(false);
-      setIsLogged(false);
-      return;
-    } else {
-      loadingUser();
-    }
-    async function loadingUser() {
-      try {
-        const { id } = decode(token);
-        const { data } = await Axios.get(`${url}/users/${id}`);
-        setData(data);
-        setIsLogged(data.user);
-        setUserAdverts(data.adverts);
-        setLoadingUser(false);
-      } catch (error) {
-        setLoadingUser(false);
-        console.log(error, `${url}/users`);
-      }
-    }
-  }, []); */
+  }, [token]);
+ 
 
   async function signup(form) {
     const { data } = await Axios.post(`${url}/signup`, form);
@@ -64,19 +53,37 @@ export function UserProvider(props) {
 
   async function confirPassword(form, token) {
     const { data } = await Axios.post(`${url}/signup/${token}`, form);
-    console.log(data);
     setResponse(data);
+    console.log(data);
     if (data.type2 === "successSignIn") {
-      setUser(data.user);
-      setToken(data.token);
-      setIsLogged(true);
+      const { email } = decode(data.token);
+      login({ email, password: form.password });
     }
     return data;
   }
 
+  async function recoverPassword(form, token) {
+    const { data } = await Axios.post(`${url}/forgot-password/${token}`, form);
+    setResponse(data);
+    if (data.type2 === "successSignIn") {
+      login({ email: data.user.email, password: form.password });
+    }
+    return data;
+  }
+
+  async function forgotPassword(form) {
+    setLoading(true);
+    try {
+      const { data } = await Axios.post(`${url}/forgot-password`, form);
+      setLoading(false);
+      return data;
+    } catch (err) {
+      console.log(err);
+      setLoading(false);
+    }
+  }
   async function login(form) {
     console.log("login sent", form);
-
     const { data } = await Axios.post(`${url}/signin`, form);
     console.log(data);
     if (data.type === "successSignIn") {
@@ -103,12 +110,15 @@ export function UserProvider(props) {
       response,
       signup,
       confirPassword,
+      forgotPassword,
+      recoverPassword,
       login,
       signout,
       isLogged,
       user,
+      loading,
     };
-  }, [userAdverts, response, isLogged, user]);
+  }, [userAdverts, response, isLogged, user, loading]);
 
   //console.log(loadingUser);
 

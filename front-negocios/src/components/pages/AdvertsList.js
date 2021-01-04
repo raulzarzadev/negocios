@@ -33,7 +33,7 @@ export default function AdvertsList() {
         setLoading(false);
         console.log(err);
       });
-  }, []);
+  }, [shortName]);
 
   console.log(adverts);
 

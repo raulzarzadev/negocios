@@ -67,7 +67,6 @@ export default function AdvertCart({
     title,
     description,
     image,
-    styles,
     googleLocation,
     labels = [],
     backgroundColor,

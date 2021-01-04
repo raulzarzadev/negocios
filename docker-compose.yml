@@ -50,6 +50,7 @@ services:
       - CLOUDINARY_API_KEY
       - CLOUDINARY_API_SECRET
       - UPLOAD_IMAGE_PORT
+  
 
 networks:
   my-dev-net:

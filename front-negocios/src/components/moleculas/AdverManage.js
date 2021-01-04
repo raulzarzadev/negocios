@@ -1,5 +1,4 @@
 import React, { useState } from "react";
-import { makeStyles } from "@material-ui/core/styles";
 import Typography from "@material-ui/core/Typography";
 import { useHistory } from "react-router-dom";
 import Loading from "../atomos/Loading";
@@ -12,7 +11,6 @@ import {
   IconButton,
   Tooltip,
 } from "@material-ui/core";
-import { CHIP_LABELS } from "../../HardData/CHIPS_LABELS";
 import ToPublishAdvert from "../moleculas/ToPublishAdvert";
 import { deleteAdvert, updateAdvert } from "../../utils/adverts";
 import AdvertCart from "../atomos/AdvertCard";
@@ -27,59 +25,14 @@ import CheckCircleIcon from "@material-ui/icons/CheckCircle";
 import CancelIcon from "@material-ui/icons/Cancel";
 import DetailsIcon from "@material-ui/icons/Details";
 
-const useStyles = makeStyles((theme) => ({
-  root: {
-    width: "100%",
-  },
-  labelsBox: {
-    [theme.breakpoints.up("xs")]: {
-      display: "flex",
-      flexDirection: "row-reverse",
-      alignItems: "center",
-      justifyContent: "space-between",
-      paddingLeft: "16px",
-    },
-  },
-  contactsBox: {
-    display: "flex",
-    width: "100%",
-    justifyContent: "space-around",
-  },
-  advertTitle: {
-    fontSize: 15,
-    [theme.breakpoints.up("sm")]: {
-      fontSize: 20,
-    },
-  },
-  actionsAdvert: { display: "flex", justifyContent: "flex-end" },
-  cardMedia: { height: 70, objectFit: "cover" },
-  cardContent: {
-    padding: theme.spacing(0.5),
-  },
-}));
-
 export default function AdvertManage({ advert = {} }) {
-  const {
-    title,
-    description,
-    labels = [],
-    isPublished,
-    _id,
-    contacts,
-  } = advert;
+  const { title, description, isPublished, _id } = advert;
 
-  const classes = useStyles();
   const history = useHistory();
-  const [openModal, setOpenModal] = useState(false);
   const [deleteModal, setDeleteModal] = useState(false);
   const [publishModal, setPublishModal] = useState(false);
   const [loading, setLoading] = useState(false);
-
-  const handleOpenModal = () => {
-    setOpenModal(!openModal);
-  };
-
-  const [anchorEl, setAnchorEl] = useState(null);
+  const [detailsModal, setDetailsModal] = useState(false);
 
   const handleDeleteAdvert = (id) => {
     setLoading(true);
@@ -92,17 +45,15 @@ export default function AdvertManage({ advert = {} }) {
         console.log(err);
       });
   };
+
   const handleOpenDeleteModal = () => {
     setDeleteModal(!deleteModal);
   };
 
   const handleOpenPublishModal = () => {
     setPublishModal(!publishModal);
-    handleClose();
   };
-  const handleClose = () => {
-    setAnchorEl(null);
-  };
+
   const handleUnpublish = () => {
     updateAdvert(advert._id, {
       ...advert,
@@ -114,22 +65,18 @@ export default function AdvertManage({ advert = {} }) {
       })
       .catch((err) => console.log(err));
   };
-  const [detailsModal, setDetailsModal] = useState(false);
 
   const handleOpenDetailsModal = () => {
     setDetailsModal(!detailsModal);
   };
 
-  const handleClickMenu = (event) => {
-    setAnchorEl(event.currentTarget);
-  };
   const handleEdit = (advertId) => {
     history.push(`/editar/${advertId}`);
   };
 
   return (
     <>
-      <Grid item xs={12} container style={{ margin: '8px 0'}}>
+      <Grid item xs={12} container style={{ margin: "8px 0" }}>
         <Grid item xs={3}>
           <Typography noWrap>{title}</Typography>
         </Grid>

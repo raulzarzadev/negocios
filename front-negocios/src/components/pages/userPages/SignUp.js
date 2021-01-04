@@ -1,7 +1,7 @@
 import { Box, Typography } from "@material-ui/core";
 import React from "react";
 import Alert from "../../Alert";
-import SignForm2 from "./SignForm2";
+import SignForm from "./SignForm";
 import { useUser } from "../../../context/userContext";
 
 export default function SignUp() {
@@ -29,7 +29,7 @@ export default function SignUp() {
       <Box m={5}>
         <Typography variant="h4">Registrate</Typography>
       </Box>
-      <SignForm2 onSubmit={signup} />
+      <SignForm onSubmit={signup} />
     </>
   );
 }

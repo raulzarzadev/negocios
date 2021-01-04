@@ -1,8 +1,8 @@
 import React, { useEffect, useState } from "react";
 import { Box, Typography } from "@material-ui/core";
-import MyLink from "../../atomos/MyLink";
-import MyButton from "../../atomos/MyButton";
-import UserAdvertsDisplay from "../../moleculas/UserAdvertsDisplay";
+import UserAdvertsDisplay from "../moleculas/UserAdvertsDisplay";
+import MyButton from "../atomos/MyButton";
+import MyLink from "../atomos/MyLink";
 
 export default function UserView({ user }) {
   const [adverts] = useState(user.adverts || []);
