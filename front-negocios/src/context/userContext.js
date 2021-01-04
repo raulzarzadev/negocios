@@ -20,7 +20,7 @@ export function UserProvider(props) {
   };
 
   useEffect(() => {
-    if (token === "undefined") {
+    if (token === "undefined" || !token) {
       console.log("no token");
       setLoading(false);
       setIsLogged(false);
