@@ -51,8 +51,14 @@ const useStyles = makeStyles((theme) => ({
       fontSize: 20,
     },
   },
-  actionsAdvert: { display: "flex", justifyContent: "flex-end" },
-  cardMedia: { height: 70, objectFit: "cover" },
+  actionsAdvert: {
+    display: "flex",
+    justifyContent: "flex-end",
+  },
+  cardMedia: {
+    height: 70,
+    objectFit: "cover",
+  },
   cardContent: {
     padding: theme.spacing(0.5),
   },
@@ -121,7 +127,7 @@ export default function AdvertCart({
       publishedOn: [],
     })
       .then((res) => {
-        window.location.replace("");
+        
       })
       .catch((err) => console.log(err));
   };
@@ -136,56 +142,15 @@ export default function AdvertCart({
         <Box className={classes.labelsBox} style={{ backgroundColor }}>
           <Box className={classes.actionsAdvert}>
             {admin ? (
-              <>
-                <Tooltip title="Opciones">
-                  <IconButton
-                    aria-controls="simple-menu"
-                    aria-haspopup="true"
-                    onClick={handleClickMenu}
-                  >
-                    <MoreVertIcon />
-                  </IconButton>
-                </Tooltip>
-                <Menu
-                  id="simple-menu"
-                  anchorEl={anchorEl}
-                  keepMounted
-                  open={Boolean(anchorEl)}
-                  onClose={handleClose}
+              <Tooltip title="Opciones">
+                <IconButton
+                  aria-controls="simple-menu"
+                  aria-haspopup="true"
+                  onClick={handleClickMenu}
                 >
-                  <MenuItem onClick={handleClose}>Detalles</MenuItem>
-
-                  {isPublished ? (
-                    <MenuItem onClick={() => handleUnpublish()}>
-                      Despublicar
-                    </MenuItem>
-                  ) : (
-                    <MenuItem onClick={() => handleOpenPublishModal()}>
-                      Publicar
-                    </MenuItem>
-                  )}
-
-                  {!publishArea && (
-                    <>
-                      <MenuItem onClick={() => handleEdit(_id)}>
-                        Editar
-                      </MenuItem>
-                      <MenuItem
-                        onClick={() => {
-                          handleOpenDeleteModal();
-                          handleClose();
-                        }}
-                      >
-                        <div
-                          style={{ border: "solid 3px red", padding: "4px" }}
-                        >
-                          Eliminar
-                        </div>
-                      </MenuItem>
-                    </>
-                  )}
-                </Menu>
-              </>
+                  <MoreVertIcon />
+                </IconButton>
+              </Tooltip>
             ) : (
               <Tooltip title="Guardar">
                 <IconButton>
@@ -194,7 +159,7 @@ export default function AdvertCart({
               </Tooltip>
             )}
           </Box>
-          <Box>
+          <Box minWidth={80}>
             {labels?.map((label, i) => (
               <Tooltip
                 key={i}
@@ -298,6 +263,37 @@ export default function AdvertCart({
       <MyModal open={openModal} handleOpenModal={handleOpenModal}>
         <div> Aca iria el menu</div>
       </MyModal>
+      <Menu
+        id="simple-menu"
+        anchorEl={anchorEl}
+        keepMounted
+        open={Boolean(anchorEl)}
+        onClose={handleClose}
+      >
+        <MenuItem onClick={handleClose}>Detalles</MenuItem>
+
+        {isPublished ? (
+          <MenuItem onClick={() => handleUnpublish()}>Despublicar</MenuItem>
+        ) : (
+          <MenuItem onClick={() => handleOpenPublishModal()}>Publicar</MenuItem>
+        )}
+
+        {!publishArea && (
+          <>
+            <MenuItem onClick={() => handleEdit(_id)}>Editar</MenuItem>
+            <MenuItem
+              onClick={() => {
+                handleOpenDeleteModal();
+                handleClose();
+              }}
+            >
+              <div style={{ border: "solid 3px red", padding: "4px" }}>
+                Eliminar
+              </div>
+            </MenuItem>
+          </>
+        )}
+      </Menu>
     </>
   );
 }

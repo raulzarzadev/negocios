@@ -1,12 +1,10 @@
 import React from "react";
+import { Redirect } from "react-router-dom";
 import { useUser } from "../../../context/userContext";
 import UserView from "../../moleculas/UserView";
-import NoLoggedView from "../../NoLoggedView";
 
-export default function NewUser(props) {
+export default function NewUser(pops) {
   const { isLogged, user } = useUser();
-  console.log(user);
-  return (
-    <>{isLogged ? <UserView user={user} /> : <NoLoggedView text="Perfil" />}</>
-  );
+  if (!isLogged) return <Redirect to="/ingresa" />;
+  return <UserView user={user} />;
 }

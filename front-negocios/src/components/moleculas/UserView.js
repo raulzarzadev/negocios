@@ -7,7 +7,7 @@ import MyLink from "../atomos/MyLink";
 export default function UserView({ user }) {
   const [adverts] = useState(user.adverts || []);
   const [publishAdverts, setPublishedAdverts] = useState([]);
-  console.log(adverts);
+  console.log(user);
 
   useEffect(() => {
     setPublishedAdverts(

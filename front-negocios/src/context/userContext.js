@@ -11,7 +11,6 @@ export function UserProvider(props) {
   const [token] = useState(getToken());
   const [isLogged, setIsLogged] = useState();
   const [loading, setLoading] = useState(true);
-  const [userAdverts, setUserAdverts] = useState([]);
   const [response, setResponse] = useState([]);
   const [user, setUser] = useState({});
 
@@ -30,9 +29,8 @@ export function UserProvider(props) {
       const { id } = decode(token);
       Axios.get(`${url}/${id}`)
         .then((res) => {
-          setUser(res.data.user);
+          setUser({...res.data.user});
           setIsLogged(true);
-          setLoading(false);
           setResponse(res.data);
         })
         .then((res) => {
@@ -41,6 +39,7 @@ export function UserProvider(props) {
               setUser({ ...user, adverts: data.adverts });
             })
             .catch((err) => console.log(err));
+          setLoading(false);
         })
         .catch((err) => {
           console.log(err);
@@ -95,12 +94,11 @@ export function UserProvider(props) {
     const { data } = await Axios.post(`${url}/signin`, form);
     console.log(data);
     if (data.type === "successSignIn") {
-      setUser(data.user);
+      setUser({...data.user});
       setToken(data.token);
       setIsLogged(true);
     }
     setResponse(data);
-
     return data;
     //setData(data);
   }
@@ -114,7 +112,6 @@ export function UserProvider(props) {
 
   const value = useMemo(() => {
     return {
-      userAdverts,
       response,
       signup,
       confirPassword,
@@ -126,9 +123,10 @@ export function UserProvider(props) {
       user,
       loading,
     };
-  }, [userAdverts, response, isLogged, user, loading]);
+  }, [response, isLogged, user, loading]);
 
   //console.log(loadingUser);
+  console.log(user)
 
   return <UserContext.Provider value={value} {...props} />;
 }

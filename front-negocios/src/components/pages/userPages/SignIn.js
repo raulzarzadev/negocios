@@ -3,16 +3,12 @@ import React from "react";
 import Alert from "../../Alert";
 import SignForm from "./SignForm";
 import { useUser } from "../../../context/userContext";
-import { useHistory } from "react-router-dom";
+import { Redirect } from "react-router-dom";
 
 export default function SignIn() {
-  const { login, response, loading } = useUser();
-  console.log(loading);
-  const history = useHistory();
-  if (response?.ok) {
-    history.push("/");
-  }
-  console.log(response);
+  const { login, response, loading, isLogged } = useUser();
+
+  if (isLogged) return <Redirect to="/perfil" />;
 
   return (
     <>

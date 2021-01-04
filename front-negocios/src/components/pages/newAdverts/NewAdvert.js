@@ -46,19 +46,14 @@ export default function NewAdvert() {
 
   const handleSubmit = async () => {
     setLoading(true);
-    //si newImage update Image
-    //else do noting
-    //si edit edit
-    //else create
+    let imageSrc = advert?.image?.src || "";
     try {
-      let imageSrc = advert?.image.src;
       if (newImage) {
         const {
           data: { image },
         } = await uploadImage(newImage);
         imageSrc = image.imageURL;
       }
-      //console.log(imageSrc);
       const res = toEdit
         ? await updateAdvert(advert._id, {
             ...advert,
