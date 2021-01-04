@@ -20,33 +20,37 @@ export function UserProvider(props) {
   };
 
   useEffect(() => {
-    if (token === "undefined" || !token) {
+    if (token) {
+      console.log("token");
+      try {
+        const { id } = decode(token);
+        console.log(id);
+        getUserAndAdverts(id).then((res) => {
+          setUser(res);
+          setLoading(false);
+          setIsLogged(true);
+        });
+        //setResponse(res.data)
+      } catch (error) {
+        //setUser({})
+        //setIsLogged(false)
+        setLoading(false);
+      }
+    } else {
       console.log("no token");
       setLoading(false);
-      setIsLogged(false);
-      return;
-    } else {
-      const { id } = decode(token);
-      Axios.get(`${url}/${id}`)
-        .then((res) => {
-          setUser({...res.data.user});
-          setIsLogged(true);
-          setResponse(res.data);
-        })
-        .then((res) => {
-          getAdvertsByOwner(id)
-            .then(({ data }) => {
-              setUser({ ...user, adverts: data.adverts });
-            })
-            .catch((err) => console.log(err));
-          setLoading(false);
-        })
-        .catch((err) => {
-          console.log(err);
-          setLoading(false);
-        });
     }
   }, [token]);
+
+  async function getUserAndAdverts(id) {
+    const {
+      data: { user },
+    } = await Axios.get(`${url}/${id}`);
+    const {
+      data: { adverts },
+    } = await getAdvertsByOwner(user._id);
+    return { ...user, adverts };
+  }
 
   async function signup(form) {
     const { data } = await Axios.post(`${url}/signup`, form);
@@ -90,17 +94,12 @@ export function UserProvider(props) {
     }
   }
   async function login(form) {
-    console.log("login sent", form);
     const { data } = await Axios.post(`${url}/signin`, form);
-    console.log(data);
     if (data.type === "successSignIn") {
-      setUser({...data.user});
       setToken(data.token);
-      setIsLogged(true);
     }
     setResponse(data);
     return data;
-    //setData(data);
   }
 
   async function signout() {
@@ -126,7 +125,7 @@ export function UserProvider(props) {
   }, [response, isLogged, user, loading]);
 
   //console.log(loadingUser);
-  console.log(user)
+  console.log("user", user);
 
   return <UserContext.Provider value={value} {...props} />;
 }
