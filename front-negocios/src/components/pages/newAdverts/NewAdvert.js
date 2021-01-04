@@ -40,20 +40,25 @@ export default function NewAdvert() {
   };
 
   const redirectToProfile = () => {
-    window.location.href = "/perfil";
+    //window.location.href = "/perfil";
     //setLoading(false);
   };
 
   const handleSubmit = async () => {
     setLoading(true);
+    //si newImage update Image
+    //else do noting
+    //si edit edit
+    //else create
     try {
-      let imageSrc = advert.image;
+      let imageSrc = advert?.image.src;
       if (newImage) {
         const {
           data: { image },
         } = await uploadImage(newImage);
         imageSrc = image.imageURL;
       }
+      //console.log(imageSrc);
       const res = toEdit
         ? await updateAdvert(advert._id, {
             ...advert,

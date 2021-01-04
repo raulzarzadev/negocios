@@ -15,6 +15,7 @@ services:
     environment: 
       - REACT_APP_SIGNUP_SERVICE
       - REACT_APP_ADVERTS
+      - REACT_APP_UPLOADIMAGE_SERVICE
 
   back:
     build:
