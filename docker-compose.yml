@@ -53,6 +53,22 @@ services:
       - CLOUDINARY_API_SECRET
       - UPLOAD_IMAGE_PORT
   
+  signupservice:
+    image: raulzarza/signupservice
+    ports:
+      - 3015:3015
+    networks: 
+      - my-dev-net
+    environment: 
+      - USERS_SERVICE_DB
+      - FRONT_HOST
+      - JWT_SECRET_TEXT
+      - SIGNUP_PORT
+      - EMAIL_PASSWORD
+      - EMAIL_USER
+  
+      
+  
 
 networks:
   my-dev-net:
