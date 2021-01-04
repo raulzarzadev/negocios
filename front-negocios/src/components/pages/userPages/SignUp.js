@@ -5,9 +5,7 @@ import SignForm from "./SignForm";
 import { useUser } from "../../../context/userContext";
 
 export default function SignUp() {
-  const { signup, response } = useUser();
-
-  console.log(response);
+  const { signup, response, loading } = useUser();
 
   return (
     <>
@@ -29,7 +27,7 @@ export default function SignUp() {
       <Box m={5}>
         <Typography variant="h4">Registrate</Typography>
       </Box>
-      <SignForm onSubmit={signup} />
+      <SignForm onSubmit={signup} isLoading={loading} />
     </>
   );
 }

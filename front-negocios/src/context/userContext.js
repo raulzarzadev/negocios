@@ -32,6 +32,7 @@ export function UserProvider(props) {
           setUser(res.data.user);
           setIsLogged(true);
           setLoading(false);
+          setResponse(res.data);
         })
         .catch((err) => {
           console.log(err);
@@ -39,7 +40,6 @@ export function UserProvider(props) {
         });
     }
   }, [token]);
- 
 
   async function signup(form) {
     const { data } = await Axios.post(`${url}/signup`, form);

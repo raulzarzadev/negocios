@@ -6,7 +6,8 @@ import { useUser } from "../../../context/userContext";
 import { useHistory } from "react-router-dom";
 
 export default function SignIn() {
-  const { login, response, loadingUser } = useUser();
+  const { login, response, loading } = useUser();
+  console.log(loading);
   const history = useHistory();
   if (response?.ok) {
     history.push("/");
@@ -37,7 +38,7 @@ export default function SignIn() {
       <Box m={5}>
         <Typography variant="h4">Ingresa</Typography>
       </Box>
-      <SignForm onSubmit={login} isLoading={loadingUser} signin />
+      <SignForm onSubmit={login} isLoading={loading} signin />
     </>
   );
 }
