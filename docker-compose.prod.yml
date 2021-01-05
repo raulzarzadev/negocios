@@ -22,6 +22,8 @@ services:
       - "4001:4001"
     networks:
       - negocios-net
+    env_file: 
+      - prod.env
 
   uploadimage:
     restart: always
@@ -29,6 +31,8 @@ services:
       - 4042:4042
     networks:
       - negocios-net
+    env_file: 
+      - prod.env
 
   signupservice:
     restart: always
@@ -38,6 +42,8 @@ services:
       - negocios-net
     networks:
       - negocios-net
+    env_file: 
+      - prod.env
 
 networks:
   negocios-net:
