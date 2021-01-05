@@ -45,7 +45,7 @@ const useStyles = makeStyles((theme) => ({
 }));
 
 export default function Navbar() {
-  console.log(process.env);
+  console.log(process.env.NODE_ENV);
   const { signout: handleSignOut, isLogged, user } = useUser();
 
   const location = useLocation();

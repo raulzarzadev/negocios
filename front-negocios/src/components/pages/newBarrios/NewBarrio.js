@@ -1,6 +1,5 @@
 import React, { useState } from "react";
 import Alert from "@material-ui/lab/Alert";
-import swal from "sweetalert";
 
 import NewBarrioForm from "./NewBarrioForm";
 
@@ -58,17 +57,7 @@ export default function NewBarrio(props) {
           messageError: <Alert severity="success">{res.data.message} </Alert>,
         });
       }
-      swal({
-        title: "Barrio creado con exito",
-        icon: "success",
-        buttons: {
-          confirm: "Ver Barrios",
-        },
-      }).then((val) => {
-        if (val) {
-          props.history.push("/");
-        }
-      });
+     
     } catch (error) {
       console.log("error capturado", error);
 
