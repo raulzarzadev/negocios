@@ -2,48 +2,52 @@ version: "3.8"
 
 services:
   front:
+    container_name: negfront
     build:
       context: ./front-negocios
       dockerfile: Dockerfile
     ports:
       - "3000:3000"
     networks:
-      - my-dev-net
+      - negocios
     volumes:
       - "./front-negocios:/app"
       - "/app/node_modules"
 
-  back:
+  negback:
+    container_name: negback
     build:
       context: ./back-negocios
       dockerfile: Dockerfile
     ports:
-      - "3001:3001"
+      - 3001:3001
     networks:
-      - my-dev-net
+      - negocios
     env_file:
       - .env
     volumes:
       - ./back-negocios:/usr/src/app
 
   uploadimage:
+    container_name: negupimage
     image: raulzarza/uploadimage:latest
     ports:
       - 4042:4042
     networks:
-      - my-dev-net
-    env_file:
+      - negocios
+    env_file: 
       - .env
 
   signupservice:
+    container_name: negsignup
     image: raulzarza/signupservice
     ports:
       - 3015:3015
     networks:
-      - my-dev-net
+      - negocios
     env_file:
       - .env
 
 networks:
-  my-dev-net:
+  negocios:
     driver: bridge
