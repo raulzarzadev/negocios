@@ -2,11 +2,11 @@ import { Box, Button, CircularProgress, TextField } from "@material-ui/core";
 import React from "react";
 import { useForm } from "react-hook-form";
 
-export default function SignForm({ onSubmit, isLoading, signin }) {
+export default function SignForm({ submit, isLoading, signin }) {
   const { register, handleSubmit, errors } = useForm();
 
   return (
-    <form onSubmit={handleSubmit(onSubmit)} noValidate autoComplete="on">
+    <form onSubmit={handleSubmit(submit)} noValidate autoComplete="on">
       <Box m={2}>
         <TextField
           autoFocus
