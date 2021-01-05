@@ -3,9 +3,10 @@ import React, { useState, useEffect, useMemo } from "react";
 import { getToken, setToken, removeToken } from "../utils/token";
 import { decode } from "jsonwebtoken";
 import { getAdvertsByOwner } from "../utils/adverts";
+import { SIGNUP_SERVICE } from "../URLS";
 
 const UserContext = React.createContext();
-const url = process.env.REACT_APP_SIGNUP_SERVICE;
+const url = SIGNUP_SERVICE
 
 export function UserProvider(props) {
   const [token] = useState(getToken());

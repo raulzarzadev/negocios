@@ -8,12 +8,9 @@ services:
       dockerfile: Dockerfile.prod
     ports:
       - "4000:80"
+  
     networks:
       - negocios-net
-    environment:
-      - REACT_APP_SIGNUP_SERVICE
-      - REACT_APP_ADVERTS
-      - REACT_APP_UPLOADIMAGE_SERVICE
 
   back:
     restart: always
@@ -22,8 +19,6 @@ services:
       dockerfile: Dockerfile.prod
     ports:
       - "4001:4001"
-    networks:
-      - negocios-net
     environment:
       - PORT
       - MONGO_NDB
@@ -31,13 +26,14 @@ services:
       - EMAIL_PASSWORD
       - NDB_EMAIL
       - ENVIROMENT
+    networks:
+      - negocios-net
 
   uploadimage:
     image: raulzarza/uploadimage:latest
+    restart: always
     ports:
       - 4042:4042
-    networks:
-      - negocios-net
     environment:
       - ENVIROMENT
       - MONGODB_URI
@@ -45,9 +41,12 @@ services:
       - CLOUDINARY_API_KEY
       - CLOUDINARY_API_SECRET
       - UPLOAD_IMAGE_PORT
+    networks:
+      - negocios-net
 
   signupservice:
     image: raulzarza/signupservice
+    restart: always
     ports:
       - 3015:3015
     networks:
@@ -59,6 +58,8 @@ services:
       - SIGNUP_PORT
       - EMAIL_PASSWORD
       - EMAIL_USER
+    networks:
+      - negocios-net
 
 networks:
   negocios-net:

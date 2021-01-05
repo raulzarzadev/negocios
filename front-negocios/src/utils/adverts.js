@@ -1,8 +1,9 @@
 import axios from "axios";
+import { BACKEND_URL } from "../URLS";
 import { getToken } from "./token";
 const token = getToken();
 
-const URL = process.env.REACT_APP_ADVERTS;
+const URL = BACKEND_URL;
 console.log("Ad&B url", URL);
 axios.defaults.headers = {
   Accept: "application/json",

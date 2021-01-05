@@ -40,11 +40,7 @@ export default function NewAdvert() {
     setAdvert({ ...advert, [e.target.name]: e.target.value });
   };
 
-  const redirectToProfile = () => {
-    //window.location.href = "/perfil";
-    //setLoading(false);
-  };
-
+ 
   const handleSubmit = async () => {
     setLoading(true);
     let imageSrc = advert?.image?.src || "";
