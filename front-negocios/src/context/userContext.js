@@ -98,6 +98,7 @@ export function UserProvider(props) {
     try {
       const { data } = await Axios.post(`${url}/signin`, form);
       setResponse(data);
+      setLoading(false);
       if (data.type === "successSignIn") {
         setToken(data.token);
         window.location.href = "/perfil";
