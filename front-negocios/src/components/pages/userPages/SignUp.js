@@ -27,7 +27,7 @@ export default function SignUp() {
       <Box m={5}>
         <Typography variant="h4">Registrate</Typography>
       </Box>
-      <SignForm onSubmit={signup} isLoading={loading} />
+      <SignForm submit={signup} isLoading={loading} />
     </>
   );
 }

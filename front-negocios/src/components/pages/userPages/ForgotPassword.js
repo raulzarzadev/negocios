@@ -11,16 +11,18 @@ import { useUser } from "../../../context/userContext";
 
 export default function ForgotPassword() {
   const [alert, setAlert] = useState(false);
+  const [loading, setLoading] = useState(false);
   const [form, setForm] = useState();
 
-  const { forgotPassword, loading } = useUser();
-  console.log("loadign", loading);
+  const { forgotPassword } = useUser();
 
   const handleSubmit = async (e) => {
     e.preventDefault();
     setAlert(true);
+    setLoading(true);
     setTimeout(() => {
       setAlert(false);
+      setLoading(false);
     }, 8000);
     setTimeout(() => {
       setAlert(false);

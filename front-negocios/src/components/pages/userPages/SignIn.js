@@ -4,15 +4,25 @@ import Alert from "../../Alert";
 import SignForm from "./SignForm";
 import { useUser } from "../../../context/userContext";
 import { Redirect } from "react-router-dom";
+import Loading from "../../atomos/Loading";
 
 export default function SignIn() {
   const { login, response, loading, isLogged } = useUser();
-
+  console.log(isLogged);
+  console.log(loading);
   if (isLogged) return <Redirect to="/perfil" />;
+  if (loading) return <Loading />;
 
   return (
     <>
-      <Box>
+      {response?.type === "faildSignIn" && (
+        <Alert
+          severity="error"
+          message="Las credenciales no son validas. Intenta nuevamente o recupera tu contraseña "
+          link={{ to: "/forgot-password", label: "aquí" }}
+        />
+      )}
+      {/* <Box>
         {response?.type === "notEmailConfirmed" && (
           <Alert
             severity="warning"
@@ -20,21 +30,14 @@ export default function SignIn() {
             link={{ to: "/registrate", label: "aquí" }}
           />
         )}
-        {response?.type === "faildSignIn" && (
-          <Alert
-            severity="error"
-            message="Las credenciales no son validas. Intenta nuevamente o recupera tu contraseña "
-            link={{ to: "/forgot-password", label: "aquí" }}
-          />
-        )}
         {response?.type === "successSignIn" && (
-          <Alert severity="success" message="!Bienvendio!" />
+          <Alert severity="success" message="!Bienvendio! ...redireccionando" />
         )}
-      </Box>
+      </Box> */}
       <Box m={5}>
         <Typography variant="h4">Ingresa</Typography>
       </Box>
-      <SignForm onSubmit={login} isLoading={loading} signin />
+      <SignForm submit={login} isLoading={loading} signin />
     </>
   );
 }

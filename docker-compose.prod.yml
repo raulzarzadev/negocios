@@ -1,6 +1,7 @@
 version: "3.8"
 
 services:
+  
   front:
     restart: always
     build:
@@ -19,45 +20,22 @@ services:
       dockerfile: Dockerfile.prod
     ports:
       - "4001:4001"
-    environment:
-      - PORT
-      - MONGO_NDB
-      - JWT_SECRET_TEXT
-      - EMAIL_PASSWORD
-      - NDB_EMAIL
-      - ENVIROMENT
     networks:
       - negocios-net
 
   uploadimage:
-    image: raulzarza/uploadimage:latest
     restart: always
     ports:
       - 4042:4042
-    environment:
-      - ENVIROMENT
-      - MONGODB_URI
-      - CLOUDINARY_CLOUD_NAME
-      - CLOUDINARY_API_KEY
-      - CLOUDINARY_API_SECRET
-      - UPLOAD_IMAGE_PORT
     networks:
       - negocios-net
 
   signupservice:
-    image: raulzarza/signupservice
     restart: always
     ports:
       - 3015:3015
     networks:
       - negocios-net
-    environment:
-      - USERS_SERVICE_DB
-      - FRONT_HOST
-      - JWT_SECRET_TEXT
-      - SIGNUP_PORT
-      - EMAIL_PASSWORD
-      - EMAIL_USER
     networks:
       - negocios-net
 

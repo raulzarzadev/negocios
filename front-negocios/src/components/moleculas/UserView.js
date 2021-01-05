@@ -13,6 +13,7 @@ export default function UserView({ user }) {
     setPublishedAdverts(
       adverts.filter((advert) => advert.isPublished === true)
     );
+  // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
   return (

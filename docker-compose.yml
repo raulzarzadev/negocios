@@ -12,7 +12,7 @@ services:
     volumes:
       - "./front-negocios:/app"
       - "/app/node_modules"
-  
+
   back:
     build:
       context: ./back-negocios
@@ -21,17 +21,8 @@ services:
       - "3001:3001"
     networks:
       - my-dev-net
-    environment:
-      - PORT
-      - ENVIROMENT
-      - MONGO_NDB
-      - JWT_SECRET_TEXT
-      - EMAIL_PASSWORD
-      - NDB_EMAIL
-      - CLOUDINARY_CLOUD_NAME
-      - CLOUDINARY_API_KEY
-      - CLOUDINARY_API_SECRET
-
+    env_file:
+      - .env
     volumes:
       - ./back-negocios:/usr/src/app
 
@@ -41,13 +32,8 @@ services:
       - 4042:4042
     networks:
       - my-dev-net
-    environment:
-      - ENVIROMENT
-      - MONGODB_URI
-      - CLOUDINARY_CLOUD_NAME
-      - CLOUDINARY_API_KEY
-      - CLOUDINARY_API_SECRET
-      - UPLOAD_IMAGE_PORT
+    env_file:
+      - .env
 
   signupservice:
     image: raulzarza/signupservice
@@ -55,13 +41,8 @@ services:
       - 3015:3015
     networks:
       - my-dev-net
-    environment:
-      - USERS_SERVICE_DB
-      - FRONT_HOST
-      - JWT_SECRET_TEXT
-      - SIGNUP_PORT
-      - EMAIL_PASSWORD
-      - EMAIL_USER
+    env_file:
+      - .env
 
 networks:
   my-dev-net:

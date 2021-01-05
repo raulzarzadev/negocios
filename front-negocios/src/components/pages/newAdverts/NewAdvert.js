@@ -40,7 +40,6 @@ export default function NewAdvert() {
     setAdvert({ ...advert, [e.target.name]: e.target.value });
   };
 
- 
   const handleSubmit = async () => {
     setLoading(true);
     let imageSrc = advert?.image?.src || "";
@@ -51,7 +50,7 @@ export default function NewAdvert() {
         } = await uploadImage(newImage);
         imageSrc = image.imageURL;
       }
-      const res = toEdit
+      toEdit
         ? await updateAdvert(advert._id, {
             ...advert,
             image: { src: imageSrc },

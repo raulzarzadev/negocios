@@ -6,11 +6,11 @@ import { getAdvertsByOwner } from "../utils/adverts";
 import { SIGNUP_SERVICE } from "../URLS";
 
 const UserContext = React.createContext();
-const url = SIGNUP_SERVICE
+const url = SIGNUP_SERVICE;
 
 export function UserProvider(props) {
   const [token] = useState(getToken());
-  const [isLogged, setIsLogged] = useState();
+  const [isLogged, setIsLogged] = useState(false);
   const [loading, setLoading] = useState(true);
   const [response, setResponse] = useState([]);
   const [user, setUser] = useState({});
@@ -26,20 +26,21 @@ export function UserProvider(props) {
       try {
         const { id } = decode(token);
         console.log(id);
-        getUserAndAdverts(id).then((res) => {
-          setUser(res);
-          setLoading(false);
-          setIsLogged(true);
-        });
+        getUserAndAdverts(id)
+          .then((res) => {
+            setUser(res);
+            setIsLogged(true);
+            setLoading(false);
+          })
+          .catch((err) => console.log(err));
         //setResponse(res.data)
       } catch (error) {
-        //setUser({})
-        //setIsLogged(false)
-        setLoading(false);
+        signout();
       }
     } else {
-      console.log("no token");
       setLoading(false);
+      setIsLogged(false);
+      console.log("no token");
     }
   }, [token]);
 
@@ -84,30 +85,38 @@ export function UserProvider(props) {
   }
 
   async function forgotPassword(form) {
-    setLoading(true);
     try {
       const { data } = await Axios.post(`${url}/forgot-password`, form);
-      setLoading(false);
       return data;
     } catch (err) {
       console.log(err);
-      setLoading(false);
+      //setLoading(false);
     }
   }
   async function login(form) {
-    const { data } = await Axios.post(`${url}/signin`, form);
-    if (data.type === "successSignIn") {
-      setToken(data.token);
+    setLoading(true);
+    try {
+      const { data } = await Axios.post(`${url}/signin`, form);
+      setResponse(data);
+      if (data.type === "successSignIn") {
+        setToken(data.token);
+        window.location.href = "/perfil";
+      }
+      return data;
+    } catch (error) {
+      setLoading(false);
+      console.log(error);
     }
-    setResponse(data);
-    return data;
   }
 
   async function signout() {
+    window.location.href = "/";
+    setResponse({});
     removeToken();
     setUser({});
-    setIsLogged(false);
-    window.location.href = "/";
+    setTimeout(() => {
+      setIsLogged(false);
+    }, 300);
   }
 
   const value = useMemo(() => {
@@ -123,6 +132,7 @@ export function UserProvider(props) {
       user,
       loading,
     };
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [response, isLogged, user, loading]);
 
   //console.log(loadingUser);
