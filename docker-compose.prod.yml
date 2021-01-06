@@ -19,33 +19,33 @@ services:
       context: ./back-negocios
       dockerfile: Dockerfile.prod
     ports:
-      - 3001:4001
+      - 4001:3001
     networks:
       - negocios
     env_file:
-      - .env
-
-  uploadimage:
-    restart: always
-    container_name: negupimage
-    image: raulzarza/uploadimage:latest
-    ports:
-      - 4042:4003
-    networks:
-      - negocios
-    env_file:
-      - .env
+      - prod.env
 
   signupservice:
     restart: always
     container_name: negsignup
     image: raulzarza/signupservice
     ports:
-      - 3015:4002
+      - 4002:3015
     networks:
       - negocios
     env_file:
-      - .env
+      - prod.env
+
+  uploadimage:
+    restart: always
+    container_name: negupimage
+    image: raulzarza/uploadimage:latest
+    ports:
+      - 4003:3015
+    networks:
+      - negocios
+    env_file:
+      - prod.env
 
 networks:
   negocios:
