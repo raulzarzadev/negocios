@@ -41,7 +41,7 @@ services:
     container_name: negupimage
     image: raulzarza/uploadimage:latest
     ports:
-      - 4003:3015
+      - 4003:4042
     networks:
       - negocios
     env_file:
