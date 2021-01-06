@@ -19,7 +19,7 @@ services:
       context: ./back-negocios
       dockerfile: Dockerfile.prod
     ports:
-      - 4001:3001
+      - 3001:4001
     networks:
       - negocios
     env_file:
@@ -30,7 +30,7 @@ services:
     container_name: negupimage
     image: raulzarza/uploadimage:latest
     ports:
-      - 4003:4042
+      - 4042:4003
     networks:
       - negocios
     env_file:
@@ -41,7 +41,7 @@ services:
     container_name: negsignup
     image: raulzarza/signupservice
     ports:
-      - 4002:3015
+      - 3015:4002
     networks:
       - negocios
     env_file:
