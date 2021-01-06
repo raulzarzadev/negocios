@@ -1,7 +1,6 @@
 import Axios from "axios";
 import { UPLOAD_IMAGE_SERVICE } from "../URLS";
 const URL = UPLOAD_IMAGE_SERVICE;
-console.log("UpImg", URL);
 export async function uploadImage(image) {
   const formData = new FormData();
   formData.append("image", image);
@@ -16,7 +15,7 @@ export async function uploadImage(image) {
     data: formData,
   };
 
-  const res = await Axios(`${URL}/upload`, config);
+  const res = await Axios(`${URL}`, config);
 
   return res;
 }

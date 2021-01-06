@@ -1,16 +1,19 @@
 version: "3.8"
 
 services:
-  front:
+  negfront:
     restart: always
     container_name: negfront
     build:
       context: ./front-negocios
       dockerfile: Dockerfile.prod
+     
     ports:
       - "4000:80"
-    networks:
-      - negocios
+    links: 
+      - "negback"
+      - "negsignup"
+      - "negupimage"
 
   negback:
     restart: always
@@ -18,35 +21,21 @@ services:
     build:
       context: ./back-negocios
       dockerfile: Dockerfile.prod
-    ports:
-      - 4001:3001
-    networks:
-      - negocios
     env_file:
       - prod.env
+    
 
-  signupservice:
+  negsignup:
     restart: always
     container_name: negsignup
     image: raulzarza/signupservice
-    ports:
-      - 4002:3015
-    networks:
-      - negocios
     env_file:
       - prod.env
 
-  uploadimage:
+  negupimage:
     restart: always
     container_name: negupimage
     image: raulzarza/uploadimage:latest
-    ports:
-      - 4003:4042
-    networks:
-      - negocios
     env_file:
       - prod.env
 
-networks:
-  negocios:
-    driver: bridge

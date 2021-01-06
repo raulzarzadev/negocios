@@ -1,6 +1,13 @@
-const PROD = process.env.NODE_ENV !=="production"
-console.log(PROD)
 
-export const BACKEND_URL = PROD ? "http://localhost:3001/api": "https://adverts.negociosdelbarrio.com"
-export const SIGNUP_SERVICE = PROD ? "http://localhost:3015/user": "https://sign.negociosdelbarrio.com"
-export const UPLOAD_IMAGE_SERVICE = PROD ? "http://localhost:4042": "https://images.negociosdelbarrio.com"
+/* 
+REACT_APP_SERVICES_HOST
+REACT_APP_SIGNUP_SERVICE
+REACT_APP_UPLOAD_IMAGE_SERVICE
+*/
+export const BACKEND_URL = process.env.REACT_APP_SERVICES_HOST;
+export const SIGNUP_SERVICE = process.env.REACT_APP_SIGNUP_SERVICE;
+export const UPLOAD_IMAGE_SERVICE = process.env.REACT_APP_UPLOAD_IMAGE_SERVICE;
+
+console.log("Ad&B", BACKEND_URL);
+console.log("Sign", SIGNUP_SERVICE);
+console.log("UpImg", UPLOAD_IMAGE_SERVICE);

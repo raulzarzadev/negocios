@@ -2,6 +2,10 @@ FROM node:alpine as build-deps
 
 RUN mkdir -p /usr/src/app
 
+ARG REACT_APP_SERVICES_HOST=/api
+ARG REACT_APP_SIGNUP_SERVICE=/user
+ARG REACT_APP_UPLOAD_IMAGE_SERVICE=/upimage
+
 WORKDIR /usr/src/app
 
 COPY package*.json .

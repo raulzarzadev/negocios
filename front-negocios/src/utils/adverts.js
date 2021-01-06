@@ -4,7 +4,6 @@ import { getToken } from "./token";
 const token = getToken();
 
 const URL = BACKEND_URL;
-console.log("Ad&B url", URL);
 axios.defaults.headers = {
   Accept: "application/json",
   "Content-Type": "application/json",

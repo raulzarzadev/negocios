@@ -4,7 +4,6 @@ import { getToken, setToken, removeToken } from "../utils/token";
 import { decode } from "jsonwebtoken";
 import { getAdvertsByOwner } from "../utils/adverts";
 import { SIGNUP_SERVICE } from "../URLS";
-console.log("SignUp", SIGNUP_SERVICE);
 
 const UserContext = React.createContext();
 const url = SIGNUP_SERVICE;
