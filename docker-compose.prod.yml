@@ -9,7 +9,7 @@ services:
       dockerfile: Dockerfile.prod
      
     ports:
-      - "4001:80"
+      - "4000:80"
     links: 
       - "negback"
       - "negsignup"
